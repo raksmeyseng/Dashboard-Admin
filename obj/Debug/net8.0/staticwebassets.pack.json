@@ -9,10 +9,6 @@
       "PackagePath": "staticwebassets/assets/logo.png"
     },
     {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/contact/image/20240912064112509.jpg",
-      "PackagePath": "staticwebassets/contact/image/20240912064112509.jpg"
-    },
-    {
       "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/css/auth.css",
       "PackagePath": "staticwebassets/css/auth.css"
     },
@@ -23,106 +19,6 @@
     {
       "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/favicon.ico",
       "PackagePath": "staticwebassets/favicon.ico"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912061017147.jpg",
-      "PackagePath": "staticwebassets/image/20240912061017147.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912061652025.png",
-      "PackagePath": "staticwebassets/image/20240912061652025.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912061705381.png",
-      "PackagePath": "staticwebassets/image/20240912061705381.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062021416.png",
-      "PackagePath": "staticwebassets/image/20240912062021416.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062046780.png",
-      "PackagePath": "staticwebassets/image/20240912062046780.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062116391.png",
-      "PackagePath": "staticwebassets/image/20240912062116391.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062249759.jpg",
-      "PackagePath": "staticwebassets/image/20240912062249759.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062655902.jpg",
-      "PackagePath": "staticwebassets/image/20240912062655902.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062710676.png",
-      "PackagePath": "staticwebassets/image/20240912062710676.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062723188.jpg",
-      "PackagePath": "staticwebassets/image/20240912062723188.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062723411.jpg",
-      "PackagePath": "staticwebassets/image/20240912062723411.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062740117.png",
-      "PackagePath": "staticwebassets/image/20240912062740117.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062756415.jpg",
-      "PackagePath": "staticwebassets/image/20240912062756415.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062820528.png",
-      "PackagePath": "staticwebassets/image/20240912062820528.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912062830802.jpg",
-      "PackagePath": "staticwebassets/image/20240912062830802.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912075237505.jpg",
-      "PackagePath": "staticwebassets/image/20240912075237505.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912081117610.png",
-      "PackagePath": "staticwebassets/image/20240912081117610.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912081532676.png",
-      "PackagePath": "staticwebassets/image/20240912081532676.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912081630835.jpg",
-      "PackagePath": "staticwebassets/image/20240912081630835.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912084014374.jpg",
-      "PackagePath": "staticwebassets/image/20240912084014374.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912085952743.png",
-      "PackagePath": "staticwebassets/image/20240912085952743.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912090039467.jpg",
-      "PackagePath": "staticwebassets/image/20240912090039467.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912090110917.png",
-      "PackagePath": "staticwebassets/image/20240912090110917.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912090133488.jpg",
-      "PackagePath": "staticwebassets/image/20240912090133488.jpg"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/image/20240912091331975.png",
-      "PackagePath": "staticwebassets/image/20240912091331975.png"
     },
     {
       "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/js/site.js",
@@ -355,18 +251,6 @@
     {
       "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery/dist/jquery.min.map",
       "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/10f4be35-c195-4851-a7fc-bc15882385c2.png",
-      "PackagePath": "staticwebassets/project/10f4be35-c195-4851-a7fc-bc15882385c2.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/8b7718e9-008e-4194-b50e-b0d204f2c969.png",
-      "PackagePath": "staticwebassets/project/8b7718e9-008e-4194-b50e-b0d204f2c969.png"
-    },
-    {
-      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/b69e3b6c-1475-4eb0-abe0-d08ca8ced386.png",
-      "PackagePath": "staticwebassets/project/b69e3b6c-1475-4eb0-abe0-d08ca8ced386.png"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.ArchtistStudio.Microsoft.AspNetCore.StaticWebAssets.props",
