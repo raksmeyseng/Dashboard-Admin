@@ -1,0 +1,52 @@
+@model ArchtistStudio.Modules.Social.InsertSocialRequest
+
+<div>
+     <h4 class="font-weight-bold py-3 mb-4">
+        Insert Platform
+    </h4>
+    <div class="row pt-3">
+        <div class="col-md-12">
+            <form asp-controller="social" asp-action="insert" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row m-1">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                            <label asp-for="DisplayText" class="control-label"></label>
+                            <input  asp-for="DisplayText" class="form-control" placeholder="DisplayText" />
+                            <span asp-validation-for="DisplayText" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="URL" class="control-label"></label>
+                            <input asp-for="URL" class="form-control" placeholder="Link" />
+                            <span asp-validation-for="URL" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1">
+                     <div class="form-group">
+                            <label asp-for="Platform" class="control-label"></label>
+                            <select asp-for="Platform" class="form-control">
+                                <option value="">-- Select Project Type --</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Instargram">Instargram</option>
+                                <option value="TikTok">TikTok</option>
+                                 <option value="Telegram">Telegram</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                            </select>
+                            <span asp-validation-for="Platform" class="text-danger"></span>
+                        </div>
+                </div>
+                <div class="d-flex justify-content-end m-2">
+                    <button type="submit" class="btn btn-primary m-2">Save changes</button>
+                    <button type="Cancel" class="btn btn-dark m-2">
+                        <a class="text-white text-decoration-none" asp-controller="contact"
+                            asp-action="profile">Cancel</a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

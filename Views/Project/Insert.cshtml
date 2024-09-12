@@ -1,0 +1,74 @@
+@model ArchtistStudio.Modules.Project.InsertProjectRequest
+
+
+<div>
+    <div class="mx-auto p-3">
+        <h2>Project List</h2>
+    </div>
+    <div class="row pt-3">
+        <div class="col-md-12">
+            <form asp-action="insert" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- First row: Project Name, Location -->
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ProjectName" class="control-label"></label>
+                            <input asp-for="ProjectName" class="form-control" placeholder="Project Name"/>
+                            <span asp-validation-for="ProjectName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Location" class="control-label"></label>
+                            <input asp-for="Location" class="form-control" placeholder="Location"/>
+                            <span asp-validation-for="Location" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Second row: Image URL, Description -->
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ImagePath" class="control-label"></label>
+                            <input type="file" asp-for="ImagePath" class="form-control" placeholder="Upload Image" />
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"  placeholder="Description" ></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ProjectType" class="control-label"></label>
+                            <select asp-for="ProjectType" class="form-control">
+                                <option value="">-- Select Project Type --</option>
+                                <option value="Residential">Residential</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Industrial">Industrial</option>
+                            </select>
+                            <span asp-validation-for="ProjectType" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end m-1">
+                        <button type="submit" class="btn btn-primary m-2" >Save changes</button>
+                        <button type="Cancel" class="btn btn-dark m-2">
+                            <a class="text-white text-decoration-none" asp-controller="project"
+                                asp-action="gets">Cancel</a>
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+</div>

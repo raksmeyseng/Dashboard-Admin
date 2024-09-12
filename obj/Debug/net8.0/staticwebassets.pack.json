@@ -1,0 +1,309 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/scopedcss/projectbundle/ArchtistStudio.bundle.scp.css",
+      "PackagePath": "staticwebassets/ArchtistStudio.bundle.scp.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/assets/logo.png",
+      "PackagePath": "staticwebassets/assets/logo.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/css/auth.css",
+      "PackagePath": "staticwebassets/css/auth.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/favicon.ico",
+      "PackagePath": "staticwebassets/favicon.ico"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/1b42e21d-0c9e-48f7-b86a-fdaedc64ab05.jpg",
+      "PackagePath": "staticwebassets/images/1b42e21d-0c9e-48f7-b86a-fdaedc64ab05.jpg"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/215f7367-e474-4a54-81c0-16b123a3b914.png",
+      "PackagePath": "staticwebassets/images/215f7367-e474-4a54-81c0-16b123a3b914.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/94409b36-3f86-452e-874d-c70a7e4f51ab.jpg",
+      "PackagePath": "staticwebassets/images/94409b36-3f86-452e-874d-c70a7e4f51ab.jpg"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/9a3a50a8-3f39-4898-a67f-97d29a75d1d6.png",
+      "PackagePath": "staticwebassets/images/9a3a50a8-3f39-4898-a67f-97d29a75d1d6.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/c0bd56fd-497e-452f-923d-ded5533401da.png",
+      "PackagePath": "staticwebassets/images/c0bd56fd-497e-452f-923d-ded5533401da.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/images/f9f2eeb7-218f-459e-bd4c-bb5e2364efc2.png",
+      "PackagePath": "staticwebassets/images/f9f2eeb7-218f-459e-bd4c-bb5e2364efc2.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/js/site.js",
+      "PackagePath": "staticwebassets/js/site.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/LICENSE",
+      "PackagePath": "staticwebassets/lib/bootstrap"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.esm.min.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map",
+      "PackagePath": "staticwebassets/lib/bootstrap/dist/js/bootstrap.min.js.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation/LICENSE.md",
+      "PackagePath": "staticwebassets/lib/jquery-validation/LICENSE.md"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation/dist/additional-methods.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation/dist/additional-methods.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/additional-methods.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation/dist/jquery.validate.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+      "PackagePath": "staticwebassets/lib/jquery-validation/dist/jquery.validate.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery/LICENSE.txt",
+      "PackagePath": "staticwebassets/lib/jquery/LICENSE.txt"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery/dist/jquery.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery/dist/jquery.min.js",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.js"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/lib/jquery/dist/jquery.min.map",
+      "PackagePath": "staticwebassets/lib/jquery/dist/jquery.min.map"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/10f4be35-c195-4851-a7fc-bc15882385c2.png",
+      "PackagePath": "staticwebassets/project/10f4be35-c195-4851-a7fc-bc15882385c2.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/8b7718e9-008e-4194-b50e-b0d204f2c969.png",
+      "PackagePath": "staticwebassets/project/8b7718e9-008e-4194-b50e-b0d204f2c969.png"
+    },
+    {
+      "Id": "/Users/mac/Documents/SengVichet/ArchtistStudio/wwwroot/project/b69e3b6c-1475-4eb0-abe0-d08ca8ced386.png",
+      "PackagePath": "staticwebassets/project/b69e3b6c-1475-4eb0-abe0-d08ca8ced386.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.ArchtistStudio.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.ArchtistStudio.props",
+      "PackagePath": "build\\ArchtistStudio.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.ArchtistStudio.props",
+      "PackagePath": "buildMultiTargeting\\ArchtistStudio.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.ArchtistStudio.props",
+      "PackagePath": "buildTransitive\\ArchtistStudio.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archtist Studio</title>
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/26.2.4/fluent.css" />
+    <link rel="icon" type="logo-ArchtistStudio" href="~/assets/logo.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ArchtistStudio.styles.css" asp-append-version="true" />
+
+    <script src="https://cdn.syncfusion.com/ej2/26.2.4/dist/ej2.min.js"></script>
+</head>
+
+<body>
+    <div class="wrapper d-flex">
+        <!-- Sidebar -->
+        <div class="col-2 bg-light p-3">
+            <div class="sidebar-logo p-2 mb-3">
+                <a class="navbar-brand text-black" asp-controller="dashboard" asp-action="overview">
+                    <h4>ArchtistStudio</h4>
+                </a>
+            </div>
+            <ul class="sidebar-nav list-unstyled text-center">
+                <li class="nav-item">
+                    <a class="nav-link text-black" asp-controller="project" asp-action="gets">Project</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" asp-controller="contact" asp-action="gets">Contact</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="col">
+            <nav class="navbar navbar-expand-lg px-3 border-bottom">
+                <div class="container-fluid">
+                    <span></span>
+                    <div class="d-flex">
+                        <li class="nav-item dropdown">
+                            <button class="btn btn-white dropdown-togg  le" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <p>Welcome, @User.Identity.Name</p>
+                                }
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-light">
+                                <li><a class="dropdown-item" href="/contact/profile">Profile</a></li>
+                                <partial name="_LoginPartial">
+                            </ul>
+                        </li>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <ejs-scripts></ejs-scripts>
+</body>
+
+</html>

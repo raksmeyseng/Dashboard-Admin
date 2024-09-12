@@ -1,0 +1,220 @@
+@model Tuple<ArchtistStudio.Modules.Contact.ListContactResponse,
+List<ArchtistStudio.Modules.Social.DetailSocialResponse>,
+ArchtistStudio.Modules.About.ListAboutResponse>
+
+<div class="container light-style flex-grow-1 container-p-y">
+    <h4 class="font-weight-bold py-3 mb-4">Account Settings</h4>
+
+    <div class="card overflow-hidden">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3 pt-0">
+                <div class="list-group list-group-flush account-settings-links">
+                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
+                        href="#account-general">General</a>
+                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
+                        href="#account-about-us">About Us</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="tab-content">
+                    <!-- General Tab -->
+                    <div class="tab-pane fade show active" id="account-general">
+                        <div class="card-body media align-items-center row p-3">
+                            <div class="col-auto">
+                                <img src="@Model.Item1?.ImagePath" alt="Profile Image"
+                                    class="img-profile rounded-circle"
+                                    style="width: 80px; height: 80px; object-fit: cover;">
+                            </div>
+                            <div class="col pl-3">
+                                <h4 class="font-weight-bold">
+                                    @if (User.Identity?.IsAuthenticated == true)
+                                    {
+                                        @User.Identity.Name
+                                    }
+                                    else
+                                    {
+                                        <p>Guest</p>
+                                    }
+                                </h4>
+                            </div>
+                        </div>
+
+                        <hr class="border-light my-0">
+
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">Name:
+                                            @Model.Item1?.Name</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">Phone Number:
+                                            @Model.Item1?.PhoneNumber</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">Purpose:
+                                            @Model.Item1?.Purpose</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">Email:
+                                            @Model.Item1?.Email</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">Message:
+                                            @Model.Item1?.Message</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Social Links -->
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1">
+                                            <h5>Social Links</h5>
+                                            <ul class="list-group list-group-flush">
+                                                @foreach (var social in Model.Item2)
+                                                {
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <a href="@social.URL"
+                                                                class="text-decoration-none">@social.DisplayText</a>
+                                                            <span class="badge badge-primary">@social.Platform</span>
+                                                        </div>
+                                                        <div>
+                                                            <a class="btn btn-outline-info btn-sm" asp-controller="social"
+                                                                asp-action="update" asp-route-id="@social.Id">Edit</a>
+                                                            <button type="button" class="btn btn-danger btn-sm"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal-@social.Id">-</button>
+
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="deleteModal-@social.Id"
+                                                                tabindex="-1" aria-labelledby="deleteModalLabel-@social.Id"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="deleteModalLabel-@social.Id">Confirm
+                                                                                Deletion</h5>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Are you sure you want to delete this item?
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <form asp-controller="social"
+                                                                                asp-action="delete"
+                                                                                asp-route-id="@social.Id" method="post">
+                                                                                @Html.AntiForgeryToken()
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger">Delete</button>
+                                                                            </form>
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end m-2">
+                            <a href="/social/insert" class="btn btn-outline-dark">Insert Social</a>
+                            <a href="/contact/insert" class="btn btn-outline-dark">Insert Contact</a>
+                            <a href="@Url.Action("update", "contact", new { id = Model.Item1?.Id })"
+                                class="btn btn-outline-dark">Edit Contact</a>
+                        </div>
+                    </div>
+
+
+                    <!-- About Us Tab -->
+                    <div class="tab-pane fade" id="account-about-us">
+                        <div class="card-body media align-items-center row p-3">
+                            <div class="col-auto">
+                                <img src="@Model.Item1?.ImagePath" alt="Profile Image"
+                                    class="img-profile rounded-circle"
+                                    style="width: 80px; height: 80px; object-fit: cover;">
+                            </div>
+                            <div class="col pl-3">
+                                <h4 class="font-weight-bold">
+                                    @if (User.Identity?.IsAuthenticated == true)
+                                    {
+                                        @User.Identity.Name
+                                    }
+                                    else
+                                    {
+                                        <p>Guest</p>
+                                    }
+                                </h4>
+                            </div>
+                        </div>
+
+                        <hr class="border-light my-0">
+
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1"><h6>Expertise</h6>
+                                            @Model.Item3?.Expert</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1"><h6>Construction</h6>
+                                            @Model.Item3?.Construction</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1"><h6>Service</h6>
+                                            @Model.Item3?.Service</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="border border-outline-secondary p-2 rounded-1"><h6>Why Choose Us</h6>
+                                            @Model.Item3?.ChooseUs</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-end m-2">
+                            <a href="/about/insert" class="btn btn-outline-dark">Insert About</a>
+                            <a href="@Url.Action("update", "about", new { id = Model.Item3?.Id })"
+                                class="btn btn-outline-dark">Edit About Us</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

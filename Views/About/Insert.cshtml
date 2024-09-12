@@ -1,0 +1,61 @@
+@model ArchtistStudio.Modules.About.InsertAboutRequest
+
+<div>
+    <h4 class="font-weight-bold py-3 mb-4">
+        Insert Platform
+    </h4>
+    <div class="row pt-3">
+        <div class="col-md-12">
+            <form asp-controller="about" asp-action="insert" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Expert" class="control-label"></label>
+                             <textarea asp-for="Expert" class="form-control" rows="3"  placeholder="Expert" ></textarea>
+                            <span asp-validation-for="Expert" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Construction" class="control-label"></label>
+                                <textarea asp-for="Construction" class="form-control" rows="3"  placeholder="Construction" ></textarea>
+                            <span asp-validation-for="Construction" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Service" class="control-label"></label>
+                              <textarea asp-for="Service" class="form-control" rows="3"  placeholder="Service" ></textarea>
+                            <span asp-validation-for="Service" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ChooseUs" class="control-label"></label>
+                                <textarea asp-for="ChooseUs" class="form-control"  placeholder="ChooseUs" ></textarea>
+                            <span asp-validation-for="ChooseUs" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ImagePath" class="control-label"></label>
+                            <input type="file" asp-for="ImagePath" class="form-control" placeholder="Upload Image" />
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end m-2">
+                    <button type="submit" class="btn btn-primary m-2">Save changes</button>
+                    <button type="Cancel" class="btn btn-dark m-2">
+                        <a class="text-white text-decoration-none" asp-controller="contact"
+                            asp-action="profile">Cancel</a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
