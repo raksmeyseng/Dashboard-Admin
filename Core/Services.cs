@@ -1,37 +1,31 @@
-
-public interface IService
+public interface IFileUploadService
 {
-    Task<string> UploadImageAsync(IFormFile imagePath);
+    string UploadFileAsync(IFormFile file, string directoryPath);
 }
 
-public class ImageUploadService(IWebHostEnvironment environment) : IService
+public class FileUploadService(IWebHostEnvironment environment) : IFileUploadService
 {
-    private readonly IWebHostEnvironment _environment = environment;
-
-    public async Task<string> UploadImageAsync(IFormFile imagePath)
+    public string UploadFileAsync(IFormFile file, string directoryPath)
     {
-        if (imagePath == null || imagePath.Length == 0)
+        if (file == null || file.Length == 0)
         {
-            throw new ArgumentException("No file provided.");
+            throw new ArgumentException("File is required.");
+        }
+      string relativePath = directoryPath.TrimStart('/');   
+        string newFileName = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + Path.GetExtension(file.FileName);
+        string fileFullPath = Path.Combine(environment.WebRootPath, relativePath, newFileName);
+
+        var directory = Path.GetDirectoryName(fileFullPath);
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
         }
 
-        if (!imagePath.ContentType.StartsWith("image/"))
+        using (var stream = new FileStream(fileFullPath, FileMode.Create))
         {
-            throw new ArgumentException("Please upload a valid image file.");
+             file.CopyToAsync(stream);
         }
 
-        string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(imagePath.FileName);
-        string imageDirectoryPath = Path.Combine(_environment.WebRootPath, "images"); 
-        string imageFullPath = Path.Combine(imageDirectoryPath, newFileName);
-
-        if (!Directory.Exists(imageDirectoryPath))
-        {
-            Directory.CreateDirectory(imageDirectoryPath);
-        }
-        using (var stream = new FileStream(imageFullPath, FileMode.Create))
-        {
-            await imagePath.CopyToAsync(stream);
-        }
-        return Path.Combine("images", newFileName);
+        return newFileName;
     }
 }

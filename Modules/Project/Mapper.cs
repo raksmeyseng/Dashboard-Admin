@@ -10,9 +10,7 @@ public class ProjectMapper : Profile
         CreateMap<Project, DetailProjectResponse>();
         CreateMap<InsertProjectRequest, Project>();
         CreateMap<Project, UpdateProjectRequest>()
-            .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Location))
-            .ForMember(dest => dest.ImagePath, opt => opt.Ignore())
-            .ReverseMap(); 
+            .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
         
     }
 }

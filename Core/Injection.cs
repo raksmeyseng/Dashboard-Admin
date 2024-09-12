@@ -16,7 +16,6 @@ public static class DependencyInjection
         if (env == "prod") return;
         app.MySwagger();
     }
-
     public static void AddInjection(this IServiceCollection service)
     {
         _assemblyInjection(service, "Service");
@@ -27,6 +26,7 @@ public static class DependencyInjection
         service.AddMySwagger();
         service.AddControllers();
         service.AddRazorPages();
+        service.AddTransient<IFileUploadService, FileUploadService>();
 
         service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
           {

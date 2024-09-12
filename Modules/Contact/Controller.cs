@@ -4,59 +4,70 @@ using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Social;
 using ArchtistStudio.Modules.About;
+using ArchtistStudio.Modules.TopManagement;
+using ArchtistStudio.Modules.History;
 
 
 namespace ArchtistStudio.Modules.Contact;
 
 
 public class ContactController(
-    IService imageUploadService,
     IMapper mapper,
     IAboutRepository aboutRepository,
     ISocialRepository socialRepository,
-    IContactRepository repository
-
-    ) : MyController
+    IHistoryRepository historyRepository,
+    ITopManagementRepository topManagementRepository,
+    IContactRepository repository,
+    IFileUploadService fileUploadService) : MyController
 {
-
+    // === Gets ====//
     [HttpGet]
     public IActionResult Profile()
     {
-        var contactEntity = repository.GetSingle(e => e.DeletedAt == null);
-        var contactLink = contactEntity == null ? null : mapper.Map<ListContactResponse>(contactEntity);
+        var contactQueryable = repository.GetSingle(e => e.DeletedAt == null);
+        var contactLink = contactQueryable == null ? null : mapper.Map<DetailContactResponse>(contactQueryable);
 
         var socialQueryable = socialRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var socialLinks = mapper.ProjectTo<DetailSocialResponse>(socialQueryable).ToList();
+        var socialLinks = mapper.ProjectTo<ListSocialResponse>(socialQueryable).ToList();
 
         var aboutQueryable = aboutRepository.GetSingle(e => e.DeletedAt == null);
-        var aboutLink = contactEntity == null ? null : mapper.Map<ListAboutResponse>(aboutQueryable);
+        var aboutLink = contactQueryable == null ? null : mapper.Map<ListAboutResponse>(aboutQueryable);
 
-        var model = new Tuple<ListContactResponse, List<DetailSocialResponse>,  ListAboutResponse>(
-            contactLink ?? new ListContactResponse(),
+        var topmanagemetnQueryable = topManagementRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var topmanagemetnLinks = mapper.ProjectTo<ListTopManagementResponse>(topmanagemetnQueryable).ToList();
+
+        var historyQueryable = historyRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var historyLinks = mapper.ProjectTo<ListHistoryResponse>(historyQueryable).ToList();
+
+        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, ListAboutResponse, List<ListTopManagementResponse>, List<ListHistoryResponse>>(
+            contactLink ?? new DetailContactResponse(),
             socialLinks ?? [],
-            aboutLink ?? new ListAboutResponse()
+            aboutLink ?? new ListAboutResponse(),
+            topmanagemetnLinks ?? [],
+            historyLinks ?? []
         );
 
-        return View(model);
+        return View(response);
     }
 
+    // === Post ====//
     public IActionResult Insert()
     {
         return View();
     }
 
     [HttpPost]
-    public async Task<IActionResult> Insert([FromForm] InsertContactRequest request)
+    public IActionResult Insert([FromForm] InsertContactRequest request)
     {
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
 
         var item = mapper.Map<Contact>(request);
-        item.ImagePath = imagePath;
+        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -66,7 +77,7 @@ public class ContactController(
         return RedirectToAction("profile");
     }
 
-    // === Update Contact === //
+    // === Update === //
     [HttpGet]
     public ActionResult Update(Guid id)
     {
@@ -78,26 +89,25 @@ public class ContactController(
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(Guid id, UpdateContactRequest request)
+    public IActionResult Update(Guid id, UpdateContactRequest request)
     {
 
-        var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (iQueryable == null) return NotFound();
-
-        iQueryable.Name = request.Name ?? iQueryable.Name;
-        iQueryable.PhoneNumber = request.PhoneNumber ?? iQueryable.PhoneNumber;
-        iQueryable.Email = request.Email ?? iQueryable.Email;
-        iQueryable.Purpose = request.Purpose ?? iQueryable.Purpose;
-        iQueryable.Message = request.Message ?? iQueryable.Message;
-        iQueryable.UpdatedAt = DateTime.UtcNow;
-
+        var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
+        if (item == null) return NotFound();
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
-            iQueryable.ImagePath = imagePath;
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
+            item.ImagePath = Image;
         }
 
-        repository.Update(iQueryable);
+        item.Name = request.Name ?? item.Name;
+        item.PhoneNumber = request.PhoneNumber ?? item.PhoneNumber;
+        item.Email = request.Email ?? item.Email;
+        item.Purpose = request.Purpose ?? item.Purpose;
+        item.Message = request.Message ?? item.Message;
+        item.UpdatedAt = DateTime.UtcNow;
+
+        repository.Update(item);
         repository.Commit();
 
         return RedirectToAction("profile");

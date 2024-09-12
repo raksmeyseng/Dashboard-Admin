@@ -50,6 +50,38 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL092ZXJ2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/History/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSGlzdG9yeS9JbnNlcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/History/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSGlzdG9yeS9VcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/New/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmV3L0dldHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/New/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmV3L0luc2VydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/New/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvTmV3L1VwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Overview/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3ZlcnZpZXcvR2V0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Overview/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3ZlcnZpZXcvSW5zZXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Overview/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3ZlcnZpZXcvVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Project/Gets.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvamVjdC9HZXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -80,6 +112,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Social/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU29jaWFsL1VwZGF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Topmanagement/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVG9wbWFuYWdlbWVudC9JbnNlcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Topmanagement/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvVG9wbWFuYWdlbWVudC9VcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/_ViewImports.cshtml]

@@ -1,34 +1,32 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
-using Microsoft.EntityFrameworkCore;
 
 namespace ArchtistStudio.Modules.About;
 
 
 public class AboutController(
-    IService imageUploadService,
+     IFileUploadService fileUploadService,
     IMapper mapper,
     IAboutRepository repository) : MyController
 {
     // === Post ====//
-     public IActionResult Insert()
+    public IActionResult Insert()
     {
         return View();
     }
-
     [HttpPost]
-    public async Task<IActionResult> Insert([FromForm] InsertAboutRequest request)
+    public IActionResult Insert([FromForm] InsertAboutRequest request)
     {
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
         var item = mapper.Map<About>(request);
-        item.ImagePath = imagePath;
+        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -38,9 +36,8 @@ public class AboutController(
         return RedirectToAction("profile", "contact");
     }
 
-
     // === Update ====//
-   [HttpGet]
+    [HttpGet]
     public ActionResult Update(Guid id)
     {
         var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
@@ -51,47 +48,27 @@ public class AboutController(
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(Guid id, UpdateAboutRequest request)
+    public IActionResult Update(Guid id, UpdateAboutRequest request)
     {
 
-        var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (iQueryable == null) return NotFound();
-
-        iQueryable.Expert = request.Expert ?? iQueryable.Expert;
-        iQueryable.Service = request.Service ?? iQueryable.Service;
-        iQueryable.ChooseUs = request.ChooseUs ?? iQueryable.ChooseUs;
-        iQueryable.Construction = request.Construction ?? iQueryable.Construction;
-        iQueryable.UpdatedAt = DateTime.UtcNow;
+        var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
+        if (item == null) return NotFound();
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
-            iQueryable.ImagePath = imagePath;
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
+            item.ImagePath = Image;
         }
 
-        repository.Update(iQueryable);
+        item.Expert = request.Expert ?? item.Expert;
+        item.Service = request.Service ?? item.Service;
+        item.ChooseUs = request.ChooseUs ?? item.ChooseUs;
+        item.Construction = request.Construction ?? item.Construction;
+        item.UpdatedAt = DateTime.UtcNow;
+
+        repository.Update(item);
         repository.Commit();
 
-     return RedirectToAction("profile", "contact");
+        return RedirectToAction("profile", "contact");
     }
-
-    // === Delete ====//
-    [HttpDelete("{id:guid}")]
-    public IActionResult Delete(Guid id)
-    {
-        var item = repository.GetSingle(e =>
-            e.Id == id &&
-            e.DeletedAt == null
-        );
-        if (item == null)
-        {
-            return BadRequest("Item Not Found");
-        }
-
-        item.DeletedAt = DateTime.UtcNow;
-        repository.Remove(item);
-        repository.Commit();
-        return NoContent();
-    }
-
 }

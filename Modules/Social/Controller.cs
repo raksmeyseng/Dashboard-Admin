@@ -11,23 +11,11 @@ public class SocialController(
     IMapper mapper,
     ISocialRepository repository) : MyController
 {
-
-    [HttpGet]
-    public IActionResult Profile()
-    {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<DetailSocialResponse>(iQueryable);
-        return View(results);
-    }
-
-
     // === Post ====//
     public IActionResult Insert()
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Insert([FromForm] InsertSocialRequest request)
     {
@@ -69,7 +57,6 @@ public class SocialController(
 
         return RedirectToAction("profile", "contact");
     }
-
 
      public IActionResult Delete()
     {

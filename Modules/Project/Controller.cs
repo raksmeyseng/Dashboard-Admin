@@ -2,16 +2,24 @@
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ArchtistStudio.Modules.Project;
 
 
 public class ProjectController(
-    IService imageUploadService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     IProjectRepository repository) : MyController
 {
+      [HttpGet]
+    public IActionResult Index()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListProjectResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
+
     // === Get All ====//
     [HttpGet]
     public IActionResult Gets()
@@ -28,34 +36,28 @@ public class ProjectController(
     {
         return View();
     }
-   [HttpPost]
-    public async Task<IActionResult> Insert([FromForm] InsertProjectRequest request)
+
+    [HttpPost]
+    public IActionResult Insert([FromForm] InsertProjectRequest request)
     {
-        if (request.ImagePath == null || request.ImagePath .Length == 0)
+        if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
-        if (!ModelState.IsValid)
-        {
-            return View(request);
-        }
-
-        string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
         var item = mapper.Map<Project>(request);
-        item.ImagePath = imagePath;
+        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
-
         repository.Add(item);
         repository.Commit();
 
-        return RedirectToAction("gets"); 
+        return RedirectToAction("gets");
     }
 
-
-    // === Update Project === //
+    // === Update === //
     [HttpGet]
     public ActionResult Update(Guid id)
     {
@@ -65,31 +67,36 @@ public class ProjectController(
         var results = mapper.Map<UpdateProjectRequest>(iQueryable);
         return View(results);
     }
-     [HttpPost]
+    [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Update(Guid id, UpdateProjectRequest request)
+    public IActionResult Update(Guid id, UpdateProjectRequest request)
     {
-        var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (iQueryable == null) return NotFound();
-
-        iQueryable.ProjectName = request.ProjectName ?? iQueryable.ProjectName;
-        iQueryable.Location = request.Location ?? iQueryable.Location;
-        iQueryable.Description = request.Description ?? iQueryable.Description;
-        iQueryable.ProjectType = request.ProjectType ?? iQueryable.ProjectType;
-        iQueryable.InActive = request.InActive ?? iQueryable.InActive;
-        iQueryable.UpdatedAt = DateTime.UtcNow;
+        var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
+        if (item == null) return NotFound();
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string imagePath = await imageUploadService.UploadImageAsync(request.ImagePath);
-            iQueryable.ImagePath = imagePath; 
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+            item.ImagePath = Image;
         }
-        repository.Update(iQueryable);
+
+        item.ProjectType = request.ProjectType ?? item.ProjectType;
+        item.ProjectName = request.ProjectName ?? item.ProjectName;
+        item.Client = request.Client ?? item.Client;
+        item.Size = request.Size ?? item.Size;
+        item.Status = request.Status ?? item.Status;
+        item.Location = request.Location ?? item.Location;
+        item.Description = request.Description ?? item.Description;
+        item.InActive = request.InActive ?? item.InActive;
+        item.UpdatedAt = DateTime.UtcNow;
+
+        repository.Update(item);
         repository.Commit();
 
-        return RedirectToAction("gets"); 
+        return RedirectToAction("gets");
     }
 
+    // === Delete === //
     public IActionResult Delete()
     {
         return View();
@@ -113,7 +120,5 @@ public class ProjectController(
 
         return RedirectToAction("gets");
     }
-
-
 }
 

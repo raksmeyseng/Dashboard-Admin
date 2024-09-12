@@ -1,20 +1,10 @@
-
 @if (User.Identity?.IsAuthenticated == true)
 {
-    <ul class="nav-bar ms-auto">
-        <li>
-            <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Logout</a>
-        </li>
-    </ul>
+
+    <a class="dropdown-item text-decoration-none" asp-controller="Auth" asp-action="Logout">Logout</a>
 }
 else
 {
-    <ul class="nav-bar ms-auto">
-        <li>
-            <a class="dropdown-item" asp-controller="Auth" asp-action="Login">Login</a>
-        </li>
-        <li>
-            <a class="dropdown-item" asp-controller="Auth" asp-action="Register">Register</a>
-        </li>
-    </ul>
+    <a class="dropdown-item text-decoration-none" asp-controller="Auth" asp-action="Login">Login</a>
+    <a class="dropdown-item text-decoration-none" asp-controller="Auth" asp-action="Register">Register</a>
 }

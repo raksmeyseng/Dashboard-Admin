@@ -1,17 +1,31 @@
 @model ArchtistStudio.Modules.Project.UpdateProjectRequest
 
 <div>
-    <div class="mx-auto p-3">
-        <h2>Edit Project</h2>
-    </div>
+     <h4 class="font-weight-bold py-3 mb-4">
+        Edit Project
+    </h4>
 
-    <div class="row pt-3">
+    <div class="row pt-2">
         <div class="col-md-12">
             <form asp-action="update" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <!-- First row: Project Name, Location -->
                 <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ProjectType" class="control-label"></label>
+                            <select asp-for="ProjectType" class="form-control">
+                                <option value="">-- Select Project Type --</option>
+                                <option value="Commercial">Commercial</option>
+                                <option value="Residential">Residential</option>
+                                <option value="Interior">Interior</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Health">Health</option>
+                                <option value="Landscape">Landscape</option>
+                            </select>
+                            <span asp-validation-for="ProjectType" class="text-danger"></span>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="ProjectName" class="control-label"></label>
@@ -19,6 +33,10 @@
                             <span asp-validation-for="ProjectName" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
+
+                <!-- First row: Project Name, Location -->
+                <div class="row m-1">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Location" class="control-label"></label>
@@ -26,41 +44,46 @@
                             <span asp-validation-for="Location" class="text-danger"></span>
                         </div>
                     </div>
-                </div>
-
-
-                <!-- Second row: Image Upload, Description -->
-                <div class="row m-1">
-                    <div class="col-md-6">
+                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="ImagePath" class="control-label"></label>
                             <input type="file" asp-for="ImagePath" class="form-control" placeholder="Upload Image" />
                             <span asp-validation-for="ImagePath" class="text-danger"></span>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                </div>
+                <div class="row m-1">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
-                            <textarea asp-for="Description" class="form-control" rows="3"  placeholder="Location"></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <label asp-for="Client" class="control-label"></label>
+                            <input asp-for="Client" class="form-control" placeholder="Client" />
+                            <span asp-validation-for="Client" class="text-danger"></span>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Size" class="control-label"></label>
+                            <input asp-for="Size" class="form-control" placeholder="Size" />
+                            <span asp-validation-for="Size" class="text-danger"></span>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <input  asp-for="Status" class="form-control" placeholder="Status" />
+                            <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Third row: Project Type -->
-                <div class="row m-1">
-                    <div class="col-md-6">
+                <!-- Second row: Image URL, Description -->
+                <div class="row m-1"> 
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label asp-for="ProjectType" class="control-label"></label>
-                            <select asp-for="ProjectType" class="form-control">
-                                <option value="">-- Select Project Type --</option>
-                                @foreach (var type in new[] { "Residential", "Commercial", "Industrial" })
-                                {
-                                    <option value="@type" selected="@(Model.ProjectType == type ? "selected" : null)"> @type
-                                    </option>
-                                }
-                            </select>
-                            <span asp-validation-for="ProjectType" class="text-danger"></span>
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"
+                                placeholder="Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
                         </div>
                     </div>
                 </div>

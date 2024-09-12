@@ -306,4 +306,4 @@
 /Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/ArchtistStudio.genruntimeconfig.cache
 /Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/ref/ArchtistStudio.dll
 /Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-/Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/BCrypt.Net-Next.dll
+/Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/ArchtistStudio.sourcelink.json
