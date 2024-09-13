@@ -3,7 +3,6 @@ using ArchtistStudio.Core;
 using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.Category;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 
 namespace ArchtistStudio.Modules.Product;
 
