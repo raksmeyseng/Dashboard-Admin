@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArchtistStudio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98a7e440ae340086f5d54bcf6ff60b107c2d389c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0aad77a229732a303d22d449866014d39e33fe4b")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArchtistStudio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArchtistStudio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
