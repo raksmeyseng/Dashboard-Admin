@@ -30,7 +30,7 @@ public static class MyEnvironment
 		Guid.Parse(Environment.GetEnvironmentVariable("SERVICE_ID") ?? "1e0fe6e6-8941-4b52-bb2d-d792af08e058");
 
 	public static string DbConnection => Environment.GetEnvironmentVariable("DB_CONNECTION") ??
-										 "Server=localhost:5055;Database=TSCE_API;User Id=postgres;Password=P@ssw0rd;";
+										 "Server=18.141.56.107:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;";
 
 	public static string JwtIssuer => Environment.GetEnvironmentVariable("JWT_ISSUER") ?? "https://dev.eventhub.one";
 

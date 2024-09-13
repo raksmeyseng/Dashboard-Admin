@@ -9,6 +9,16 @@
       "database": "TSCE_API",
       "username": "postgres",
       "password": "P@ssw0rd"
+    },
+    {
+      "previewLimit": 50,
+      "server": "18.141.56.107",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "password": "P@ssw0rd",
+      "name": "TSCE",
+      "username": "TSCE",
+      "database": "Archtist"
     }
   ]
 }
