@@ -97,3 +97,17 @@ public class TopManagementController(
     }
 
 }
+
+public class ApiTopManagementController(
+    IMapper mapper, 
+    ITopManagementRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListTopManagementResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
+}

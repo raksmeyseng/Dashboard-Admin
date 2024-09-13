@@ -31,9 +31,8 @@ namespace ArchtistStudio.Modules.Auth
                     {
                         var claims = new List<Claim>
                 {
-                     new Claim(ClaimTypes.Name, admin.Name),
-                    new Claim(ClaimTypes.Email, admin.Email),
-                    new Claim(ClaimTypes.NameIdentifier, admin.Id.ToString())
+                     new(ClaimTypes.Name, admin.Name),
+                    new(ClaimTypes.NameIdentifier, admin.Id.ToString())
                 };
 
                         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -48,7 +47,6 @@ namespace ArchtistStudio.Modules.Auth
 
                         HttpContext.Session.SetString("Email", admin.Email);
                         return RedirectToAction("Overview", "Dashboard");
-
                     }
                     else
                     {

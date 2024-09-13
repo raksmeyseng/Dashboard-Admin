@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ArchtistStudio.Modules.Contact;
 
 namespace ArchtistStudio.Modules.Social;
 
@@ -19,6 +18,10 @@ public class SocialController(
     [HttpPost]
     public IActionResult Insert([FromForm] InsertSocialRequest request)
     {
+         if (!ModelState.IsValid)
+        {
+            return View(request);
+        }
         var item = mapper.Map<Social>(request);
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
@@ -80,5 +83,19 @@ public class SocialController(
         repository.Commit();
 
         return RedirectToAction("profile", "contact");
+    }
+}
+
+public class ApiSocialController(
+    IMapper mapper, 
+    ISocialRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListSocialResponse>(iQueryable).ToList();
+        return Ok(results);
     }
 }

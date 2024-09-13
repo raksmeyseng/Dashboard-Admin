@@ -25,7 +25,5 @@ app.MapControllerRoute(
     pattern: "{controller=Auth}/{action=Login}/{id?}");
 
 app.AddMiddleWare();
-app.MapGet("/api", () => builder.Environment);
-app.MapControllers();
 
 app.Run();

@@ -19,6 +19,10 @@ public class HistoryController(
     [HttpPost]
     public IActionResult Insert([FromForm] InsertHistoryRequest request)
     {
+         if (!ModelState.IsValid)
+        {
+            return View(request);
+        }
         var item = mapper.Map<History>(request);
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
@@ -33,6 +37,7 @@ public class HistoryController(
     [HttpGet]
     public ActionResult Update(Guid id)
     {
+        
         var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (iQueryable == null) return View();
 
@@ -43,7 +48,7 @@ public class HistoryController(
     [ValidateAntiForgeryToken]
     public IActionResult Update(Guid id, UpdateHistoryRequest request)
     {
-
+        
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (item == null) return NotFound();
         item.Name = request.Name ?? item.Name;
@@ -81,4 +86,18 @@ public class HistoryController(
        return RedirectToAction("profile", "contact");
     }
 
+}
+
+public class ApiHistoryController(
+    IMapper mapper, 
+    IHistoryRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListHistoryResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
 }

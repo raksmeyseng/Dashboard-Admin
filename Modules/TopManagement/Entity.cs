@@ -17,6 +17,7 @@ public class TopManagementConfig : IEntityTypeConfiguration<TopManagement>
 {
 	public void Configure(EntityTypeBuilder<TopManagement> builder)
 	{
-
+		builder.Property(m => m.Name)
+				.HasMaxLength(50);
 	}
 }

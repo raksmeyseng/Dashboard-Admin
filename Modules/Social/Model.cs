@@ -8,13 +8,6 @@ public class ListSocialResponse
     public string DisplayText { get; set; } = null!;
     public string URL { get; set; } = null!;
 }
-public class DetailSocialResponse
-{
-     public Guid Id { get; set; }
-	public ESocial Platform { get; set; } 
-	public string DisplayText { get; set; } = null!;
-	public string URL { get; set; } = null!;
-}
 
 public class InsertSocialRequest
 {

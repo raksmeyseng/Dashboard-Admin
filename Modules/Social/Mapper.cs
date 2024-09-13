@@ -7,7 +7,6 @@ public class SocialMapper : Profile
     public SocialMapper()
     {
         CreateMap<Social, ListSocialResponse>();
-        CreateMap<Social, DetailSocialResponse>();
         CreateMap<InsertSocialRequest, Social>(); 
        CreateMap<Social, UpdateSocialRequest>();
     }

@@ -8,12 +8,6 @@ public class ListOverviewResponse
     public string Description { get; set; } = null!;
 
 }
-public class DetailOverviewResponse
-{
-	public string ImagePath { get; set; } = null!;
-    public string Description { get; set; } = null!;
-
-}
  
 public class InsertOverviewRequest
 {
@@ -21,7 +15,6 @@ public class InsertOverviewRequest
     public string Description { get; set; } = null!;
 
 }
-
 
 public class UpdateOverviewRequest
 {

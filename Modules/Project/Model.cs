@@ -14,18 +14,6 @@ public class ListProjectResponse
 	public string Description { get; set; } = null!;
     public bool? InActive { get; set; }
 }
-public class DetailProjectResponse
-{
-  public string ProjectType { get; set; } = null!;
-	public string ProjectName { get; set; } = null!;
-	public string Client { get; set; } = null!;
-	public string Size { get; set; } = null!;
-	public string Status { get; set; } = null!;
-	public string Location { get; set; } = null!;
-	public string ImagePath { get; set; } = null!;
-	public string Description { get; set; } = null!;
-    public bool? InActive { get; set; }
-}
 
 public class InsertProjectRequest
 {

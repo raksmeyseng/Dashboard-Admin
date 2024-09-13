@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ArchtistStudio.Modules.New;
 
 public class NewController(
-      IFileUploadService fileUploadService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     INewRepository repository) : MyController
 {
@@ -25,7 +25,6 @@ public class NewController(
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Insert([FromForm] InsertNewRequest request)
     {
@@ -78,6 +77,8 @@ public class NewController(
 
         return RedirectToAction("gets");
     }
+
+
     // === Delete === //
     public IActionResult Delete()
     {
@@ -103,4 +104,20 @@ public class NewController(
         return RedirectToAction("gets");
     }
 
+}
+
+
+
+public class ApiNewController(
+    IMapper mapper, 
+    INewRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListNewResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
 }

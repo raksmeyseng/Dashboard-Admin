@@ -11,15 +11,6 @@ public class ProjectController(
     IMapper mapper,
     IProjectRepository repository) : MyController
 {
-      [HttpGet]
-    public IActionResult Index()
-    {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<ListProjectResponse>(iQueryable).ToList();
-        return Ok(results);
-    }
-
     // === Get All ====//
     [HttpGet]
     public IActionResult Gets()
@@ -29,7 +20,6 @@ public class ProjectController(
         var results = mapper.ProjectTo<ListProjectResponse>(iQueryable).ToList();
         return View(results);
     }
-
 
     // === Post ====//
     public IActionResult Insert()
@@ -122,3 +112,16 @@ public class ProjectController(
     }
 }
 
+public class ApiProjectController(
+    IMapper mapper, 
+    IProjectRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListProjectResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
+}

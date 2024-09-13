@@ -8,13 +8,6 @@ public class ListTopManagementResponse
 	public string ImagePath { get; set; } = null!;
 	public string Description { get; set; } = null!;
 }
-public class DetailTopManagementResponse
-{
-	public Guid Id { get; set; }
-	public string Name { get; set; } = null!;
-	public string ImagePath { get; set; } = null!;
-	public string Description { get; set; } = null!;
-}
 
 public class InsertTopManagementRequest
 {

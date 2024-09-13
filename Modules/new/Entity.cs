@@ -17,6 +17,7 @@ public class NewConfig : IEntityTypeConfiguration<New>
 {
 	public void Configure(EntityTypeBuilder<New> builder)
 	{
-		
+		builder.Property(m => m.Title)
+				.HasMaxLength(100);
 	}
 }

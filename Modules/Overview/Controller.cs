@@ -8,7 +8,7 @@ namespace ArchtistStudio.Modules.Overview;
 
 public class OverviewController(
     IMapper mapper,
-     IFileUploadService fileUploadService,
+    IFileUploadService fileUploadService,
     IOverviewRepository repository) : MyController
 {
     // === Gets ====//
@@ -26,7 +26,6 @@ public class OverviewController(
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Insert([FromForm] InsertOverviewRequest request)
     {
@@ -78,7 +77,7 @@ public class OverviewController(
 
         return RedirectToAction("gets");
     }
-    
+
     // === Delete === //
     public IActionResult Delete()
     {
@@ -102,5 +101,19 @@ public class OverviewController(
         repository.Commit();
 
         return RedirectToAction("gets");
+    }
+}
+
+public class ApiOverviewController(
+    IMapper mapper, 
+    IOverviewRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListOverviewResponse>(iQueryable).ToList();
+        return Ok(results);
     }
 }

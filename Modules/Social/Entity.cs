@@ -16,5 +16,11 @@ public class SocialConfig : IEntityTypeConfiguration<Social>
 {
 	public void Configure(EntityTypeBuilder<Social> builder)
 	{
+		builder.Property(m => m.Platform)
+				.HasMaxLength(100);
+		builder.Property(m => m.URL)
+				.HasMaxLength(100);
+		builder.Property(m => m.DisplayText)
+				.HasMaxLength(100);
 	}
 }

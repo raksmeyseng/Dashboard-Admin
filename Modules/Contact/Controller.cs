@@ -6,6 +6,7 @@ using ArchtistStudio.Modules.Social;
 using ArchtistStudio.Modules.About;
 using ArchtistStudio.Modules.TopManagement;
 using ArchtistStudio.Modules.History;
+using ArchtistStudio.Modules.Recommend;
 
 
 namespace ArchtistStudio.Modules.Contact;
@@ -18,7 +19,8 @@ public class ContactController(
     IHistoryRepository historyRepository,
     ITopManagementRepository topManagementRepository,
     IContactRepository repository,
-    IFileUploadService fileUploadService) : MyController
+    IFileUploadService fileUploadService,
+    IRecommendRepository recommendRepository) : MyController
 {
     // === Gets ====//
     [HttpGet]
@@ -31,7 +33,7 @@ public class ContactController(
         var socialLinks = mapper.ProjectTo<ListSocialResponse>(socialQueryable).ToList();
 
         var aboutQueryable = aboutRepository.GetSingle(e => e.DeletedAt == null);
-        var aboutLink = contactQueryable == null ? null : mapper.Map<ListAboutResponse>(aboutQueryable);
+        var aboutLink = contactQueryable == null ? null : mapper.Map<DetailAboutResponse>(aboutQueryable);
 
         var topmanagemetnQueryable = topManagementRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var topmanagemetnLinks = mapper.ProjectTo<ListTopManagementResponse>(topmanagemetnQueryable).ToList();
@@ -39,12 +41,16 @@ public class ContactController(
         var historyQueryable = historyRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var historyLinks = mapper.ProjectTo<ListHistoryResponse>(historyQueryable).ToList();
 
-        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, ListAboutResponse, List<ListTopManagementResponse>, List<ListHistoryResponse>>(
+         var recommendiQueryable = recommendRepository.FindBy(e => e.DeletedAt == null) .AsNoTracking();
+        var recommendLinks = mapper.ProjectTo<ListRecommendResponse>(recommendiQueryable).ToList();
+
+        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, DetailAboutResponse, List<ListTopManagementResponse>, List<ListHistoryResponse>,  List<ListRecommendResponse>>(
             contactLink ?? new DetailContactResponse(),
             socialLinks ?? [],
-            aboutLink ?? new ListAboutResponse(),
+            aboutLink ?? new DetailAboutResponse(),
             topmanagemetnLinks ?? [],
-            historyLinks ?? []
+            historyLinks ?? [],
+            recommendLinks ?? []
         );
 
         return View(response);
@@ -55,7 +61,6 @@ public class ContactController(
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Insert([FromForm] InsertContactRequest request)
     {
@@ -64,7 +69,7 @@ public class ContactController(
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
         var item = mapper.Map<Contact>(request);
         item.ImagePath = Image;
@@ -96,7 +101,7 @@ public class ContactController(
         if (item == null) return NotFound();
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
             item.ImagePath = Image;
         }
 
@@ -113,4 +118,19 @@ public class ContactController(
         return RedirectToAction("profile");
     }
 
+}
+
+public class ApiContactController(
+    IMapper mapper, 
+    IContactRepository repository) : MyAdminController
+{
+     // === Gets ====//
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListContactResponse>(iQueryable).ToList();
+        return Ok(results);
+    }
 }

@@ -16,6 +16,7 @@ public class HistoryConfig : IEntityTypeConfiguration<History>
 {
 	public void Configure(EntityTypeBuilder<History> builder)
 	{
-		
+		 builder.Property(m => m.Name)
+                .HasMaxLength(50);
 	}
 }

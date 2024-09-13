@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace ArchtistStudio.Modules.About;
 
 
 public class AboutController(
-     IFileUploadService fileUploadService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     IAboutRepository repository) : MyController
 {
@@ -56,7 +57,7 @@ public class AboutController(
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "contact/image");
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
             item.ImagePath = Image;
         }
 
@@ -70,5 +71,20 @@ public class AboutController(
         repository.Commit();
 
         return RedirectToAction("profile", "contact");
+    }
+}
+
+
+public class ApiAboutController(
+    IMapper mapper, 
+    IAboutRepository repository) : MyAdminController
+{
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
+        var results = mapper.ProjectTo<ListAboutResponse>(iQueryable).ToList();
+        return Ok(results);
     }
 }

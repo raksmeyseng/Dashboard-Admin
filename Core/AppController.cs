@@ -21,3 +21,9 @@ public class MyController : Controller
         return BadRequest($"{name} is existed");
     }
 }
+
+
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class MyAdminController : MyController;

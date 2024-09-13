@@ -9,13 +9,6 @@ public class ListNewResponse
 	public string Description { get; set; } = null!;
 	public string Time { get; set; } = null!;
 }
-public class DetailNewResponse
-{
-  	public string ImagePath { get; set; } = null!;
-	public string Title { get; set; } = null!;
-	public string Description { get; set; } = null!;
-	public string Time { get; set; } = null!;
-}
  
 public class InsertNewRequest
 {
@@ -24,7 +17,6 @@ public class InsertNewRequest
 	public string Description { get; set; } = null!;
 	public DateTime Time { get; set; }
 }
-
 
 public class UpdateNewRequest
 {
