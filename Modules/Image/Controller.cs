@@ -52,33 +52,20 @@ public class ImageController(
             ModelState.AddModelError("ImagePath", "Image file is required.");
             return View(request);
         }
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
-        try
-        {
-            var imagePath = fileUploadService.UploadFileAsync(request.ImagePath, "images");
+        var item = mapper.Map<Image>(request);
+        item.ImagePath = Image;
+        item.CreatedAt = DateTime.UtcNow;
+        item.CreatedBy = Guid.NewGuid();
 
-            var item = mapper.Map<Image>(request);
-            item.ImagePath = imagePath;
-            item.CreatedAt = DateTime.UtcNow;
-            item.CreatedBy = Guid.NewGuid();
+        project.Images ??= [];
+        project.Images.Add(item);
 
-            if (project.Images == null)
-            {
-                project.Images = [];
-            }
+        repository.Add(item);
+        repository.Commit();
 
-            project.Images.Add(item);
-
-            repository.Add(item);
-            repository.Commit();
-
-            return RedirectToAction("gets", "image", new { id = request.ProjectId });
-        }
-        catch (Exception)
-        {
-            ModelState.AddModelError("", "An error occurred while processing your request.");
-            return View(request);
-        }
+        return RedirectToAction("gets", "image", new { id = request.ProjectId });
     }
 
 
@@ -113,28 +100,18 @@ public class ImageController(
             ModelState.AddModelError("", "Image not found.");
             return View(request);
         }
-
         var project = projectRepository.FindBy(e => e.Id == request.ProjectId).FirstOrDefault();
         if (project == null)
         {
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
             return View(request);
         }
-
-        if (request.ImagePath != null && request.ImagePath.Length > 0)
+        if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
-            try
-            {
-
-                var imagePath = fileUploadService.UploadFileAsync(request.ImagePath, "images");
-                image.ImagePath = imagePath;
-            }
-            catch (Exception)
-            {
-                ModelState.AddModelError("", "An error occurred while uploading the image.");
-                return View(request);
-            }
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
         }
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
         image.Description = request.Description ?? image.Description;
         image.UpdatedAt = DateTime.UtcNow;
@@ -142,7 +119,7 @@ public class ImageController(
         repository.Update(image);
         repository.Commit();
 
-              return RedirectToAction("gets", "image", new { id = request.ProjectId });
+        return RedirectToAction("gets", "image", new { id = request.ProjectId });
     }
 
 
