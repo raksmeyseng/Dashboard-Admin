@@ -7,7 +7,6 @@ namespace ArchtistStudio.Modules.Project;
 
 
 public class ProjectController(
-    IFileUploadService fileUploadService,
     IMapper mapper,
     IProjectRepository repository) : MyController
 {
@@ -26,19 +25,15 @@ public class ProjectController(
     {
         return View();
     }
-
     [HttpPost]
     public IActionResult Insert([FromForm] InsertProjectRequest request)
     {
-        if (request.ImagePath == null || request.ImagePath.Length == 0)
+        if (!ModelState.IsValid)
         {
-            ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
 
         var item = mapper.Map<Project>(request);
-        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
         repository.Add(item);
@@ -64,19 +59,12 @@ public class ProjectController(
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (item == null) return NotFound();
 
-        if (request.ImagePath != null && request.ImagePath.Length > 0)
-        {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
-            item.ImagePath = Image;
-        }
-
         item.ProjectType = request.ProjectType ?? item.ProjectType;
         item.ProjectName = request.ProjectName ?? item.ProjectName;
         item.Client = request.Client ?? item.Client;
         item.Size = request.Size ?? item.Size;
         item.Status = request.Status ?? item.Status;
         item.Location = request.Location ?? item.Location;
-        item.Description = request.Description ?? item.Description;
         item.InActive = request.InActive ?? item.InActive;
         item.UpdatedAt = DateTime.UtcNow;
 

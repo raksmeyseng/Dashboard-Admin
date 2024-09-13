@@ -8,8 +8,7 @@ public class ProjectMapper : Profile
     {
         CreateMap<Project, ListProjectResponse>();
         CreateMap<InsertProjectRequest, Project>();
-        CreateMap<Project, UpdateProjectRequest>()
-            .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
+        CreateMap<Project, UpdateProjectRequest>();
         
     }
 }

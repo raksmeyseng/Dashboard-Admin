@@ -1,11 +1,11 @@
 ﻿
+using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.Architecture;
 
 public class GetCategoryByArchitectureResponse
 {
 	public Guid ProjectId { get; set; }
-	public Project.Project Project { get; set; } = null!;
-
+	public ListProjectResponse Project { get; set; } = null!;
 	public bool Checked { get; set; }
 }
 public class ChangeArchitectureRequest

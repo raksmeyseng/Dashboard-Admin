@@ -1,0 +1,24 @@
+﻿
+namespace ArchtistStudio.Modules.Image;
+
+public class ListImageResponse
+{
+	public Guid Id { get; set; }
+	public string ImagePath { get; set; } = null!;
+	public string Description { get; set; } = null!;
+}
+
+public class InsertImageRequest
+{
+	public Guid ProjectId { get; set; }
+	public IFormFile ImagePath { get; set; } = null!;
+	public string Description { get; set; } = null!;
+}
+
+public class UpdateImageRequest
+{
+	public Guid ProjectId { get; set; }
+	public IFormFile? ImagePath { get; set; }
+	public string? Description { get; set; }
+
+}

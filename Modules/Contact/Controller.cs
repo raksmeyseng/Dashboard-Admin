@@ -96,9 +96,12 @@ public class ContactController(
     [ValidateAntiForgeryToken]
     public IActionResult Update(Guid id, UpdateContactRequest request)
     {
+        if(ModelState.IsValid){
+            return View(request);
+        }
 
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (item == null) return NotFound();
+        if (item == null) return View();
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
             string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");

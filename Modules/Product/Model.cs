@@ -1,10 +1,11 @@
 ﻿
+using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.Product;
 
 public class GetCategoryByProductResponse
 {
 	public Guid ProjectId { get; set; }
-	public Project.Project Project { get; set; } = null!;
+	public ListProjectResponse Project { get; set; } = null!;
 	public bool Checked { get; set; }
 }
 public class ChangeProductRequest

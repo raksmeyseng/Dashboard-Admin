@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.Category;
 using Microsoft.EntityFrameworkCore;
+using ArchtistStudio.Modules.Image;
 
 namespace ArchtistStudio.Modules.Architecture;
 
@@ -17,18 +18,34 @@ public class ArchitectureController(
     [HttpGet("all/project")]
     public IActionResult Gets()
     {
+
         var projects = projectrepository
-              .FindBy(e => e.DeletedAt == null)
-              .AsNoTracking()
-              .Select(s => new GetCategoryByArchitectureResponse
-              {
-                  ProjectId = s.Id,
-                  Project = s,
-              })
-          .ToList();
+            .FindBy(e => e.DeletedAt == null)
+            .AsNoTracking()
+            .Include(p => p.Images)
+            .Select(s => new GetCategoryByArchitectureResponse
+            {
+                ProjectId = s.Id,
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType,
+                    ProjectName = s.ProjectName,
+                    Client = s.Client,
+                    Size = s.Size,
+                    Status = s.Status,
+                    Location = s.Location,
+                    Images = s.Images.Select(img => new ListImageResponse
+                    {
+                        ImagePath = img.ImagePath,
+                        Description = img.Description
+                    }).ToList(),
+                }
+            })
+            .ToList();
 
         return Ok(projects);
     }
+
 
     [HttpGet("Project/{id:guid}")]
     public IActionResult GetByCategoryId(Guid id, Guid projectId)
@@ -48,8 +65,22 @@ public class ArchitectureController(
             .Select(s => new GetCategoryByArchitectureResponse
             {
                 ProjectId = s.Id,
-                Project = s,
-            }).ToList();
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType,
+                    ProjectName = s.ProjectName,
+                    Client = s.Client,
+                    Size = s.Size,
+                    Status = s.Status,
+                    Location = s.Location,
+                    Images = s.Images.Select(img => new ListImageResponse
+                    {
+                        ImagePath = img.ImagePath,
+                        Description = img.Description
+                    }).ToList(),
+                }
+            })
+        .ToList();
 
         var categoryProjectIds = repository
             .FindBy(e => e.CategoryId == id)
@@ -82,11 +113,25 @@ public class ArchitectureController(
           .Where(p => (string.IsNullOrEmpty(projectName) ||
                      p.ProjectName.Contains(projectName, StringComparison.OrdinalIgnoreCase)) &&
                     p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
-            .Select(s => new GetCategoryByArchitectureResponse
-            {
-                ProjectId = s.Id,
-                Project = s,
-            }).ToList();
+           .Select(s => new GetCategoryByArchitectureResponse
+           {
+               ProjectId = s.Id,
+               Project = new ListProjectResponse
+               {
+                   ProjectType = s.ProjectType,
+                   ProjectName = s.ProjectName,
+                   Client = s.Client,
+                   Size = s.Size,
+                   Status = s.Status,
+                   Location = s.Location,
+                   Images = s.Images.Select(img => new ListImageResponse
+                   {
+                       ImagePath = img.ImagePath,
+                       Description = img.Description
+                   }).ToList(),
+               }
+           })
+        .ToList();
 
         var ids = repository
             .FindBy(e => e.CategoryId == id)
