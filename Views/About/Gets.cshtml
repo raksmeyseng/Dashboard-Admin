@@ -1,0 +1,51 @@
+@model ArchtistStudio.Modules.About.DetailAboutResponse
+
+<div>
+    <h4 class="font-weight-bold py-3 mb-4">
+        Insert Platform
+    </h4>
+    <div class="card-body"  style="max-height: 80vh; overflow-y: auto;">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="border border-outline-secondary p-2 rounded-1">
+                        <h6>Expert</h6>
+                        <p>@Model.Expert</p>
+                        <a href="http://localhost:8000/image/@Model.ImagePath" class="text-decoration-none">@Model.ImagePath</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="border border-outline-secondary p-2 rounded-1">
+                        <h6>Construction</h6>
+                        <p>@Model.Construction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="border border-outline-secondary p-2 rounded-1">
+                        <h6>Service</h6>
+                        <p> @Model.Service </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="border border-outline-secondary p-2 rounded-1">
+                        <h6>ChooseUs</h6>
+                        <p> @Model.ChooseUs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-end m-2">
+            <a href="/about/insert" class="btn btn-outline-dark">Insert About</a>
+            <a href="@Url.Action("update", "about", new { id = Model.Id })" class="btn btn-outline-dark">Edit About
+                Us</a>
+        </div>
+    </div>
+</div>

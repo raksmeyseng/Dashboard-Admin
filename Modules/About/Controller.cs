@@ -11,6 +11,19 @@ public class AboutController(
     IMapper mapper,
     IAboutRepository repository) : MyController
 {
+    // === Gets ====//
+    [HttpGet]
+    public IActionResult Gets()
+    {
+        var Queryable = repository.GetSingle(e => e.DeletedAt == null);
+        if (Queryable == null)
+        {
+            return RedirectToAction("insert");
+        }
+        var results = Queryable == null ? null : mapper.Map<DetailAboutResponse>(Queryable);
+        return View(results);
+    }
+
     // === Post ====//
     public IActionResult Insert()
     {
@@ -19,6 +32,12 @@ public class AboutController(
     [HttpPost]
     public IActionResult Insert([FromForm] InsertAboutRequest request)
     {
+        var Queryable = repository.GetSingle(e => e.DeletedAt == null);
+        if (Queryable != null)
+        {
+            TempData["Message"] = "Data is available. Redirecting to update.";
+            return RedirectToAction("error", "error");
+        }
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
@@ -34,7 +53,7 @@ public class AboutController(
         repository.Add(item);
         repository.Commit();
 
-        return RedirectToAction("profile", "contact");
+        return RedirectToAction("gets");
     }
 
     // === Update ====//
@@ -70,13 +89,17 @@ public class AboutController(
         repository.Update(item);
         repository.Commit();
 
-        return RedirectToAction("profile", "contact");
+        return RedirectToAction("gets");
+    }
+        public IActionResult Error()
+    {
+        return View();
     }
 }
 
 
 public class ApiAboutController(
-    IMapper mapper, 
+    IMapper mapper,
     IAboutRepository repository) : MyAdminController
 {
     [HttpGet]

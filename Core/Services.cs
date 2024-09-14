@@ -11,7 +11,12 @@ public class FileUploadService(IWebHostEnvironment environment) : IFileUploadSer
         {
             throw new ArgumentException("File is required.");
         }
-      string relativePath = directoryPath.TrimStart('/');   
+        if (file.Length > 6 * 1024 * 1024)
+        {
+            throw new ArgumentException("File size exceeds the 5MB limit.");
+        }
+        
+        string relativePath = directoryPath.TrimStart('/');
         string newFileName = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + Path.GetExtension(file.FileName);
         string fileFullPath = Path.Combine(environment.WebRootPath, relativePath, newFileName);
 
@@ -23,9 +28,8 @@ public class FileUploadService(IWebHostEnvironment environment) : IFileUploadSer
 
         using (var stream = new FileStream(fileFullPath, FileMode.Create))
         {
-             file.CopyToAsync(stream);
+            file.CopyToAsync(stream);
         }
-
         return newFileName;
     }
 }

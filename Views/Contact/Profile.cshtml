@@ -1,6 +1,5 @@
 @model Tuple<ArchtistStudio.Modules.Contact.DetailContactResponse,
 List<ArchtistStudio.Modules.Social.ListSocialResponse>,
-ArchtistStudio.Modules.About.DetailAboutResponse,
 List<ArchtistStudio.Modules.TopManagement.ListTopManagementResponse> ,
 List<ArchtistStudio.Modules.History.ListHistoryResponse>,
 List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
@@ -14,8 +13,6 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                 <div class="list-group list-group-flush account-settings-links">
                     <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
                         href="#account-general">General</a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
-                        href="#account-about-us">About Us</a>
                     <a class="list-group-item list-group-item-action" data-bs-toggle="list"
                         href="#account-history">History</a>
                     <a class="list-group-item list-group-item-action" data-bs-toggle="list"
@@ -158,77 +155,6 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                         </div>
                     </div>
 
-                    <!-- About Us Tab -->
-                    <div class="tab-pane fade" id="account-about-us">
-                        <div class="card-body media align-items-center row p-3">
-                            <div class="col-auto">
-                                <img src="/image/@Model.Item1?.ImagePath" alt="Profile Image"
-                                    class="img-profile rounded-circle"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                            </div>
-                            <div class="col pl-3">
-                                <h4 class="font-weight-bold">
-                                    @if (User.Identity?.IsAuthenticated == true)
-                                    {
-                                        @User.Identity.Name
-                                    }
-                                    else
-                                    {
-                                        <p>Guest</p>
-                                    }
-                                </h4>
-                            </div>
-                        </div>
-
-                        <hr class="border-light my-0">
-
-                        <div class="card-body" style="max-height: 550px; overflow-y: auto;">
-                            <div class="list-group list-group-flush">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="border border-outline-secondary p-2 rounded-1">
-                                                <h6>Expertise</h6>
-                                                @Model.Item3?.Expert
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="border border-outline-secondary p-2 rounded-1">
-                                                <h6>Construction</h6>
-                                                @Model.Item3?.Construction
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="border border-outline-secondary p-2 rounded-1">
-                                                <h6>Service</h6>
-                                                @Model.Item3?.Service
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="border border-outline-secondary p-2 rounded-1">
-                                                <h6>Why Choose Us</h6>
-                                                @Model.Item3?.ChooseUs
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-end m-2">
-                            <a href="/about/insert" class="btn btn-outline-dark">Insert About</a>
-                            <a href="@Url.Action("update", "about", new { id = Model.Item3?.Id })"
-                                class="btn btn-outline-dark">Edit About Us</a>
-                        </div>
-                    </div>
-
                     <!-- Management Tab -->
                     <div class="tab-pane fade" id="account-top-management">
                         <div class="card-body media align-items-center row p-3">
@@ -256,7 +182,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                         <div class="card-body" style="max-height: 550px; overflow-y: auto;">
                             <!-- Scrollable List Group -->
                             <div class="list-group list-group-flush">
-                                @foreach (var topmanagement in Model.Item4)
+                                @foreach (var topmanagement in Model.Item3)
                                 {
                                     <div class="list-group-item d-flex justify-content-between align-items-center">
                                         <!-- Image and Text Section -->
@@ -345,7 +271,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
 
                         <div class="card-body" style="max-height: 550px; overflow-y: auto;">
                             <div class="list-group list-group-flush">
-                                @foreach (var history in Model.Item5)
+                                @foreach (var history in Model.Item4)
                                 {
                                     <div class="list-group-item d-flex justify-content-between align-items-start">
                                         <!-- Content Section -->
@@ -428,7 +354,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                 <div class="border border-outline-secondary p-2 rounded-1">
                                     <h5>Recommand</h5>
                                     <ul class="list-group list-group-flush">
-                                        @foreach (var notification in Model.Item6)
+                                        @foreach (var notification in Model.Item5)
                                         {
                                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <div>

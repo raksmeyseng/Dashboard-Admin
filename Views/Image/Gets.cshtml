@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
+                 <th scope="col">ProjectName</th>
                 <th scope="col">ImagePath</th>
                 <th scope="col">Description</th>
                 <th scope="col">Action</th>
@@ -22,6 +23,7 @@
                 {
                     <tr>
                         <th scope="row">@index</th>
+                        <td>@Html.DisplayFor(model => item.Project.ProjectName)</td>
                         <td>@Html.DisplayFor(model => item.ImagePath)</td>
                         <td>@Html.DisplayFor(model => item.Description)</td>
                         <td>
