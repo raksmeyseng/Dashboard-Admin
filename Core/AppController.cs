@@ -22,8 +22,6 @@ public class MyController : Controller
     }
 }
 
-
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class MyAdminController : MyController;
