@@ -107,7 +107,7 @@ public class ApiAboutController(
     {
         var iQueryable = repository.FindBy(e => e.DeletedAt == null)
             .AsNoTracking();
-        var results = mapper.ProjectTo<ListAboutResponse>(iQueryable).ToList();
+        var results = mapper.ProjectTo<ListAboutResponse>(iQueryable).FirstOrDefault();
         return Ok(results);
     }
 }

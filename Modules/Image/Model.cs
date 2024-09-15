@@ -6,8 +6,16 @@ public class ListImageResponse
 	public Guid Id { get; set; }
 	public string ImagePath { get; set; } = null!;
 	public string Description { get; set; } = null!;
+}
+
+public class ListViewResponse
+{
+	public Guid Id { get; set; }
+	public string ImagePath { get; set; } = null!;
+	public string Description { get; set; } = null!;
 	public Project.Project Project { get; set; } = null!;
 }
+
 
 public class InsertImageRequest
 {

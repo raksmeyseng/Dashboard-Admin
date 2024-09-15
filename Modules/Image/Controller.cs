@@ -69,8 +69,6 @@ public class ImageController(
     }
 
 
-
-
     // === Update === //
     [HttpGet]
     public IActionResult Update(Guid id)
