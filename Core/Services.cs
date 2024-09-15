@@ -5,15 +5,16 @@ public interface IFileUploadService
 
 public class FileUploadService(IWebHostEnvironment environment) : IFileUploadService
 {
+
     public string UploadFileAsync(IFormFile file, string directoryPath)
     {
         if (file == null || file.Length == 0)
         {
             throw new ArgumentException("File is required.");
         }
-        if (file.Length > 6 * 1024 * 1024)
+        if (file.Length > 10 * 1024 * 1024) // 6 MB limit
         {
-            throw new ArgumentException("File size exceeds the 5MB limit.");
+            throw new ArgumentException("File size exceeds the 6MB limit.");
         }
         
         string relativePath = directoryPath.TrimStart('/');
@@ -28,8 +29,10 @@ public class FileUploadService(IWebHostEnvironment environment) : IFileUploadSer
 
         using (var stream = new FileStream(fileFullPath, FileMode.Create))
         {
-            file.CopyToAsync(stream);
+            file.CopyTo(stream);
         }
-        return newFileName;
+
+        string fileUrl = $"https://archtist-studio.xyz/{relativePath.TrimStart('/')}/{newFileName}";
+        return fileUrl;
     }
 }

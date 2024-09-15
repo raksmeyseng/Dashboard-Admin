@@ -149,8 +149,6 @@ public class ImageController(
 
 }
 
-
-
 public class ApiImageController(
     IMapper mapper,
     IImageRepository repository) : MyAdminController
