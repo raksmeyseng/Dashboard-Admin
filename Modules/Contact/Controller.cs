@@ -138,7 +138,7 @@ public class ApiContactController(
     {
         var iQueryable = repository.FindBy(e => e.DeletedAt == null)
             .AsNoTracking();
-        var results = mapper.ProjectTo<ListContactResponse>(iQueryable).ToList();
-        return Ok(results);
+       var result = mapper.ProjectTo<ListContactResponse>(iQueryable).FirstOrDefault();
+        return Ok(result);
     }
 }
