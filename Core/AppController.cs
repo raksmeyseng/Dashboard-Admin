@@ -24,4 +24,4 @@ public class MyController : Controller
 
 [ApiController]
 [Route("api/[controller]")]
-public class MyAdminController : MyController;
+public class MyAdminController : Controller;
