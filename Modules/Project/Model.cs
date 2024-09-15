@@ -12,7 +12,7 @@ public class ListProjectResponse
 	public string Size { get; set; } = null!;
 	public string Status { get; set; } = null!;
 	public string Location { get; set; } = null!;
-	 public List<ListImageResponse> Images { get; set; } = [];
+	 public List<DatailImageResponse> Images { get; set; } = [];
 	public bool? InActive { get; set; }
 }
 

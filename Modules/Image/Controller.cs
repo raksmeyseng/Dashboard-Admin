@@ -160,7 +160,7 @@ public class ApiImageController(
     {
         var iQueryable = repository.FindBy(e => e.DeletedAt == null)
             .AsNoTracking();
-        var results = mapper.ProjectTo<ListImageResponse>(iQueryable).ToList();
+        var results = mapper.ProjectTo<DatailImageResponse>(iQueryable).ToList();
         return Ok(results);
     }
 }
