@@ -7,7 +7,7 @@
 
     <div class="button-row text-end m-2">
         <a class="text-decoration-none btn btn-outline-dark" href="/image/gets">Image Project</a>
-        <a class="text-decoration-none btn btn-outline-dark" href="/project/insert">New Post</a>
+        <a class="text-decoration-none btn btn-outline-dark" href="/project/insert">Post Project</a>
     </div>
     <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
 <table class="table table-Secondary table-striped">
@@ -44,9 +44,7 @@
                                asp-route-id="@item.Id">Edit</a>
 
                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal-@item.Id">
-                                Delete
-                            </button>
+                                    data-bs-target="#deleteModal-@item.Id">-</button>
                             <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                  aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
                                 <div class="modal-dialog">
