@@ -24,4 +24,18 @@ public class MyController : Controller
 
 [ApiController]
 [Route("api/[controller]")]
-public class MyAdminController : Controller;
+public class MyAdminController : Controller
+{
+
+    [NonAction]
+    protected IActionResult ItemNotFound()
+    {
+        return BadRequest("Item not found");
+    }
+
+    [NonAction]
+    protected IActionResult Existed(string name)
+    {
+        return BadRequest($"{name} is existed");
+    }
+}
