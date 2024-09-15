@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Social;
+using ArchtistStudio.Modules.About;
 using ArchtistStudio.Modules.TopManagement;
 using ArchtistStudio.Modules.History;
 using ArchtistStudio.Modules.Recommend;
@@ -28,7 +29,7 @@ public class ContactController(
         var contactLink = contactQueryable == null ? null : mapper.Map<DetailContactResponse>(contactQueryable);
 
         var socialQueryable = socialRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var socialLinks = mapper.ProjectTo<ListViewResponse>(socialQueryable).ToList();
+        var socialLinks = mapper.ProjectTo<ListSocialResponse>(socialQueryable).ToList();
 
         var topmanagemetnQueryable = topManagementRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var topmanagemetnLinks = mapper.ProjectTo<ListTopManagementResponse>(topmanagemetnQueryable).ToList();
@@ -39,7 +40,7 @@ public class ContactController(
         var recommendiQueryable = recommendRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var recommendLinks = mapper.ProjectTo<ListRecommendResponse>(recommendiQueryable).ToList();
 
-        var response = new Tuple<DetailContactResponse, List<ListViewResponse>, List<ListTopManagementResponse>, List<ListHistoryResponse>, List<ListRecommendResponse>>(
+        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, List<ListTopManagementResponse>, List<ListHistoryResponse>, List<ListRecommendResponse>>(
             contactLink ?? new DetailContactResponse(),
             socialLinks ?? [],
             topmanagemetnLinks ?? [],
@@ -137,7 +138,7 @@ public class ApiContactController(
     {
         var iQueryable = repository.FindBy(e => e.DeletedAt == null)
             .AsNoTracking();
-       var result = mapper.ProjectTo<ListContactResponse>(iQueryable).FirstOrDefault();
-        return Ok(result);
+        var results = mapper.ProjectTo<ListContactResponse>(iQueryable).FirstOrDefault();
+        return Ok(results);
     }
 }

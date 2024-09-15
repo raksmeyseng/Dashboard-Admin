@@ -7,7 +7,7 @@ namespace ArchtistStudio.Modules.Social;
 
 public class Social : AuditableEntity
 {
-	public string Platform { get; set; } = null!;
+	public string Platform { get; set; }  = null!;
 	public string URL { get; set; } = null!;
 	public string DisplayText { get; set; } = null!;
 }
