@@ -109,4 +109,50 @@ public class EngineeingController(
 
         return Ok(filteredProjects);
     }
+
+    [HttpGet("Category/{id:guid}")]
+    public IActionResult GetByCategoryId(Guid id)
+    {
+        var category = categoryrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (category == null) return ItemNotFound();
+        var categoryType = category.Name.ToLower();
+
+        var allprojects = projectrepository
+            .FindBy(e => e.InActive != true && e.DeletedAt == null)
+            .ToList();
+
+        var projects = allprojects
+          .Where(p => p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
+           .Select(s => new GetCategoryByEngineeingResponse
+           {
+               ProjectId = s.Id,
+               Project = new ListProjectResponse
+               {
+                   ProjectType = s.ProjectType ?? string.Empty,
+                   ProjectName = s.ProjectName ?? string.Empty,
+                   Client = s.Client ?? string.Empty,
+                   Size = s.Size ?? string.Empty,
+                   Status = s.Status ?? string.Empty,
+                   Location = s.Location ?? string.Empty,
+                   Images = s.Images?.Select(img => new DatailImageResponse
+                   {
+                       ImagePath = img.ImagePath ?? string.Empty,
+                       Description = img.Description ?? string.Empty
+                   }).ToList() ?? []
+               },
+               Checked = false
+           })
+        .ToList();
+
+        var ids = repository
+            .FindBy(e => e.CategoryId == id)
+            .Select(s => s.ProjectId)
+            .ToList();
+
+        foreach (var tag in projects)
+        {
+            tag.Checked = ids.Contains(tag.ProjectId);
+        }
+        return Ok(projects);
+    }
 }
