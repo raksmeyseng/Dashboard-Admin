@@ -12,7 +12,7 @@ public class FileUploadService(IWebHostEnvironment environment) : IFileUploadSer
         {
             throw new ArgumentException("File is required.");
         }
-        if (file.Length > 10 * 1024 * 1024) // 6 MB limit
+        if (file.Length > 6 * 1024 * 1024) 
         {
             throw new ArgumentException("File size exceeds the 6MB limit.");
         }
