@@ -10,7 +10,7 @@
         <a class="text-decoration-none btn btn-outline-dark" href="/project/insert">Post Project</a>
     </div>
     <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
-<table class="table table-Secondary table-striped">
+        <table class="table table-Secondary table-striped">
         <thead>
             <tr>
                 <th scope="col">No</th>
@@ -24,65 +24,65 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model != null && Model.Any())
-            {
-                int index = 1;
-                foreach (var item in Model)
+                @if (Model != null && Model.Any())
                 {
-                    <tr>
-                        <th scope="row">@index</th>
-                        <td>@Html.DisplayFor(model => item.ProjectName)</td>
-                        <td>@Html.DisplayFor(model => item.ProjectType)</td>
-                        <td>@Html.DisplayFor(model => item.Location)</td>
-                        <td>@Html.DisplayFor(model => item.Client)</td>
-                        <td>@Html.DisplayFor(model => item.Size)</td>
-                        <td>@Html.DisplayFor(model => item.Status)</td>
-                        <td>
-                            <a class="text-decoration-none btn btn-outline-dark" asp-controller="image" asp-action="insert"
-                               asp-route-id="@item.Id">Add Image to this Project</a>
-                            <a class="btn btn-outline-info btn-sm" asp-controller="project" asp-action="update"
-                               asp-route-id="@item.Id">Edit</a>
+                    int index = 1;
+                    foreach (var item in Model)
+                    {
+                            <tr>
+                                <th scope="row">@index</th>
+                                <td>@Html.DisplayFor(model => item.ProjectName)</td>
+                                <td>@Html.DisplayFor(model => item.ProjectType)</td>
+                                <td>@Html.DisplayFor(model => item.Location)</td>
+                                <td>@Html.DisplayFor(model => item.Client)</td>
+                                <td>@Html.DisplayFor(model => item.Size)</td>
+                                <td>@Html.DisplayFor(model => item.Status)</td>
+                                <td>
+                                    <a class="text-decoration-none btn btn-outline-dark" asp-controller="image" asp-action="insert"
+                                       asp-route-id="@item.Id">Add Image to this Project</a>
+                                    <a class="btn btn-outline-info btn-sm" asp-controller="project" asp-action="update"
+                                       asp-route-id="@item.Id">Edit</a>
 
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal-@item.Id">-</button>
-                            <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
-                                 aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="deleteModalLabel-@item.Id">Confirm Deletion</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want to delete this item?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <form asp-controller="project" asp-action="delete"
-                                                  asp-route-id="@item.Id" method="post" style="display: inline;">
-                                                @Html.AntiForgeryToken()
-                                                <input type="hidden" name="_method" value="delete" />
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal-@item.Id">-</button>
+                                    <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
+                                         aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="deleteModalLabel-@item.Id">Confirm Deletion</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this item?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form asp-controller="project" asp-action="delete"
+                                                          asp-route-id="@item.Id" method="post" style="display: inline;">
+                                                    @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="_method" value="delete" />
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    index++;
+                                </td>
+                            </tr>
+                        index++;
+                    }
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="8" class="text-center">No data available</td>
-                </tr>
-            }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">No data available</td>
+                    </tr>
+                }
         </tbody>
     </table>
     </div>
-    
+
 </div>
