@@ -14,8 +14,8 @@ public class Project : AuditableEntity
 	public string Size { get; set; } = null!;
 	public string Status { get; set; } = null!;
 	public string Location { get; set; } = null!;
-	public ICollection<Image.Image> Images { get; set; } = null!;
 
+	public ICollection<Image.Image> Images { get; set; } = null!;
 	public ICollection<Architecture.Architecture> Architectures { get; set; } = null!;
 	public ICollection<Engineeing.Engineeing> Engineerings { get; set; } = null!;
 	public ICollection<Product.Product> Products { get; set; } = null!;
