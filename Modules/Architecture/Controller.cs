@@ -1,7 +1,7 @@
 ﻿using ArchtistStudio.Core;
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Modules.Project;
-using ArchtistStudio.Modules.Category;
+using ArchtistStudio.Modules.CategoryArchitecture;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
 
@@ -11,9 +11,50 @@ namespace ArchtistStudio.Modules.Architecture;
 public class ArchitectureController(
     IArchitectureRepository repository,
     IProjectRepository projectrepository,
-    ICategoryRepository categoryrepository
+    ICategoryArchitectureRepository categoryArchitecturerepository
     ) : MyAdminController
-{
+{ 
+    [HttpGet("search/project")]
+    public IActionResult GetByCategoryArchitectureId([FromQuery] string? ProjectName)
+    {
+
+        var allProjects = projectrepository
+            .FindBy(e => e.InActive != true && e.DeletedAt == null)
+            .Include(p => p.Images)
+            .ToList();
+
+        if (allProjects == null)
+        {
+            return NotFound("No projects found.");
+        }
+
+        var projects = allProjects
+            .OrderByDescending(p => p.ProjectName.Contains(ProjectName ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryArchitectureByArchitectureResponse
+            {
+                ProjectId = s.Id,
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType ?? string.Empty,
+                    ProjectName = s.ProjectName ?? string.Empty,
+                    Client = s.Client ?? string.Empty,
+                    Size = s.Size ?? string.Empty,
+                    Status = s.Status ?? string.Empty,
+                    Location = s.Location ?? string.Empty,
+                    Images = s.Images?.Select(img => new DatailImageResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty
+                    }).ToList() ?? []
+                },
+                Checked = false
+            })
+        .ToList();
+
+        return Ok(projects);
+    }
+
+
 
     [HttpGet("all/project")]
     public IActionResult Gets()
@@ -23,7 +64,7 @@ public class ArchitectureController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
-            .Select(s => new GetCategoryByArchitectureResponse
+            .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
                 Project = new ListProjectResponse
@@ -48,15 +89,15 @@ public class ArchitectureController(
 
 
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
     {
-        var category = categoryrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (category == null)
+        var CategoryArchitecture = categoryArchitecturerepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null)
         {
             return ItemNotFound();
         }
 
-        var categoryType = category.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -69,8 +110,8 @@ public class ArchitectureController(
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
-            .Select(s => new GetCategoryByArchitectureResponse
+            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
                 Project = new ListProjectResponse
@@ -91,67 +132,79 @@ public class ArchitectureController(
             })
         .ToList();
 
-        var categoryProjectIds = repository
-            .FindBy(e => e.CategoryId == id)
+        var CategoryArchitectureProjectIds = repository
+            .FindBy(e => e.CategoryArchitectureId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (categoryProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("Category project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = categoryProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(filteredProjects);
     }
 
-    [HttpGet("Category/{id:guid}")]
-    public IActionResult GetByCategoryId(Guid id)
+    [HttpGet("CategoryArchitecture/{id:guid}")]
+    public IActionResult GetByCategoryArchitectureId(Guid id)
     {
-        var category = categoryrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (category == null) return ItemNotFound();
-        var categoryType = category.Name.ToLower();
+        var CategoryArchitecture = categoryArchitecturerepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null) return ItemNotFound();
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
-        var allprojects = projectrepository
+        var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
+            .Include(p => p.Images)
             .ToList();
 
-        var projects = allprojects
-          .Where(p => p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
-           .Select(s => new GetCategoryByArchitectureResponse
-           {
-               ProjectId = s.Id,
-               Project = new ListProjectResponse
-               {
-                   ProjectType = s.ProjectType ?? string.Empty,
-                   ProjectName = s.ProjectName ?? string.Empty,
-                   Client = s.Client ?? string.Empty,
-                   Size = s.Size ?? string.Empty,
-                   Status = s.Status ?? string.Empty,
-                   Location = s.Location ?? string.Empty,
-                   Images = s.Images?.Select(img => new DatailImageResponse
-                   {
-                       ImagePath = img.ImagePath ?? string.Empty,
-                       Description = img.Description ?? string.Empty
-                   }).ToList() ?? []
-               },
-               Checked = false
-           })
+        if (allProjects == null)
+        {
+            return NotFound("No projects found.");
+        }
+
+        var projects = allProjects
+            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryArchitectureByArchitectureResponse
+            {
+                ProjectId = s.Id,
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType ?? string.Empty,
+                    ProjectName = s.ProjectName ?? string.Empty,
+                    Client = s.Client ?? string.Empty,
+                    Size = s.Size ?? string.Empty,
+                    Status = s.Status ?? string.Empty,
+                    Location = s.Location ?? string.Empty,
+                    Images = s.Images?.Select(img => new DatailImageResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty
+                    }).ToList() ?? []
+                },
+                Checked = false
+            })
         .ToList();
 
-        var ids = repository
-            .FindBy(e => e.CategoryId == id)
+        var CategoryArchitectureProjectIds = repository
+            .FindBy(e => e.CategoryArchitectureId == id)
             .Select(s => s.ProjectId)
-            .ToList();
+            .ToList() ?? [];
+
+        if (CategoryArchitectureProjectIds == null)
+        {
+            return NotFound("CategoryArchitecture project IDs not found.");
+        }
 
         foreach (var tag in projects)
         {
-            tag.Checked = ids.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
+
         return Ok(projects);
     }
 }

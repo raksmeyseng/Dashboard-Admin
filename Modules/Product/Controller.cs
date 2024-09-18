@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using ArchtistStudio.Modules.Project;
-using ArchtistStudio.Modules.Category;
+using ArchtistStudio.Modules.CategoryProduct;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
 
@@ -11,9 +11,50 @@ namespace ArchtistStudio.Modules.Product;
 public class ProductController(
     IProductRepository repository,
     IProjectRepository projectrepository,
-    ICategoryRepository categoryrepository
+    ICategoryProductRepository categoryPCategoryProductrepository
     ) : MyAdminController
 {
+     [HttpGet("search/project")]
+    public IActionResult GetByCategoryProductId([FromQuery] string? ProjectName)
+    {
+
+        var allProjects = projectrepository
+            .FindBy(e => e.InActive != true && e.DeletedAt == null)
+            .Include(p => p.Images)
+            .ToList();
+
+        if (allProjects == null)
+        {
+            return NotFound("No projects found.");
+        }
+
+        var projects = allProjects
+            .OrderByDescending(p => p.ProjectName.Contains(ProjectName ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryProductByProductResponse
+            {
+                ProjectId = s.Id,
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType ?? string.Empty,
+                    ProjectName = s.ProjectName ?? string.Empty,
+                    Client = s.Client ?? string.Empty,
+                    Size = s.Size ?? string.Empty,
+                    Status = s.Status ?? string.Empty,
+                    Location = s.Location ?? string.Empty,
+                    Images = s.Images?.Select(img => new DatailImageResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty
+                    }).ToList() ?? []
+                },
+                Checked = false
+            })
+        .ToList();
+
+        return Ok(projects);
+    }
+
+
 
     [HttpGet("all/project")]
     public IActionResult Gets()
@@ -23,7 +64,7 @@ public class ProductController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
-            .Select(s => new GetCategoryByProductResponse
+            .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
                 Project = new ListProjectResponse
@@ -48,15 +89,15 @@ public class ProductController(
 
 
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryProductId(Guid id, Guid projectId)
     {
-        var category = categoryrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (category == null)
+        var categoryPCategoryProduct = categoryPCategoryProductrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (categoryPCategoryProduct == null)
         {
             return ItemNotFound();
         }
 
-        var categoryType = category.Name?.ToLower() ?? string.Empty;
+        var categoryPCategoryProductType = categoryPCategoryProduct.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -69,8 +110,8 @@ public class ProductController(
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
-            .Select(s => new GetCategoryByProductResponse
+            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(categoryPCategoryProductType, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
                 Project = new ListProjectResponse
@@ -91,67 +132,79 @@ public class ProductController(
             })
         .ToList();
 
-        var categoryProjectIds = repository
-            .FindBy(e => e.CategoryId == id)
+        var categoryPCategoryProductProjectIds = repository
+            .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (categoryProjectIds == null)
+        if (categoryPCategoryProductProjectIds == null)
         {
-            return NotFound("Category project IDs not found.");
+            return NotFound("CategoryProduct project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = categoryProjectIds.Contains(tag.ProjectId);
+            tag.Checked = categoryPCategoryProductProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(filteredProjects);
     }
 
-    [HttpGet("Category/{id:guid}")]
-    public IActionResult GetByCategoryId(Guid id)
+    [HttpGet("CategoryProduct/{id:guid}")]
+    public IActionResult GetByCategoryProductId(Guid id)
     {
-        var category = categoryrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (category == null) return ItemNotFound();
-        var categoryType = category.Name.ToLower();
+        var categoryPCategoryProduct = categoryPCategoryProductrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (categoryPCategoryProduct == null) return ItemNotFound();
+        var categoryPCategoryProductType = categoryPCategoryProduct.Name?.ToLower() ?? string.Empty;
 
-        var allprojects = projectrepository
+        var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
+            .Include(p => p.Images)
             .ToList();
 
-        var projects = allprojects
-          .Where(p => p.ProjectType.Contains(categoryType, StringComparison.OrdinalIgnoreCase))
-           .Select(s => new GetCategoryByProductResponse
-           {
-               ProjectId = s.Id,
-               Project = new ListProjectResponse
-               {
-                   ProjectType = s.ProjectType ?? string.Empty,
-                   ProjectName = s.ProjectName ?? string.Empty,
-                   Client = s.Client ?? string.Empty,
-                   Size = s.Size ?? string.Empty,
-                   Status = s.Status ?? string.Empty,
-                   Location = s.Location ?? string.Empty,
-                   Images = s.Images?.Select(img => new DatailImageResponse
-                   {
-                       ImagePath = img.ImagePath ?? string.Empty,
-                       Description = img.Description ?? string.Empty
-                   }).ToList() ?? []
-               },
-               Checked = false
-           })
+        if (allProjects == null)
+        {
+            return NotFound("No projects found.");
+        }
+
+        var projects = allProjects
+            .Where(p => p.ProjectType != null && p.ProjectType.Contains(categoryPCategoryProductType, StringComparison.OrdinalIgnoreCase))
+            .Select(s => new GetCategoryProductByProductResponse
+            {
+                ProjectId = s.Id,
+                Project = new ListProjectResponse
+                {
+                    ProjectType = s.ProjectType ?? string.Empty,
+                    ProjectName = s.ProjectName ?? string.Empty,
+                    Client = s.Client ?? string.Empty,
+                    Size = s.Size ?? string.Empty,
+                    Status = s.Status ?? string.Empty,
+                    Location = s.Location ?? string.Empty,
+                    Images = s.Images?.Select(img => new DatailImageResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty
+                    }).ToList() ?? []
+                },
+                Checked = false
+            })
         .ToList();
 
-        var ids = repository
-            .FindBy(e => e.CategoryId == id)
+        var categoryPCategoryProductProjectIds = repository
+            .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
-            .ToList();
+            .ToList() ?? [];
+
+        if (categoryPCategoryProductProjectIds == null)
+        {
+            return NotFound("CategoryProduct project IDs not found.");
+        }
 
         foreach (var tag in projects)
         {
-            tag.Checked = ids.Contains(tag.ProjectId);
+            tag.Checked = categoryPCategoryProductProjectIds.Contains(tag.ProjectId);
         }
+
         return Ok(projects);
     }
 }

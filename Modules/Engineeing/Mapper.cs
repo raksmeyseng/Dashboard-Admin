@@ -6,7 +6,7 @@ public class EngineeingMapper : Profile
 {
     public EngineeingMapper()
     {
-        CreateMap<Engineeing, GetCategoryByEngineeingResponse>();
+        CreateMap<Engineeing, GetCategoryEngineeringByEngineeingResponse>();
         CreateMap<Engineeing, ChangeEngineeingRequest>();
     }
 }

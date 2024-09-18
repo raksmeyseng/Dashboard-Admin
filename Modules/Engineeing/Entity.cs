@@ -7,8 +7,8 @@ namespace ArchtistStudio.Modules.Engineeing;
 
 public class Engineeing : AuditableEntity
 {
-        public Guid CategoryId { get; set; }
-        public Category.Category Category { get; set; } = null!;
+        public Guid CategoryEngineeringId { get; set; }
+        public CategoryEngineering.CategoryEngineering CategoryEngineering { get; set; } = null!;
         public Guid ProjectId { get; set; }
         public Project.Project Project { get; set; } = null!;
 }
@@ -17,11 +17,11 @@ public class ArchitectureConfig : IEntityTypeConfiguration<Engineeing>
 {
         public void Configure(EntityTypeBuilder<Engineeing> builder)
         {
-                builder.HasOne(o => o.Category)
-                        .WithMany(m => m.Engineeings)
-                        .HasForeignKey(k => k.CategoryId);
+                builder.HasOne(o => o.CategoryEngineering)
+                        .WithMany(m => m.Engineerings)
+                        .HasForeignKey(k => k.CategoryEngineeringId);
                 builder.HasOne(o => o.Project)
-                        .WithMany(m => m.Engineeings)
+                        .WithMany(m => m.Engineerings)
                         .HasForeignKey(k => k.ProjectId);
 
         }

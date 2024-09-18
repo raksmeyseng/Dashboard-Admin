@@ -7,14 +7,3 @@ public class ListCategoryResponse
     public string Name { get; set; } = null!;
    
 }
- 
-public class InsertCategoryRequest
-{
-    public string Name { get; set; } = null!;
-   
-}
-
-public class UpdateCategoryRequest
-{
-    public string? Name { get; set; }
-}

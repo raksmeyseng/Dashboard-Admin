@@ -17,7 +17,7 @@ public class Project : AuditableEntity
 	public ICollection<Image.Image> Images { get; set; } = null!;
 
 	public ICollection<Architecture.Architecture> Architectures { get; set; } = null!;
-	public ICollection<Engineeing.Engineeing> Engineeings { get; set; } = null!;
+	public ICollection<Engineeing.Engineeing> Engineerings { get; set; } = null!;
 	public ICollection<Product.Product> Products { get; set; } = null!;
 
 }
@@ -29,13 +29,14 @@ public class ProjectConfig : IEntityTypeConfiguration<Project>
 		builder.HasMany(m => m.Images)
 				.WithOne(o => o.Project);
 		builder.HasMany(m => m.Architectures)
-				.WithOne(o => o.Project);
-		builder.HasMany(m => m.Engineeings)
+				.WithOne(o => o.Project)
+				.HasForeignKey(k => k.CategoryArchitectureId);
+		builder.HasMany(m => m.Engineerings)
 	  			.WithOne(o => o.Project)
-	  			.HasForeignKey(k => k.CategoryId);
+	  			.HasForeignKey(k => k.CategoryEngineeringId);
 		builder.HasMany(m => m.Products)
 			   .WithOne(o => o.Project)
-			   .HasForeignKey(k => k.CategoryId);
+			   .HasForeignKey(k => k.CategoryProductId);
 		builder.Property(m => m.ProjectType)
 				.HasMaxLength(50);
 		builder.Property(m => m.ProjectName)

@@ -7,8 +7,8 @@ namespace ArchtistStudio.Modules.Product;
 
 public class Product : AuditableEntity
 {
-        public Guid CategoryId { get; set; }
-        public Category.Category Category { get; set; } = null!;
+        public Guid CategoryProductId { get; set; }
+        public CategoryProduct.CategoryProduct CategoryProduct { get; set; } = null!;
         public Guid ProjectId { get; set; }
         public Project.Project Project { get; set; } = null!;
 }
@@ -17,9 +17,9 @@ public class ArchitectureConfig : IEntityTypeConfiguration<Product>
 {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-                builder.HasOne(o => o.Category)
+                builder.HasOne(o => o.CategoryProduct)
                         .WithMany(m => m.Products)
-                        .HasForeignKey(k => k.CategoryId);
+                        .HasForeignKey(k => k.CategoryProductId);
                 builder.HasOne(o => o.Project)
                         .WithMany(m => m.Products)
                         .HasForeignKey(k => k.ProjectId);

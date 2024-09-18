@@ -6,7 +6,7 @@ public class ProductMapper : Profile
 {
     public ProductMapper()
     {
-        CreateMap<Product, GetCategoryByProductResponse>();
+        CreateMap<Product, GetCategoryProductByProductResponse>();
         CreateMap<Product, ChangeProductRequest>();
     }
 }

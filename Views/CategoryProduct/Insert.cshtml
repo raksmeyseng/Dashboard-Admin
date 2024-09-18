@@ -1,26 +1,18 @@
-@model ArchtistStudio.Modules.Category.InsertCategoryRequest
+@model ArchtistStudio.Modules.CategoryProduct.InsertCategoryProductRequest
 
 <div>
     <h4 class="font-weight-bold py-3 mb-4">
-        Insert Category
+        Insert CategoryProduct
     </h4>
     <div class="row pt-2">
         <div class="col-md-12">
-            <form asp-controller="category" asp-action="insert" method="post" enctype="multipart/form-data">
+            <form asp-controller="categoryproduct" asp-action="insert" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                <div class="row m-1">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label asp-for="Name" class="control-label"></label>
-                            <select asp-for="Name" class="form-control">
-                                <option value="">-- Select Project Type --</option>
-                                <option value="Commercial">Commercial</option>
-                                <option value="Residential">Residential</option>
-                                <option value="Interior">Interior</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Health">Health</option>
-                                <option value="Landscape">Landscape</option>
-                            </select>
+                            <input asp-for="Name" class="form-control" placeholder="Name" />
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
                     </div>
