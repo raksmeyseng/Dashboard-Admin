@@ -16,7 +16,7 @@
       "applicationUrl": "http://localhost:8000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION":  "Server=18.141.56.107:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
+        "DB_CONNECTION":  "Server=13.213.61.11:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
         "MAIL_ACCOUNT": "seng.vichet.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212"
@@ -29,7 +29,7 @@
       "applicationUrl": "http://localhost:8000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=18.141.56.107:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
+        "DB_CONNECTION": "Server=13.213.61.11:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
         "MAIL_ACCOUNT": "last.name.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212"
