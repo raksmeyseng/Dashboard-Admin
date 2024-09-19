@@ -200,3 +200,11 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .back-ground{
   background-color: #f1f1f1;
 }
+
+
+.text-hover {
+  color: black;
+}
+.text:hover{
+  color: #f2f2f2;
+}
