@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArchtistStudio.Migrations
 {
     /// <inheritdoc />
-    public partial class Completed : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,63 @@ namespace ArchtistStudio.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryArchitecture",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryArchitecture", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryEngineering",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryEngineering", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryProduct",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryProduct", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,6 +281,25 @@ namespace ArchtistStudio.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Search",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Search", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Social",
                 columns: table => new
                 {
@@ -270,7 +346,7 @@ namespace ArchtistStudio.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryArchitectureId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -284,14 +360,14 @@ namespace ArchtistStudio.Migrations
                 {
                     table.PrimaryKey("PK_Architecture", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Architecture_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
+                        name: "FK_Architecture_CategoryArchitecture_CategoryArchitectureId",
+                        column: x => x.CategoryArchitectureId,
+                        principalTable: "CategoryArchitecture",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Architecture_Project_ProjectId",
-                        column: x => x.ProjectId,
+                        name: "FK_Architecture_Project_CategoryArchitectureId",
+                        column: x => x.CategoryArchitectureId,
                         principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -302,7 +378,7 @@ namespace ArchtistStudio.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryEngineeringId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -316,14 +392,14 @@ namespace ArchtistStudio.Migrations
                 {
                     table.PrimaryKey("PK_Engineeing", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Engineeing_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
+                        name: "FK_Engineeing_CategoryEngineering_CategoryEngineeringId",
+                        column: x => x.CategoryEngineeringId,
+                        principalTable: "CategoryEngineering",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Engineeing_Project_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_Engineeing_Project_CategoryEngineeringId",
+                        column: x => x.CategoryEngineeringId,
                         principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -361,7 +437,7 @@ namespace ArchtistStudio.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CategoryProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -375,33 +451,55 @@ namespace ArchtistStudio.Migrations
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Category",
+                        name: "FK_Product_CategoryProduct_CategoryProductId",
+                        column: x => x.CategoryProductId,
+                        principalTable: "CategoryProduct",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Product_Project_CategoryId",
-                        column: x => x.CategoryId,
+                        name: "FK_Product_Project_CategoryProductId",
+                        column: x => x.CategoryProductId,
                         principalTable: "Project",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Architecture_CategoryId",
-                table: "Architecture",
-                column: "CategoryId");
+            migrationBuilder.CreateTable(
+                name: "ImageShow",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ImagePath = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    ImageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageShow", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ImageShow_Image_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Image",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Architecture_ProjectId",
+                name: "IX_Architecture_CategoryArchitectureId",
                 table: "Architecture",
-                column: "ProjectId");
+                column: "CategoryArchitectureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Engineeing_CategoryId",
+                name: "IX_Engineeing_CategoryEngineeringId",
                 table: "Engineeing",
-                column: "CategoryId");
+                column: "CategoryEngineeringId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Image_ProjectId",
@@ -409,9 +507,14 @@ namespace ArchtistStudio.Migrations
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoryId",
+                name: "IX_ImageShow_ImageId",
+                table: "ImageShow",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_CategoryProductId",
                 table: "Product",
-                column: "CategoryId");
+                column: "CategoryProductId");
         }
 
         /// <inheritdoc />
@@ -427,6 +530,9 @@ namespace ArchtistStudio.Migrations
                 name: "Auth");
 
             migrationBuilder.DropTable(
+                name: "Category");
+
+            migrationBuilder.DropTable(
                 name: "Contact");
 
             migrationBuilder.DropTable(
@@ -439,7 +545,7 @@ namespace ArchtistStudio.Migrations
                 name: "History");
 
             migrationBuilder.DropTable(
-                name: "Image");
+                name: "ImageShow");
 
             migrationBuilder.DropTable(
                 name: "New");
@@ -454,13 +560,25 @@ namespace ArchtistStudio.Migrations
                 name: "Recommend");
 
             migrationBuilder.DropTable(
+                name: "Search");
+
+            migrationBuilder.DropTable(
                 name: "Social");
 
             migrationBuilder.DropTable(
                 name: "TopManagement");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "CategoryArchitecture");
+
+            migrationBuilder.DropTable(
+                name: "CategoryEngineering");
+
+            migrationBuilder.DropTable(
+                name: "Image");
+
+            migrationBuilder.DropTable(
+                name: "CategoryProduct");
 
             migrationBuilder.DropTable(
                 name: "Project");

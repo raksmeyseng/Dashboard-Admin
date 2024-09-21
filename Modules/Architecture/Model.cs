@@ -1,4 +1,5 @@
 ﻿
+using ArchtistStudio.Modules.Image;
 using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.Architecture;
 

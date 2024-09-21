@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
-using ArchtistStudio.Modules.Project;
+using ArchtistStudio.Modules.Image;
+
 
 namespace ArchtistStudio.Modules.ImageShow;
 
@@ -10,7 +11,7 @@ public class ImageShowController(
     IFileUploadService fileUploadService,
     IMapper mapper,
     IImageShowRepository repository,
-    IProjectRepository projectRepository) : MyController
+    IImageRepository imageRepository) : MyController
 {
     // === Gets ====//
     [HttpGet]
@@ -25,14 +26,14 @@ public class ImageShowController(
     [HttpGet]
     public IActionResult Insert(Guid id)
     {
-        var project = projectRepository.FindBy(e => e.Id == id).FirstOrDefault();
-        if (project == null)
+        var image = imageRepository.FindBy(e => e.Id == id).FirstOrDefault();
+        if (image == null)
         {
             return NotFound("Project not found.");
         }
         var model = new InsertImageShowRequest
         {
-            ProjectId = id
+            ImageId = id
         };
         return View(model);
     }
@@ -40,9 +41,9 @@ public class ImageShowController(
     [HttpPost]
     public IActionResult Insert([FromForm] InsertImageShowRequest request)
     {
-        var project = projectRepository.FindBy(e => e.Id == request.ProjectId).FirstOrDefault();
+        var image = imageRepository.FindBy(e => e.Id == request.ImageId).FirstOrDefault();
 
-        if (project == null)
+        if (image == null)
         {
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
             return View(request);
@@ -59,13 +60,13 @@ public class ImageShowController(
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
-        project.ImageShows ??= [];
-        project.ImageShows.Add(item);
+        image.ImageShows ??= [];
+        image.ImageShows.Add(item);
 
         repository.Add(item);
         repository.Commit();
 
-        return RedirectToAction("gets", "imageshow", new { id = request.ProjectId });
+        return RedirectToAction("gets", "imageshow", new { id = request.ImageId });
     }
 
 
@@ -81,7 +82,7 @@ public class ImageShowController(
 
         var model = new UpdateImageShowRequest
         {
-            ProjectId = ImageShow.ProjectId,
+            ImageId = ImageShow.ImageId,
             Description = ImageShow.Description,
         };
 
@@ -98,7 +99,7 @@ public class ImageShowController(
             ModelState.AddModelError("", "Image not found.");
             return View(request);
         }
-        var project = projectRepository.FindBy(e => e.Id == request.ProjectId).FirstOrDefault();
+        var project = imageRepository.FindBy(e => e.Id == request.ImageId).FirstOrDefault();
         if (project == null)
         {
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
@@ -117,7 +118,7 @@ public class ImageShowController(
         repository.Update(ImageShow);
         repository.Commit();
 
-        return RedirectToAction("gets", "imageshow", new { id = request.ProjectId });
+        return RedirectToAction("gets", "imageshow", new { id = request.ImageId });
     }
 
 

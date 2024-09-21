@@ -6,7 +6,6 @@
     </h4>
 
     <div class="button-row text-end m-2">
-           <a class="text-decoration-none btn btn-outline-dark" href="/imageshow/gets">Image Show</a>
         <a class="text-decoration-none btn btn-outline-dark" href="/image/gets">Image </a>
         <a class="text-decoration-none btn btn-outline-dark" href="/project/insert">Post Project</a>
     </div>
@@ -39,8 +38,6 @@
                                 <td>@Html.DisplayFor(model => item.Size)</td>
                                 <td>@Html.DisplayFor(model => item.Status)</td>
                                 <td>
-                                    <a class="text-decoration-none btn btn-outline-dark" asp-controller="imageshow" asp-action="insert"
-                                       asp-route-id="@item.Id">Add Image Show</a>
                                      <a class="text-decoration-none btn btn-outline-dark" asp-controller="image" asp-action="insert"
                                        asp-route-id="@item.Id">Add Image</a>
                                     <a class="btn btn-outline-info btn-sm" asp-controller="project" asp-action="update"

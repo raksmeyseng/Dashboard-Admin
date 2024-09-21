@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Project;
+using ArchtistStudio.Modules.ImageShow;
 
 namespace ArchtistStudio.Modules.Image;
 
@@ -150,15 +151,26 @@ public class ImageController(
 }
 
 public class ApiImageController(
-    IMapper mapper,
     IImageRepository repository) : MyAdminController
 {
     [HttpGet]
     public IActionResult Gets()
     {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<DatailImageResponse>(iQueryable).ToList();
+        var results = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking()
+            .Include(p => p.ImageShows)
+            .Select(s => new DatailImageResponse
+            {
+                ImagePath = s.ImagePath,
+                Description = s.Description,
+                ImageShows = s.ImageShows.Select(img => new DatailImageShowResponse
+                {
+                    ImagePath = img.ImagePath,
+                    Description = img.Description
+                }).ToList(),
+            })
+            .ToList();
+
         return Ok(results);
     }
 }

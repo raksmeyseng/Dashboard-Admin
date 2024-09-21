@@ -5,6 +5,7 @@
         Information Image
     </h4>
     <div class="text-end m-2">
+        <a class="text-decoration-none btn btn-outline-dark" href="/imageshow/gets">Image Show</a>
         <a class="text-decoration-none btn btn-outline-dark" href="/project/gets"> Back to Project</a>
     </div>
     <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
@@ -30,6 +31,8 @@
                             <td>@Html.DisplayFor(model => item.ImagePath)</td>
                             <td>@Html.DisplayFor(model => item.Description)</td>
                             <td>
+                                <a class="text-decoration-none btn btn-outline-dark" asp-controller="imageshow"
+                                    asp-action="insert" asp-route-id="@item.Id">Add Image Show</a>
                                 <a class="btn btn-outline-info btn-sm" asp-controller="image" asp-action="update"
                                     asp-route-id="@item.Id">
                                     Edit

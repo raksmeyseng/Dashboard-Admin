@@ -4,6 +4,7 @@ using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.CategoryArchitecture;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
+using ArchtistStudio.Modules.ImageShow;
 
 namespace ArchtistStudio.Modules.Architecture;
 
@@ -11,18 +12,18 @@ namespace ArchtistStudio.Modules.Architecture;
 public class ArchitectureController(
     IArchitectureRepository repository,
     IProjectRepository projectrepository,
-    ICategoryArchitectureRepository categoryArchitecturerepository
+    ICategoryArchitectureRepository categoryArchitectueRepository
     ) : MyAdminController
-{ 
+{
 
     [HttpGet("all/project")]
     public IActionResult Gets()
     {
-
         var projects = projectrepository
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
+                .ThenInclude(img => img.ImageShows)
             .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
@@ -37,7 +38,12 @@ public class ArchitectureController(
                     Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath,
-                        Description = img.Description
+                        Description = img.Description,
+                        ImageShows = img.ImageShows.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath,
+                            Description = showImg.Description
+                        }).ToList()
                     }).ToList(),
                 }
             })
@@ -47,10 +53,11 @@ public class ArchitectureController(
     }
 
 
+
     [HttpGet("Project/{id:guid}")]
     public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
     {
-        var CategoryArchitecture = categoryArchitecturerepository.FindBy(c => c.Id == id).FirstOrDefault();
+        var CategoryArchitecture = categoryArchitectueRepository.FindBy(c => c.Id == id).FirstOrDefault();
         if (CategoryArchitecture == null)
         {
             return ItemNotFound();
@@ -61,7 +68,7 @@ public class ArchitectureController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ToList();
+                .ThenInclude(img => img.ImageShows).ToList();
 
         if (allProjects == null)
         {
@@ -81,10 +88,15 @@ public class ArchitectureController(
                     Size = s.Size ?? string.Empty,
                     Status = s.Status ?? string.Empty,
                     Location = s.Location ?? string.Empty,
-                    Images = s.Images?.Select(img => new DatailImageResponse
+                    Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
-                        Description = img.Description ?? string.Empty
+                        Description = img.Description ?? string.Empty,
+                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath ?? string.Empty,
+                            Description = showImg.Description ?? string.Empty,
+                        }).ToList() ?? []
                     }).ToList() ?? []
                 },
                 Checked = false
@@ -112,14 +124,14 @@ public class ArchitectureController(
     [HttpGet("CategoryArchitecture/{id:guid}")]
     public IActionResult GetByCategoryArchitectureId(Guid id)
     {
-        var CategoryArchitecture = categoryArchitecturerepository.FindBy(c => c.Id == id).FirstOrDefault();
+        var CategoryArchitecture = categoryArchitectueRepository.FindBy(c => c.Id == id).FirstOrDefault();
         if (CategoryArchitecture == null) return ItemNotFound();
         var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ToList();
+            .ThenInclude(img => img.ImageShows).ToList();
 
         if (allProjects == null)
         {
@@ -139,10 +151,15 @@ public class ArchitectureController(
                     Size = s.Size ?? string.Empty,
                     Status = s.Status ?? string.Empty,
                     Location = s.Location ?? string.Empty,
-                    Images = s.Images?.Select(img => new DatailImageResponse
+                    Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
-                        Description = img.Description ?? string.Empty
+                        Description = img.Description ?? string.Empty,
+                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath ?? string.Empty,
+                            Description = showImg.Description ?? string.Empty,
+                        }).ToList() ?? []
                     }).ToList() ?? []
                 },
                 Checked = false

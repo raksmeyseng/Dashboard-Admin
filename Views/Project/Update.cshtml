@@ -49,18 +49,10 @@
                     </div>
                 </div>
                 <div class="row m-1">
-                    <div class="col-md-12">
+                   <div class="col-md-12">
                         <div class="form-group">
                             <label asp-for="ProjectType" class="control-label"></label>
-                            <select asp-for="ProjectType" class="form-control">
-                                <option value="">-- Select Project Type --</option>
-                                <option value="Commercial">Commercial</option>
-                                <option value="Residential">Residential</option>
-                                <option value="Interior">Interior</option>
-                                <option value="Sports">Sports</option>
-                                <option value="Health">Health</option>
-                                <option value="Landscape">Landscape</option>
-                            </select>
+                            <input asp-for="ProjectType" class="form-control" placeholder="ProjectType" />
                             <span asp-validation-for="ProjectType" class="text-danger"></span>
                         </div>
                     </div>

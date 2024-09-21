@@ -14,9 +14,7 @@ public class Project : AuditableEntity
 	public string Size { get; set; } = null!;
 	public string Status { get; set; } = null!;
 	public string Location { get; set; } = null!;
-
 	public ICollection<Image.Image> Images { get; set; } = null!;
-		public ICollection<ImageShow.ImageShow> ImageShows { get; set; } = null!;
 	public ICollection<Architecture.Architecture> Architectures { get; set; } = null!;
 	public ICollection<Engineeing.Engineeing> Engineerings { get; set; } = null!;
 	public ICollection<Product.Product> Products { get; set; } = null!;
@@ -27,8 +25,6 @@ public class ProjectConfig : IEntityTypeConfiguration<Project>
 {
 	public void Configure(EntityTypeBuilder<Project> builder)
 	{
-		builder.HasMany(m => m.ImageShows)
-				.WithOne(o => o.Project);
 		builder.HasMany(m => m.Images)
 				.WithOne(o => o.Project);
 		builder.HasMany(m => m.Architectures)

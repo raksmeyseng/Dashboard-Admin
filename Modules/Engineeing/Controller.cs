@@ -4,6 +4,7 @@ using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.CategoryEngineering;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
+using ArchtistStudio.Modules.ImageShow;
 
 
 namespace ArchtistStudio.Modules.Engineeing;
@@ -12,19 +13,19 @@ namespace ArchtistStudio.Modules.Engineeing;
 public class EngineeingController(
     IEngineeingRepository repository,
     IProjectRepository projectrepository,
-    ICategoryEngineeringRepository CategoryEngineeringrepository
+    ICategoryEngineeringRepository categoryEngineeringrepository
     ) : MyAdminController
 {
 
 
-    [HttpGet("all/project")]
+   [HttpGet("all/project")]
     public IActionResult Gets()
     {
-
         var projects = projectrepository
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
+                .ThenInclude(img => img.ImageShows)
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -39,7 +40,12 @@ public class EngineeingController(
                     Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath,
-                        Description = img.Description
+                        Description = img.Description,
+                        ImageShows = img.ImageShows.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath,
+                            Description = showImg.Description
+                        }).ToList()
                     }).ToList(),
                 }
             })
@@ -49,21 +55,22 @@ public class EngineeingController(
     }
 
 
+
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryEngineeringId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
     {
-        var CategoryEngineering = CategoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryEngineering == null)
+        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null)
         {
             return ItemNotFound();
         }
 
-        var CategoryEngineeringType = CategoryEngineering.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
-            .Include(p => p.Images) // Ensure images are included
-            .ToList();
+            .Include(p => p.Images)
+                .ThenInclude(img => img.ImageShows).ToList();
 
         if (allProjects == null)
         {
@@ -71,7 +78,7 @@ public class EngineeingController(
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeringType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -83,45 +90,50 @@ public class EngineeingController(
                     Size = s.Size ?? string.Empty,
                     Status = s.Status ?? string.Empty,
                     Location = s.Location ?? string.Empty,
-                    Images = s.Images?.Select(img => new DatailImageResponse
+                    Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
-                        Description = img.Description ?? string.Empty
+                        Description = img.Description ?? string.Empty,
+                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath ?? string.Empty,
+                            Description = showImg.Description ?? string.Empty,
+                        }).ToList() ?? []
                     }).ToList() ?? []
                 },
                 Checked = false
             })
         .ToList();
 
-        var CategoryEngineeringProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryEngineeringProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryEngineering project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = CategoryEngineeringProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(filteredProjects);
     }
 
-    [HttpGet("CategoryEngineering/{id:guid}")]
-    public IActionResult GetByCategoryEngineeringId(Guid id)
+    [HttpGet("CategoryArchitecture/{id:guid}")]
+    public IActionResult GetByCategoryArchitectureId(Guid id)
     {
-        var CategoryEngineering = CategoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryEngineering == null) return ItemNotFound();
-        var CategoryEngineeringType = CategoryEngineering.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null) return ItemNotFound();
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ToList();
+            .ThenInclude(img => img.ImageShows).ToList();
 
         if (allProjects == null)
         {
@@ -129,7 +141,7 @@ public class EngineeingController(
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeringType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -141,29 +153,34 @@ public class EngineeingController(
                     Size = s.Size ?? string.Empty,
                     Status = s.Status ?? string.Empty,
                     Location = s.Location ?? string.Empty,
-                    Images = s.Images?.Select(img => new DatailImageResponse
+                    Images = s.Images.Select(img => new DatailImageResponse
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
-                        Description = img.Description ?? string.Empty
+                        Description = img.Description ?? string.Empty,
+                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
+                        {
+                            ImagePath = showImg.ImagePath ?? string.Empty,
+                            Description = showImg.Description ?? string.Empty,
+                        }).ToList() ?? []
                     }).ToList() ?? []
                 },
                 Checked = false
             })
         .ToList();
 
-        var CategoryEngineeringProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryEngineeringProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryEngineering project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in projects)
         {
-            tag.Checked = CategoryEngineeringProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(projects);

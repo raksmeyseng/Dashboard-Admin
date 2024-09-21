@@ -8,6 +8,7 @@ public class ImageMapper : Profile
     {
         CreateMap<Image, ListImageResponse>();
          CreateMap<Image, DatailImageResponse>();
+         
         CreateMap<InsertImageRequest, Image>()
            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));

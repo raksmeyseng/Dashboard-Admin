@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArchtistStudio.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240919144639_ImageShoe")]
-    partial class ImageShoe
+    [Migration("20240921153905_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -551,15 +551,15 @@ namespace ArchtistStudio.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("ImageId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -569,7 +569,7 @@ namespace ArchtistStudio.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ImageId");
 
                     b.ToTable("ImageShow");
                 });
@@ -988,13 +988,13 @@ namespace ArchtistStudio.Migrations
 
             modelBuilder.Entity("ArchtistStudio.Modules.ImageShow.ImageShow", b =>
                 {
-                    b.HasOne("ArchtistStudio.Modules.Project.Project", "Project")
+                    b.HasOne("ArchtistStudio.Modules.Image.Image", "Image")
                         .WithMany("ImageShows")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("ArchtistStudio.Modules.Product.Product", b =>
@@ -1031,13 +1031,16 @@ namespace ArchtistStudio.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("ArchtistStudio.Modules.Image.Image", b =>
+                {
+                    b.Navigation("ImageShows");
+                });
+
             modelBuilder.Entity("ArchtistStudio.Modules.Project.Project", b =>
                 {
                     b.Navigation("Architectures");
 
                     b.Navigation("Engineerings");
-
-                    b.Navigation("ImageShows");
 
                     b.Navigation("Images");
 
