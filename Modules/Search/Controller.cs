@@ -13,10 +13,16 @@ public class SearchController(
     [HttpGet("project")]
     public IActionResult GetByCategorySearchId([FromQuery] string? ProjectName)
     {
+        if (string.IsNullOrWhiteSpace(ProjectName))
+        {
+            return Ok(new List<GetSearchByProjectResponse>());
+        }
+
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
             .ToList();
+
 
         if (allProjects == null || allProjects.Count == 0)
         {
@@ -24,9 +30,7 @@ public class SearchController(
         }
 
         var projects = allProjects
-            .Where(p => string.IsNullOrEmpty(ProjectName) ||
-                        p.ProjectName.Contains(ProjectName, StringComparison.OrdinalIgnoreCase))
-            .OrderByDescending(p => p.ProjectName.Contains(ProjectName ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectName.Contains(ProjectName, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetSearchByProjectResponse
             {
                 Project = new ListProjectResponse
@@ -41,11 +45,10 @@ public class SearchController(
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty
-                    }).ToList() ?? new List<DatailImageResponse>()
+                    }).ToList() ?? []
                 },
             })
             .ToList();
-
         return Ok(projects);
     }
 
