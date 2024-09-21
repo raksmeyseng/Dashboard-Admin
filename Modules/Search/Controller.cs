@@ -33,7 +33,6 @@ public class SearchController(
             .Where(p => p.ProjectName.Contains(ProjectName, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetSearchByProjectResponse
             {
-                ProjectId = s.Id,
                 Project = new ListProjectResponse
                 {
                     ProjectType = s.ProjectType ?? string.Empty,
