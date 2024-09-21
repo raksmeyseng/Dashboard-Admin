@@ -122,8 +122,8 @@ public class EngineeingController(
         return Ok(filteredProjects);
     }
 
-    [HttpGet("CategoryEngineeing/{id:guid}")]
-    public IActionResult GetByCategoryEngineeingId(Guid id)
+    [HttpGet("CategoryEngineering/{id:guid}")]
+    public IActionResult GetByCategoryEngineeringId(Guid id)
     {
         var CategoryEngineeing = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
         if (CategoryEngineeing == null) return ItemNotFound();
