@@ -55,17 +55,16 @@ public class EngineeingController(
     }
 
 
-
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryEngineeingId(Guid id, Guid projectId)
     {
-        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryArchitecture == null)
+        var CategoryEngineeing = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryEngineeing == null)
         {
             return ItemNotFound();
         }
 
-        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
+        var CategoryEngineeingType = CategoryEngineeing.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -78,7 +77,7 @@ public class EngineeingController(
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeingType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -105,30 +104,30 @@ public class EngineeingController(
             })
         .ToList();
 
-        var CategoryArchitectureProjectIds = repository
+        var CategoryEngineeingProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryArchitectureProjectIds == null)
+        if (CategoryEngineeingProjectIds == null)
         {
-            return NotFound("CategoryArchitecture project IDs not found.");
+            return NotFound("CategoryEngineeing project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryEngineeingProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(filteredProjects);
     }
 
-    [HttpGet("CategoryArchitecture/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id)
+    [HttpGet("CategoryEngineeing/{id:guid}")]
+    public IActionResult GetByCategoryEngineeingId(Guid id)
     {
-        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryArchitecture == null) return ItemNotFound();
-        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
+        var CategoryEngineeing = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryEngineeing == null) return ItemNotFound();
+        var CategoryEngineeingType = CategoryEngineeing.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -141,7 +140,7 @@ public class EngineeingController(
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeingType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -168,21 +167,20 @@ public class EngineeingController(
             })
         .ToList();
 
-        var CategoryArchitectureProjectIds = repository
+        var CategoryEngineeingProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryArchitectureProjectIds == null)
+        if (CategoryEngineeingProjectIds == null)
         {
-            return NotFound("CategoryArchitecture project IDs not found.");
+            return NotFound("CategoryEngineeing project IDs not found.");
         }
 
         foreach (var tag in projects)
         {
-            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryEngineeingProjectIds.Contains(tag.ProjectId);
         }
-
         return Ok(projects);
     }
 }

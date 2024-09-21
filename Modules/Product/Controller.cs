@@ -54,15 +54,15 @@ public class ProductController(
 
 
      [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryProductId(Guid id, Guid projectId)
     {
-        var CategoryArchitecture = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryArchitecture == null)
+        var CategoryProduct = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryProduct == null)
         {
             return ItemNotFound();
         }
 
-        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
+        var CategoryProductType = CategoryProduct.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -75,7 +75,7 @@ public class ProductController(
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryProductType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
@@ -102,30 +102,30 @@ public class ProductController(
             })
         .ToList();
 
-        var CategoryArchitectureProjectIds = repository
+        var CategoryProductProjectIds = repository
             .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryArchitectureProjectIds == null)
+        if (CategoryProductProjectIds == null)
         {
-            return NotFound("CategoryArchitecture project IDs not found.");
+            return NotFound("CategoryProduct project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryProductProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(filteredProjects);
     }
 
-     [HttpGet("CategoryArchitecture/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id)
+     [HttpGet("CategoryProduct/{id:guid}")]
+    public IActionResult GetByCategoryProductId(Guid id)
     {
-        var CategoryArchitecture = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryArchitecture == null) return ItemNotFound();
-        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
+        var CategoryProduct = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryProduct == null) return ItemNotFound();
+        var CategoryProductType = CategoryProduct.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
@@ -138,7 +138,7 @@ public class ProductController(
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryProductType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
@@ -165,19 +165,19 @@ public class ProductController(
             })
         .ToList();
 
-        var CategoryArchitectureProjectIds = repository
+        var CategoryProductProjectIds = repository
             .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
             .ToList() ?? [];
 
-        if (CategoryArchitectureProjectIds == null)
+        if (CategoryProductProjectIds == null)
         {
-            return NotFound("CategoryArchitecture project IDs not found.");
+            return NotFound("CategoryProduct project IDs not found.");
         }
 
         foreach (var tag in projects)
         {
-            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryProductProjectIds.Contains(tag.ProjectId);
         }
 
         return Ok(projects);
