@@ -2,16 +2,15 @@ namespace ArchtistStudio.Core;
 
 internal static class CorsExtension
 {
-    public static void AddMyCors(this IServiceCollection service)
+    public static void AddMyCors(this IServiceCollection services)
     {
-        service.AddCors(options =>
+        services.AddCors(options =>
         {
-            options.AddDefaultPolicy(
-                policy =>
-                    policy.WithOrigins("*")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+            options.AddPolicy("AllowSpecificOrigins", policy =>
+                policy.WithOrigins("https://architecture.ts-enc.com")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
             );
         });
     }
