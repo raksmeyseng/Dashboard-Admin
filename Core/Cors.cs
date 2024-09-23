@@ -11,7 +11,7 @@ internal static class CorsExtension
                     policy.WithOrigins("*")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        // .SetIsOriginAllowedToAllowWildcardSubdomains()
             );
         });
     }
