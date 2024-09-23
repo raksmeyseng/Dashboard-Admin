@@ -8,7 +8,7 @@ internal static class CorsExtension
         {
             options.AddDefaultPolicy(
                 policy =>
-                    policy.WithOrigins("*")
+                    policy.WithOrigins("https://architecture.ts-enc.com")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .SetIsOriginAllowedToAllowWildcardSubdomains()
