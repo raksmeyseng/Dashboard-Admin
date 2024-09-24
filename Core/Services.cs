@@ -2,7 +2,9 @@ using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using ArchtistStudio.Core;
-
+using Microsoft.AspNetCore.Http; // Make sure to include this for IFormFile
+using System;
+using System.IO;
 
 public interface IFileUploadService
 {
@@ -12,6 +14,7 @@ public interface IFileUploadService
 public class FileUploadService : IFileUploadService
 {
     private readonly RegionEndpoint region = RegionEndpoint.APSoutheast1;
+
     public string UploadFileAsync(IFormFile imagePath)
     {
         if (imagePath == null || imagePath.Length == 0)
@@ -23,14 +26,13 @@ public class FileUploadService : IFileUploadService
         {
             using (var memoryStream = new MemoryStream())
             {
-
                 imagePath.CopyTo(memoryStream);
                 memoryStream.Position = 0;
 
                 var uploadRequest = new TransferUtilityUploadRequest
                 {
                     InputStream = memoryStream,
-                    Key = imagePath.FileName,
+                    Key = imagePath.FileName, // Consider using a unique name to avoid overwriting
                     BucketName = MyEnvironment.BucketName,
                     ContentType = imagePath.ContentType
                 };
@@ -48,6 +50,7 @@ public class FileUploadService : IFileUploadService
             }
         }
 
-        return imagePath.FileName;
+        string fileUrl = $"https://{MyEnvironment.BucketName}.s3.ap-southeast-1.amazonaws.com/{imagePath.FileName}";
+        return fileUrl;
     }
 }

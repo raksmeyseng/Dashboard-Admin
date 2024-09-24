@@ -307,3 +307,6 @@
 /Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/ref/ArchtistStudio.dll
 /Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/mac/Documents/SengVichet/ArchtistStudio/obj/Debug/net8.0/ArchtistStudio.sourcelink.json
+/Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/AWSSDK.Core.dll
+/Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/AWSSDK.Extensions.NETCore.Setup.dll
+/Users/mac/Documents/SengVichet/ArchtistStudio/bin/Debug/net8.0/AWSSDK.S3.dll
