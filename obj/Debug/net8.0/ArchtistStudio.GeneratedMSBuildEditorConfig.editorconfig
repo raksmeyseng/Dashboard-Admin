@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /Users/mac/Documents/SengVichet/ArchtistStudio
 build_property._RazorSourceGeneratorDebug = 
 
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/About/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWJvdXQvR2V0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/About/Insert.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQWJvdXQvSW5zZXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -32,6 +36,34 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Auth/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Category/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnkvR2V0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryArchitecture/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlBcmNoaXRlY3R1cmUvSW5zZXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryArchitecture/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlBcmNoaXRlY3R1cmUvVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryEngineering/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlFbmdpbmVlcmluZy9JbnNlcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryEngineering/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlFbmdpbmVlcmluZy9VcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryProduct/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlQcm9kdWN0L0luc2VydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/CategoryProduct/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2F0ZWdvcnlQcm9kdWN0L1VwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Contact/Insert.cshtml]
@@ -50,12 +82,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL092ZXJ2aWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Error/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRXJyb3IvRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/History/Insert.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSGlzdG9yeS9JbnNlcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/History/Update.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSGlzdG9yeS9VcGRhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Image/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2UvR2V0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Image/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2UvSW5zZXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/Image/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2UvVXBkYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/ImageShow/Gets.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2VTaG93L0dldHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/ImageShow/Insert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2VTaG93L0luc2VydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/mac/Documents/SengVichet/ArchtistStudio/Views/ImageShow/Update.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSW1hZ2VTaG93L1VwZGF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/mac/Documents/SengVichet/ArchtistStudio/Views/New/Gets.cshtml]
