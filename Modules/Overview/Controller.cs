@@ -31,10 +31,11 @@ public class OverviewController(
     {
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
-            ModelState.AddModelError("Image", "Image file is required.");
+            ModelState.AddModelError("ImagePath", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+
 
         var item = mapper.Map<Overview>(request);
         item.ImagePath = Image;
@@ -65,7 +66,7 @@ public class OverviewController(
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
             item.ImagePath = Image;
         }
 
@@ -105,7 +106,7 @@ public class OverviewController(
 }
 
 public class ApiOverviewController(
-    IMapper mapper, 
+    IMapper mapper,
     IOverviewRepository repository) : MyAdminController
 {
     [HttpGet]

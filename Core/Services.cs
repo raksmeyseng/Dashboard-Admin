@@ -1,38 +1,53 @@
+using Amazon;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using ArchtistStudio.Core;
+
+
 public interface IFileUploadService
 {
-    string UploadFileAsync(IFormFile file, string directoryPath);
+    string UploadFileAsync(IFormFile imagePath);
 }
 
-public class FileUploadService(IWebHostEnvironment environment) : IFileUploadService
+public class FileUploadService : IFileUploadService
 {
-
-    public string UploadFileAsync(IFormFile file, string directoryPath)
+    private readonly RegionEndpoint region = RegionEndpoint.APSoutheast1;
+    public string UploadFileAsync(IFormFile imagePath)
     {
-        if (file == null || file.Length == 0)
+        if (imagePath == null || imagePath.Length == 0)
         {
-            throw new ArgumentException("File is required.");
-        }
-        if (file.Length > 6 * 1024 * 1024) 
-        {
-            throw new ArgumentException("File size exceeds the 6MB limit.");
-        }
-        
-        string relativePath = directoryPath.TrimStart('/');
-        string newFileName = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff") + Path.GetExtension(file.FileName);
-        string fileFullPath = Path.Combine(environment.WebRootPath, relativePath, newFileName);
-
-        var directory = Path.GetDirectoryName(fileFullPath);
-        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
+            throw new ArgumentException("Image file is required");
         }
 
-        using (var stream = new FileStream(fileFullPath, FileMode.Create))
+        using (var amazonS3Client = new AmazonS3Client(MyEnvironment.AWSKey, MyEnvironment.AWSSecretkey, region))
         {
-            file.CopyTo(stream);
+            using (var memoryStream = new MemoryStream())
+            {
+
+                imagePath.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+
+                var uploadRequest = new TransferUtilityUploadRequest
+                {
+                    InputStream = memoryStream,
+                    Key = imagePath.FileName,
+                    BucketName = MyEnvironment.BucketName,
+                    ContentType = imagePath.ContentType
+                };
+
+                var transferUtility = new TransferUtility(amazonS3Client);
+
+                try
+                {
+                    transferUtility.Upload(uploadRequest);
+                }
+                catch (AmazonS3Exception ex)
+                {
+                    throw new Exception("Upload failed: " + ex.Message, ex);
+                }
+            }
         }
 
-        string fileUrl = $"https://archtist-studio.xyz/{relativePath.TrimStart('/')}/{newFileName}";
-        return fileUrl;
+        return imagePath.FileName;
     }
 }

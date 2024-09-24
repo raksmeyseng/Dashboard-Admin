@@ -24,7 +24,7 @@ public class TopManagementController(
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<TopManagement>(request);
         item.ImagePath = Image;
@@ -57,7 +57,7 @@ public class TopManagementController(
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
             item.ImagePath = Image;
         }
 

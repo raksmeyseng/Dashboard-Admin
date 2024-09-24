@@ -48,15 +48,17 @@ public class ImageShowController(
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
             return View(request);
         }
+
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("ImagePath", "ImageShow file is required.");
             return View(request);
         }
-        string ImageShow = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<ImageShow>(request);
-        item.ImagePath = ImageShow;
+        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -68,6 +70,7 @@ public class ImageShowController(
 
         return RedirectToAction("gets", "imageshow", new { id = request.ImageId });
     }
+
 
 
     // === Update === //
@@ -110,7 +113,7 @@ public class ImageShowController(
             ModelState.AddModelError("Images", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+        var Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         ImageShow.Description = request.Description ?? ImageShow.Description;
         ImageShow.UpdatedAt = DateTime.UtcNow;

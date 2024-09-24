@@ -1,6 +1,6 @@
 using System.Reflection;
+using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 namespace ArchtistStudio.Core;
 
 public static class DependencyInjection
@@ -26,6 +26,7 @@ public static class DependencyInjection
         service.AddMySwagger();
         service.AddControllers();
         service.AddRazorPages();
+        service.AddAWSService<IAmazonS3>();
         service.AddTransient<IFileUploadService, FileUploadService>();
 
         service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

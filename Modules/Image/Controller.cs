@@ -53,7 +53,7 @@ public class ImageController(
             ModelState.AddModelError("ImagePath", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<Image>(request);
         item.ImagePath = Image;
@@ -110,7 +110,7 @@ public class ImageController(
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath, "image");
+        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         image.Description = request.Description ?? image.Description;
         image.UpdatedAt = DateTime.UtcNow;

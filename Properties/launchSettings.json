@@ -19,7 +19,10 @@
         "DB_CONNECTION":  "Server=54.151.175.103:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
         "MAIL_ACCOUNT": "seng.vichet.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
-        "JWT_EXPIRED": "1212121212"
+        "JWT_EXPIRED": "1212121212",
+        "ACCESS_KEY" : "AKIAX2DZEVEVTPSTVY23",
+        "SECRET_KEY" : "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",
+         "BACKET_NAME": "arhcitecture-image"
       }
     },
     "GCloud": {
@@ -32,7 +35,10 @@
         "DB_CONNECTION": "Server=54.151.175.103:5432;Database=Archtist;User Id=TSCE;Password=P@ssw0rd;",
         "MAIL_ACCOUNT": "last.name.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
-        "JWT_EXPIRED": "1212121212"
+        "JWT_EXPIRED": "1212121212",
+         "ACCESS_KEY" : "AKIAX2DZEVEVTPSTVY23",
+        "SECRET_KEY" : "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",
+         "BACKET_NAME": "arhcitecture-image"
       }
     },
     "https": {

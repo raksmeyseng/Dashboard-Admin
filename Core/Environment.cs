@@ -40,5 +40,7 @@ public static class MyEnvironment
 	public static string JwtKey => Environment.GetEnvironmentVariable("JWT_KEY") ??
 								   "ra8FXsc1Xv6FjN8cuxMDYcKeP4aQ4XRmKZyGnyhLRhuJ";
 
-	public static double JwtExpiredService => double.Parse(Environment.GetEnvironmentVariable("JWT_EXPIRED_SERVICE") ?? "60");
+	public static string BucketName => Environment.GetEnvironmentVariable("BACKET_NAME") ?? "arhcitecture-image";
+	public static string AWSKey => Environment.GetEnvironmentVariable("ACCESS_KEY") ?? "AKIAX2DZEVEVTPSTVY23";
+	public static string AWSSecretkey => Environment.GetEnvironmentVariable("SECRET_KEY") ?? "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";
 }
