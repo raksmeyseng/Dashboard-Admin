@@ -17,7 +17,7 @@ public class ProductController(
 {
 
     [HttpGet("all/project")]
-    public IActionResult Gets()
+   public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
         var projects = projectrepository
             .FindBy(e => e.DeletedAt == null)
@@ -47,6 +47,8 @@ public class ProductController(
                     }).ToList(),
                 }
             })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToList();
 
         return Ok(projects);
@@ -54,28 +56,31 @@ public class ProductController(
 
 
      [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryProductId(Guid id, Guid projectId)
+     public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId, int pageNumber = 1, int pageSize = 10)
     {
-        var CategoryProduct = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryProduct == null)
+        var CategoryArchitecture = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null)
         {
             return ItemNotFound();
         }
 
-        var CategoryProductType = CategoryProduct.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows).ToList();
+                .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryProductType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId &&
+                        p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
@@ -100,45 +105,53 @@ public class ProductController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
-        var CategoryProductProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
-        if (CategoryProductProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryProduct project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = CategoryProductProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
-        return Ok(filteredProjects);
+        var paginatedProjects = filteredProjects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize)
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
 
      [HttpGet("CategoryProduct/{id:guid}")]
-    public IActionResult GetByCategoryProductId(Guid id)
+    public IActionResult GetByCategoryArchitectureId(Guid id, int pageNumber = 1, int pageSize = 10)
     {
-        var CategoryProduct = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryProduct == null) return ItemNotFound();
-        var CategoryProductType = CategoryProduct.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitecture = categoryProductRepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null) return ItemNotFound();
+
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ThenInclude(img => img.ImageShows).ToList();
+            .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryProductType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
@@ -163,23 +176,28 @@ public class ProductController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
-        var CategoryProductProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryProductId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
-        if (CategoryProductProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryProduct project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in projects)
         {
-            tag.Checked = CategoryProductProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
-        return Ok(projects);
+        var paginatedProjects = projects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize) 
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
 }

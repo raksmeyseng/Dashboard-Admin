@@ -46,7 +46,7 @@ namespace ArchtistStudio.Modules.Auth
 
 
                         HttpContext.Session.SetString("Email", admin.Email);
-                        return RedirectToAction("Overview", "Dashboard");
+                        return RedirectToAction("gets", "project");
                     }
                     else
                     {
@@ -90,7 +90,7 @@ namespace ArchtistStudio.Modules.Auth
 
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 HttpContext.Session.SetString("Email", item.Email);
-                return RedirectToAction("Overview", "Dashboard");
+                   return RedirectToAction("gets", "project");
             }
 
             return View(request);

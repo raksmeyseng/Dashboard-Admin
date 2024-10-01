@@ -27,11 +27,6 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                     <!-- General Tab -->
                     <div class="tab-pane fade show active" id="account-general">
                         <div class="card-body media align-items-center row p-3">
-                            <div class="col-auto">
-                                <img src="/image/@Model.Item1?.ImagePath" alt="Profile Image"
-                                    class="img-profile rounded-circle"
-                                    style="width: 50px; height: 50px; object-fit: cover;">
-                            </div>
                             <div class="col pl-3">
                                 <h4 class="font-weight-bold">
                                     @if (User.Identity?.IsAuthenticated == true)
@@ -103,6 +98,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                                         <div>
                                                             <a class="btn btn-outline-info btn-sm" asp-controller="social"
                                                                 asp-action="update" asp-route-id="@social.Id">Edit</a>
+                                                                
                                                             <button type="button" class="btn btn-danger btn-sm"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deleteModal-@social.Id">-</button>

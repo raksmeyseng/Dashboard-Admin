@@ -1,7 +1,7 @@
 ﻿@model Tuple<
-    List<ArchtistStudio.Modules.CategoryArchitecture.ListCategoryArchitectureResponse>,
-    List<ArchtistStudio.Modules.CategoryEngineering.ListCategoryEngineeringResponse>,
-    List<ArchtistStudio.Modules.CategoryProduct.ListCategoryProductResponse>>
+List<ArchtistStudio.Modules.CategoryArchitecture.ListCategoryArchitectureResponse>,
+List<ArchtistStudio.Modules.CategoryEngineering.ListCategoryEngineeringResponse>,
+List<ArchtistStudio.Modules.CategoryProduct.ListCategoryProductResponse>>
 <div class="container">
     <!-- Centered Tabs Navbar -->
     <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -10,12 +10,13 @@
             <div class="mx-auto">
                 <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active text-hover" id="architecture-tab" data-bs-toggle="tab" href="#architecture"
-                            role="tab" aria-controls="architecture" aria-selected="true">Architecture</a>
+                        <a class="nav-link active text-hover" id="architecture-tab" data-bs-toggle="tab"
+                            href="#architecture" role="tab" aria-controls="architecture"
+                            aria-selected="true">Architecture</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link text-hover" id="engineering-tab" data-bs-toggle="tab" href="#engineering" role="tab"
-                            aria-controls="engineering" aria-selected="false">Engineering</a>
+                        <a class="nav-link text-hover" id="engineering-tab" data-bs-toggle="tab" href="#engineering"
+                            role="tab" aria-controls="engineering" aria-selected="false">Engineering</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link text-hover" id="product-tab" data-bs-toggle="tab" href="#product" role="tab"
@@ -32,7 +33,8 @@
         <div class="tab-pane fade show active" id="architecture" role="tabpanel" aria-labelledby="architecture-tab">
             <div class="card-body">
                 <div class="text-end m-2">
-                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryarchitecture/insert">Post Category Architecture</a>
+                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryarchitecture/insert">Post
+                        Category Architecture</a>
                 </div>
                 <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
                     <table class="table table-Secondary table-striped">
@@ -53,12 +55,13 @@
                                         <th scope="row">@index</th>
                                         <td>@Html.DisplayFor(model => item.Name)</td>
                                         <td>
-                                            <a class="btn btn-outline-info btn-sm" asp-controller="categoryarchitecture" asp-action="update"
-                                                asp-route-id="@item.Id">Edit</a>
+                                            <a asp-controller="categoryarchitecture" asp-action="update"
+                                                asp-route-id="@item.Id"> <i class="fa fa-edit fa-lg text-info p-2"
+                                                    aria-hidden="true"></i> </a>
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal-@item.Id">
-                                                Delete
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                                 aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
@@ -106,8 +109,9 @@
         <!-- Engineering Tab -->
         <div class="tab-pane fade" id="engineering" role="tabpanel" aria-labelledby="engineering-tab">
             <div class="card-body">
-                  <div class="text-end m-2">
-                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryengineering/insert">Post Category Engineering</a>
+                <div class="text-end m-2">
+                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryengineering/insert">Post
+                        Category Engineering</a>
                 </div>
                 <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
                     <table class="table table-Secondary table-striped">
@@ -128,12 +132,12 @@
                                         <th scope="row">@index</th>
                                         <td>@Html.DisplayFor(model => item.Name)</td>
                                         <td>
-                                            <a class="btn btn-outline-info btn-sm" asp-controller="categoryengineering" asp-action="update"
-                                                asp-route-id="@item.Id">Edit</a>
+                                            <a asp-controller="categoryengineering" asp-action="update" asp-route-id="@item.Id">
+                                                <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i> </a>
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal-@item.Id">
-                                                Delete
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                                 aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
@@ -181,8 +185,9 @@
         <!-- Product Tab -->
         <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product-tab">
             <div class="card-body">
-                  <div class="text-end m-2">
-                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryproduct/insert">Post Category Product</a>
+                <div class="text-end m-2">
+                    <a class="text-decoration-none btn btn-outline-dark" href="/categoryproduct/insert">Post Category
+                        Product</a>
                 </div>
                 <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
                     <table class="table table-Secondary table-striped">
@@ -203,12 +208,12 @@
                                         <th scope="row">@index</th>
                                         <td>@Html.DisplayFor(model => item.Name)</td>
                                         <td>
-                                            <a class="btn btn-outline-info btn-sm" asp-controller="categoryproduct" asp-action="update"
-                                                asp-route-id="@item.Id">Edit</a>
+                                            <a asp-controller="categoryproduct" asp-action="update" asp-route-id="@item.Id"> <i
+                                                    class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i> </a>
 
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal-@item.Id">
-                                                Delete
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                             <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                                 aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">

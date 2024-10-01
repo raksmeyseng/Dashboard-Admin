@@ -13,9 +13,7 @@
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">ImagePath</th>
                     <th scope="col">SlideImage</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -27,17 +25,15 @@
                     {
                         <tr>
                             <th scope="row">@index</th>
-                            <td>@Html.DisplayFor(model => item.Image.ImagePath)</td>
                             <td>@Html.DisplayFor(model => item.ImagePath)</td>
-                            <td>@Html.DisplayFor(model => item.Description)</td>
                             <td>
-                                <a class="btn btn-outline-info btn-sm" asp-controller="imageshow" asp-action="update"
+                                <a asp-controller="imageshow" asp-action="update"
                                     asp-route-id="@item.Id">
-                                    Edit
+                                        <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i> 
                                 </a>
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal-@item.Id">
-                                    Delete
+                                       <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                                 <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                     aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">

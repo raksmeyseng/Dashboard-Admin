@@ -11,7 +11,7 @@
     </div>
     <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
         <table class="table table-Secondary table-striped">
-        <thead>
+            <thead>
             <tr>
                 <th scope="col">No</th>
                 <th scope="col">Project Name</th>
@@ -22,8 +22,8 @@
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
                 @if (Model != null && Model.Any())
                 {
                     int index = 1;
@@ -36,15 +36,18 @@
                                 <td>@Html.DisplayFor(model => item.Location)</td>
                                 <td>@Html.DisplayFor(model => item.Client)</td>
                                 <td>@Html.DisplayFor(model => item.Size)</td>
-                                <td>@Html.DisplayFor(model => item.Status)</td>
+                                <td class="color @(item.Status == "Completed" ? "text-success" : item.Status == "Pending" ? "text-warning" : item.Status == "In Progress" ? "text-warning" : "text-danger")">
+                                    @Html.DisplayFor(model => item.Status)
+                                </td>
                                 <td>
                                      <a class="text-decoration-none btn btn-outline-dark" asp-controller="image" asp-action="insert"
-                                       asp-route-id="@item.Id">Add Image</a>
-                                    <a class="btn btn-outline-info btn-sm" asp-controller="project" asp-action="update"
-                                       asp-route-id="@item.Id">Edit</a>
+                                       asp-route-id="@item.Id"><i class="fa fa-plus-square p-1" aria-hidden="true"></i> Image</a>
+                                    <a asp-controller="project" asp-action="update"
+                                       asp-route-id="@item.Id"> <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i> </a>
 
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                            data-bs-target="#deleteModal-@item.Id">-</button>
+                                      <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id" class="btn btn-link text-danger">
+                                 <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
                                     <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                          aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -81,8 +84,8 @@
                         <td colspan="8" class="text-center">No data available</td>
                     </tr>
                 }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     </div>
 
 </div>

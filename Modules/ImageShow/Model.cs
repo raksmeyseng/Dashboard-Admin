@@ -6,7 +6,6 @@ public class ListImageShowResponse
 	public Guid Id { get; set; }
 	public string ImagePath { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public Image.Image Image { get; set; } = null!;
 }
 public class DatailImageShowResponse
 {

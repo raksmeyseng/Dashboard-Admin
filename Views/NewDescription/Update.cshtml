@@ -1,0 +1,35 @@
+@model ArchtistStudio.Modules.NewDescription.UpdateNewDescriptionRequest
+
+<div>
+     <h4 class="font-weight-bold py-3 mb-4">
+        Edit News Description
+    </h4>
+
+    <div class="row pt-2">
+        <div class="col-md-12">
+            <form asp-controller="newdescription" asp-action="update" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row m-1">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"
+                                placeholder="Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row m-1">
+                    <div class="d-flex justify-content-end m-1">
+                        <button type="submit" class="btn btn-primary m-2">Save changes</button>
+                        <button type="Cancel" class="btn btn-dark m-2">
+                            <a class="text-white text-decoration-none" asp-controller="new" asp-action="gets">Cancel</a>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

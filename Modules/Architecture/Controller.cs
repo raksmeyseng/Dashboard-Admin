@@ -17,7 +17,7 @@ public class ArchitectureController(
 {
 
     [HttpGet("all/project")]
-    public IActionResult Gets()
+    public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
         var projects = projectrepository
             .FindBy(e => e.DeletedAt == null)
@@ -47,15 +47,16 @@ public class ArchitectureController(
                     }).ToList(),
                 }
             })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToList();
 
         return Ok(projects);
     }
 
 
-
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId, int pageNumber = 1, int pageSize = 10)
     {
         var CategoryArchitecture = categoryArchitectueRepository.FindBy(c => c.Id == id).FirstOrDefault();
         if (CategoryArchitecture == null)
@@ -68,15 +69,18 @@ public class ArchitectureController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows).ToList();
+                .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId &&
+                        p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
@@ -101,12 +105,12 @@ public class ArchitectureController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
         var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryArchitectureId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
         if (CategoryArchitectureProjectIds == null)
         {
@@ -118,28 +122,36 @@ public class ArchitectureController(
             tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
-        return Ok(filteredProjects);
+        var paginatedProjects = filteredProjects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize)
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
 
     [HttpGet("CategoryArchitecture/{id:guid}")]
-    public IActionResult GetByCategoryArchitectureId(Guid id)
+    public IActionResult GetByCategoryArchitectureId(Guid id, int pageNumber = 1, int pageSize = 10)
     {
         var CategoryArchitecture = categoryArchitectueRepository.FindBy(c => c.Id == id).FirstOrDefault();
         if (CategoryArchitecture == null) return ItemNotFound();
+
         var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ThenInclude(img => img.ImageShows).ToList();
+            .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
@@ -164,12 +176,12 @@ public class ArchitectureController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
         var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryArchitectureId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
         if (CategoryArchitectureProjectIds == null)
         {
@@ -181,6 +193,12 @@ public class ArchitectureController(
             tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
-        return Ok(projects);
+        var paginatedProjects = projects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize) 
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
+
 }

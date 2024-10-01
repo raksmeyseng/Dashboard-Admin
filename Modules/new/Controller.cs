@@ -2,22 +2,36 @@
 using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
+using ArchtistStudio.Modules.NewDescription;
 
 namespace ArchtistStudio.Modules.New;
 
 public class NewController(
     IFileUploadService fileUploadService,
     IMapper mapper,
+    INewDescriptionRepository newDescriptionRepository,
     INewRepository repository) : MyController
 {
+
     // === Gets ====//
     [HttpGet]
     public IActionResult Gets()
     {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<ListNewResponse>(iQueryable).ToList();
-        return View(results);
+
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var NewLink = mapper.ProjectTo<ListNewResponse>(iQueryable).ToList();
+
+        var newDescriptionQueryable = newDescriptionRepository.GetSingle(e => e.DeletedAt == null);
+        var newDescriptionLink = mapper.Map<ListNewDescriptionResponse>(newDescriptionQueryable);
+
+
+        var response = new Tuple<List<ListNewResponse>, ListNewDescriptionResponse>(
+            NewLink ?? [],
+            newDescriptionLink ?? new ListNewDescriptionResponse()
+
+        );
+
+        return View(response);
     }
 
     // === Post ====//
@@ -109,7 +123,7 @@ public class NewController(
 
 
 public class ApiNewController(
-    IMapper mapper, 
+    IMapper mapper,
     INewRepository repository) : MyAdminController
 {
     [HttpGet]

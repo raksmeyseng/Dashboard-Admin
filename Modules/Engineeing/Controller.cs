@@ -19,7 +19,7 @@ public class EngineeingController(
 
 
    [HttpGet("all/project")]
-    public IActionResult Gets()
+    public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
         var projects = projectrepository
             .FindBy(e => e.DeletedAt == null)
@@ -49,6 +49,8 @@ public class EngineeingController(
                     }).ToList(),
                 }
             })
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToList();
 
         return Ok(projects);
@@ -56,28 +58,31 @@ public class EngineeingController(
 
 
     [HttpGet("Project/{id:guid}")]
-    public IActionResult GetByCategoryEngineeingId(Guid id, Guid projectId)
+    public IActionResult GetByCategoryArchitectureId(Guid id, Guid projectId, int pageNumber = 1, int pageSize = 10)
     {
-        var CategoryEngineeing = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryEngineeing == null)
+        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null)
         {
             return ItemNotFound();
         }
 
-        var CategoryEngineeingType = CategoryEngineeing.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows).ToList();
+                .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var filteredProjects = allProjects
-            .Where(p => p.Id == projectId && p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeingType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Id == projectId &&
+                        p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -102,45 +107,53 @@ public class EngineeingController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
-        var CategoryEngineeingProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
-        if (CategoryEngineeingProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryEngineeing project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in filteredProjects)
         {
-            tag.Checked = CategoryEngineeingProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
 
-        return Ok(filteredProjects);
+        var paginatedProjects = filteredProjects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize)
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
 
     [HttpGet("CategoryEngineering/{id:guid}")]
-    public IActionResult GetByCategoryEngineeringId(Guid id)
+    public IActionResult GetByCategoryArchitectureId(Guid id, int pageNumber = 1, int pageSize = 10)
     {
-        var CategoryEngineeing = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
-        if (CategoryEngineeing == null) return ItemNotFound();
-        var CategoryEngineeingType = CategoryEngineeing.Name?.ToLower() ?? string.Empty;
+        var CategoryArchitecture = categoryEngineeringrepository.FindBy(c => c.Id == id).FirstOrDefault();
+        if (CategoryArchitecture == null) return ItemNotFound();
+
+        var CategoryArchitectureType = CategoryArchitecture.Name?.ToLower() ?? string.Empty;
 
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ThenInclude(img => img.ImageShows).ToList();
+            .ThenInclude(img => img.ImageShows)
+            .ToList();
 
-        if (allProjects == null)
+        if (allProjects == null || !allProjects.Any())
         {
             return NotFound("No projects found.");
         }
 
         var projects = allProjects
-            .Where(p => p.ProjectType != null && p.ProjectType.Contains(CategoryEngineeingType, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.ProjectType != null &&
+                        p.ProjectType.Contains(CategoryArchitectureType, StringComparison.OrdinalIgnoreCase))
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -165,22 +178,28 @@ public class EngineeingController(
                 },
                 Checked = false
             })
-        .ToList();
+            .ToList();
 
-        var CategoryEngineeingProjectIds = repository
+        var CategoryArchitectureProjectIds = repository
             .FindBy(e => e.CategoryEngineeringId == id)
             .Select(s => s.ProjectId)
-            .ToList() ?? [];
+            .ToList();
 
-        if (CategoryEngineeingProjectIds == null)
+        if (CategoryArchitectureProjectIds == null)
         {
-            return NotFound("CategoryEngineeing project IDs not found.");
+            return NotFound("CategoryArchitecture project IDs not found.");
         }
 
         foreach (var tag in projects)
         {
-            tag.Checked = CategoryEngineeingProjectIds.Contains(tag.ProjectId);
+            tag.Checked = CategoryArchitectureProjectIds.Contains(tag.ProjectId);
         }
-        return Ok(projects);
+
+        var paginatedProjects = projects
+            .Skip((pageNumber - 1) * pageSize) 
+            .Take(pageSize) 
+            .ToList();
+
+        return Ok(paginatedProjects);
     }
 }
