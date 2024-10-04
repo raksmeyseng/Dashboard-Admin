@@ -2,9 +2,6 @@ using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using ArchtistStudio.Core;
-using Microsoft.AspNetCore.Http; // Make sure to include this for IFormFile
-using System;
-using System.IO;
 
 public interface IFileUploadService
 {
@@ -32,7 +29,7 @@ public class FileUploadService : IFileUploadService
                 var uploadRequest = new TransferUtilityUploadRequest
                 {
                     InputStream = memoryStream,
-                    Key = imagePath.FileName, // Consider using a unique name to avoid overwriting
+                    Key = imagePath.FileName,
                     BucketName = MyEnvironment.BucketName,
                     ContentType = imagePath.ContentType
                 };
