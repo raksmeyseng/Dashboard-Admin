@@ -7,6 +7,8 @@ using ArchtistStudio.Modules.About;
 using ArchtistStudio.Modules.TopManagement;
 using ArchtistStudio.Modules.History;
 using ArchtistStudio.Modules.Recommend;
+using ArchtistStudio.Modules.PhoneNumber;
+using ArchtistStudio.Modules.Email;
 
 
 namespace ArchtistStudio.Modules.Contact;
@@ -17,6 +19,8 @@ public class ContactController(
     ISocialRepository socialRepository,
     IHistoryRepository historyRepository,
     ITopManagementRepository topManagementRepository,
+    IPhoneNumberRepository phoneNumberRepository,
+    IEmailRepository emailRepository,
     IContactRepository repository,
     IFileUploadService fileUploadService,
     IRecommendRepository recommendRepository) : MyController
@@ -34,16 +38,24 @@ public class ContactController(
         var topmanagemetnQueryable = topManagementRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var topmanagemetnLinks = mapper.ProjectTo<ListTopManagementResponse>(topmanagemetnQueryable).ToList();
 
+        var phoneNumberQueryable = phoneNumberRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var phoneNumberLinks = mapper.ProjectTo<ListPhoneNumberResponse>(phoneNumberQueryable).ToList();
+
+        var emailQueryable = emailRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var emailLinks = mapper.ProjectTo<ListEmailResponse>(emailQueryable).ToList();
+
         var historyQueryable = historyRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var historyLinks = mapper.ProjectTo<ListHistoryResponse>(historyQueryable).ToList();
 
         var recommendiQueryable = recommendRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var recommendLinks = mapper.ProjectTo<ListRecommendResponse>(recommendiQueryable).ToList();
 
-        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, List<ListTopManagementResponse>, List<ListHistoryResponse>, List<ListRecommendResponse>>(
+        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, List<ListTopManagementResponse>,List<ListPhoneNumberResponse>,List<ListEmailResponse>, List<ListHistoryResponse>, List<ListRecommendResponse>>(
             contactLink ?? new DetailContactResponse(),
             socialLinks ?? [],
             topmanagemetnLinks ?? [],
+            phoneNumberLinks ?? [],
+            emailLinks ?? [],
             historyLinks ?? [],
             recommendLinks ?? []
         );
@@ -65,6 +77,7 @@ public class ContactController(
             TempData["Message"] = "Data is available. Redirecting to update.";
             return RedirectToAction("error", "error");
         }
+
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
@@ -104,7 +117,8 @@ public class ContactController(
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (item == null)
         {
-            return RedirectToAction("insert");
+              TempData["Message"] = "Data is available. Redirecting to insert.";
+            return RedirectToAction("error", "error");
         }
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
@@ -113,11 +127,7 @@ public class ContactController(
             item.ImagePath = Image;
         }
 
-        item.Name = request.Name ?? item.Name;
-        item.PhoneNumber = request.PhoneNumber ?? item.PhoneNumber;
-        item.Email = request.Email ?? item.Email;
-        item.Purpose = request.Purpose ?? item.Purpose;
-        item.Message = request.Message ?? item.Message;
+        item.Location = request.Location ?? item.Location;
         item.UpdatedAt = DateTime.UtcNow;
 
         repository.Update(item);

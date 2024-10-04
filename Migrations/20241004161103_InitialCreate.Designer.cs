@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArchtistStudio.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240924185355_InitialCreate")]
+    [Migration("20241004161103_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -328,11 +328,6 @@ namespace ArchtistStudio.Migrations
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
@@ -340,25 +335,9 @@ namespace ArchtistStudio.Migrations
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("Message")
+                    b.Property<string>("Location")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Purpose")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -371,11 +350,16 @@ namespace ArchtistStudio.Migrations
                     b.ToTable("Contact");
                 });
 
-            modelBuilder.Entity("ArchtistStudio.Modules.Dashboard.Dashboard", b =>
+            modelBuilder.Entity("ArchtistStudio.Modules.Email.Email", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -400,7 +384,7 @@ namespace ArchtistStudio.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Dashboard");
+                    b.ToTable("Email");
                 });
 
             modelBuilder.Entity("ArchtistStudio.Modules.Engineeing.Engineeing", b =>
@@ -622,7 +606,7 @@ namespace ArchtistStudio.Migrations
                     b.ToTable("New");
                 });
 
-            modelBuilder.Entity("ArchtistStudio.Modules.Overview.Overview", b =>
+            modelBuilder.Entity("ArchtistStudio.Modules.NewDescription.NewDescription", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -644,10 +628,6 @@ namespace ArchtistStudio.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
 
@@ -659,7 +639,44 @@ namespace ArchtistStudio.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Overview");
+                    b.ToTable("NewDescription");
+                });
+
+            modelBuilder.Entity("ArchtistStudio.Modules.PhoneNumber.PhoneNumber", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool?>("InActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PhoneNumber");
                 });
 
             modelBuilder.Entity("ArchtistStudio.Modules.Product.Product", b =>

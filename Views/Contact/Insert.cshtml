@@ -8,26 +8,6 @@
         <div class="col-md-12">
             <form asp-action="insert" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <!-- First row: Project Name, Location -->
-                <div class="row m-1">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="Name" class="control-label"></label>
-                            <input asp-for="Name" class="form-control" placeholder="Name" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="PhoneNumber" class="control-label"></label>
-                            <input asp-for="PhoneNumber" class="form-control" placeholder="Phone Number" />
-                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Second row: Image URL, Description -->
                 <div class="row m-1">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -38,26 +18,9 @@
                     </div>
                     <div class="col-md-6">
                          <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" placeholder="Email" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                 <!-- Second row: Image URL, Description -->
-                 <div class="row m-1">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label asp-for="Purpose" class="control-label"></label>
-                                 <textarea asp-for="Purpose" class="form-control" rows="3"  placeholder="Purpose" ></textarea>
-                            <span asp-validation-for="Purpose" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                         <div class="form-group">
-                            <label asp-for="Message" class="control-label"></label>
-                               <textarea asp-for="Message" class="form-control" rows="3"  placeholder="Message" ></textarea>
-                            <span asp-validation-for="Message" class="text-danger"></span>
+                            <label asp-for="Location" class="control-label"></label>
+                            <input asp-for="Location" class="form-control" placeholder="Location" />
+                            <span asp-validation-for="Location" class="text-danger"></span>
                         </div>
                     </div>
                 </div>

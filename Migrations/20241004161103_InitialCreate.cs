@@ -137,11 +137,7 @@ namespace ArchtistStudio.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ImagePath = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Purpose = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Message = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Location = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -156,10 +152,11 @@ namespace ArchtistStudio.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dashboard",
+                name: "Email",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Address = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -170,7 +167,7 @@ namespace ArchtistStudio.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dashboard", x => x.Id);
+                    table.PrimaryKey("PK_Email", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,11 +213,10 @@ namespace ArchtistStudio.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Overview",
+                name: "NewDescription",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ImagePath = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
@@ -232,7 +228,26 @@ namespace ArchtistStudio.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Overview", x => x.Id);
+                    table.PrimaryKey("PK_NewDescription", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhoneNumber",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Phone = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uuid", nullable: true),
+                    InActive = table.Column<bool>(type: "boolean", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhoneNumber", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -536,7 +551,7 @@ namespace ArchtistStudio.Migrations
                 name: "Contact");
 
             migrationBuilder.DropTable(
-                name: "Dashboard");
+                name: "Email");
 
             migrationBuilder.DropTable(
                 name: "Engineeing");
@@ -551,7 +566,10 @@ namespace ArchtistStudio.Migrations
                 name: "New");
 
             migrationBuilder.DropTable(
-                name: "Overview");
+                name: "NewDescription");
+
+            migrationBuilder.DropTable(
+                name: "PhoneNumber");
 
             migrationBuilder.DropTable(
                 name: "Product");
