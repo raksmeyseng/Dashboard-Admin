@@ -80,10 +80,11 @@ public class AboutController(
             item.ImagePath = Image;
         }
 
-        item.Expert = request.Expert ?? item.Expert;
+        item.Since = request.Since ?? item.Since;
+        item.We = request.We ?? item.We;
+        item.Version = request.Version ?? item.Version;
         item.Service = request.Service ?? item.Service;
-        item.ChooseUs = request.ChooseUs ?? item.ChooseUs;
-        item.Construction = request.Construction ?? item.Construction;
+         item.Process = request.Process ?? item.Process;
         item.UpdatedAt = DateTime.UtcNow;
 
         repository.Update(item);

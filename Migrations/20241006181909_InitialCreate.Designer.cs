@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArchtistStudio.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241004161103_InitialCreate")]
+    [Migration("20241006181909_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -31,14 +31,6 @@ namespace ArchtistStudio.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("ChooseUs")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Construction")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -51,10 +43,6 @@ namespace ArchtistStudio.Migrations
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Expert")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
@@ -62,7 +50,15 @@ namespace ArchtistStudio.Migrations
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Process")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Service")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Since")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -71,6 +67,14 @@ namespace ArchtistStudio.Migrations
 
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("We")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
