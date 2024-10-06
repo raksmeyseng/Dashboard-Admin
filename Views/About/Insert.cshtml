@@ -8,23 +8,31 @@
         <div class="col-md-12">
             <form asp-controller="about" asp-action="insert" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               
                 <div class="row m-1">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="Expert" class="control-label"></label>
-                            <textarea asp-for="Expert" class="form-control" rows="5" placeholder="Expert"></textarea>
-                            <span asp-validation-for="Expert" class="text-danger"></span>
+                            <label asp-for="Since" class="control-label"></label>
+                            <textarea asp-for="Since" class="form-control" rows="5" placeholder="Since" ></textarea>
+                            <span asp-validation-for="Since" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="Construction" class="control-label"></label>
-                            <textarea asp-for="Construction" class="form-control" rows="5" placeholder="Construction" ></textarea>
-                            <span asp-validation-for="Construction" class="text-danger"></span>
+                            <label asp-for="We" class="control-label"></label>
+                            <textarea asp-for="We" class="form-control" rows="5" placeholder="We" ></textarea>
+                            <span asp-validation-for="We" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
                 <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Version" class="control-label"></label>
+                            <textarea asp-for="Version" class="form-control" rows="5" placeholder="Version" ></textarea>
+                            <span asp-validation-for="Version" class="text-danger"></span>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="Service" class="control-label"></label>
@@ -32,11 +40,20 @@
                             <span asp-validation-for="Service" class="text-danger"></span>
                         </div>
                     </div>
+                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label asp-for="ImagePath" class="control-label"></label>
+                            <input type="file" asp-for="ImagePath" class="form-control" placeholder="Upload Image" />
+                            <span asp-validation-for="ImagePath" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                   <div class="row m-1">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label asp-for="ChooseUs" class="control-label"></label>
-                            <textarea asp-for="ChooseUs" class="form-control" rows="5" placeholder="ChooseUs" ></textarea>
-                            <span asp-validation-for="ChooseUs" class="text-danger"></span>
+                            <label asp-for="Process" class="control-label"></label>
+                            <textarea asp-for="Process" class="form-control" rows="5" placeholder="Process" ></textarea>
+                            <span asp-validation-for="Process" class="text-danger"></span>
                         </div>
                     </div>
                      <div class="col-md-12">
