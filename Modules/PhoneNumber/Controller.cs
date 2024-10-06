@@ -101,7 +101,7 @@ public class ApiPhoneNumberController(
     {
         var iQueryable = repository.FindBy(e => e.DeletedAt == null)
             .AsNoTracking();
-        var results = mapper.ProjectTo<ListPhoneNumberResponse>(iQueryable).FirstOrDefault();
+        var results = mapper.ProjectTo<ListPhoneNumberResponse>(iQueryable).ToList();
         return Ok(results);
     }
 }
