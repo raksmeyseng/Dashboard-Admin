@@ -134,4 +134,16 @@ public class ApiNewController(
         var results = mapper.ProjectTo<ListNewResponse>(iQueryable).ToList();
         return Ok(results);
     }
+
+    // === Get only ====//
+    [HttpGet("{id:guid}")]
+    public IActionResult Get(Guid id)
+    {
+        var iQueryable = repository.FindBy(e =>
+            e.Id == id &&
+            e.DeletedAt == null
+        ).AsNoTracking();
+        var result = mapper.ProjectTo<DetailNewResponse>(iQueryable).FirstOrDefault();
+        return result == null ? ItemNotFound() : Ok(result);
+    }
 }

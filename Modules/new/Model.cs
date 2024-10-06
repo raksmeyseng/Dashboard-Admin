@@ -9,6 +9,15 @@ public class ListNewResponse
 	public string Description { get; set; } = null!;
 	public DateTime Time { get; set; } 
 }
+
+public class DetailNewResponse
+{
+    public Guid Id { get; set; }
+  	public string ImagePath { get; set; } = null!;
+	public string Title { get; set; } = null!;
+	public string Description { get; set; } = null!;
+	public DateTime Time { get; set; } 
+}
  
 public class InsertNewRequest
 {
