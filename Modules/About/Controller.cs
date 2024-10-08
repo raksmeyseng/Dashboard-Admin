@@ -45,8 +45,41 @@ public class AboutController(
         }
         string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
+
+        if (request.ImagePathWe == null || request.ImagePathWe.Length == 0)
+        {
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
+        }
+        string ImageWe = fileUploadService.UploadFileAsync(request.ImagePathWe);
+
+        if (request.ImagePathVersion == null || request.ImagePathVersion.Length == 0)
+        {
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
+        }
+        string ImagePathVersion = fileUploadService.UploadFileAsync(request.ImagePathVersion);
+
+        if (request.ImagePathService == null || request.ImagePathService.Length == 0)
+        {
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
+        }
+        string ImagePathService = fileUploadService.UploadFileAsync(request.ImagePathService);
+
+        if (request.ImagePathProcess == null || request.ImagePathProcess.Length == 0)
+        {
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
+        }
+        string ImagePathProcess = fileUploadService.UploadFileAsync(request.ImagePathProcess);
+
         var item = mapper.Map<About>(request);
         item.ImagePath = Image;
+        item.ImagePathWe = ImageWe;
+        item.ImagePathVersion = ImagePathVersion;
+        item.ImagePathService = ImagePathService;
+        item.ImagePathProcess = ImagePathProcess;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -84,7 +117,7 @@ public class AboutController(
         item.We = request.We ?? item.We;
         item.Version = request.Version ?? item.Version;
         item.Service = request.Service ?? item.Service;
-         item.Process = request.Process ?? item.Process;
+        item.Process = request.Process ?? item.Process;
         item.UpdatedAt = DateTime.UtcNow;
 
         repository.Update(item);
@@ -92,7 +125,7 @@ public class AboutController(
 
         return RedirectToAction("gets");
     }
-        public IActionResult Error()
+    public IActionResult Error()
     {
         return View();
     }

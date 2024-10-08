@@ -44,6 +44,22 @@ namespace ArchtistStudio.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("ImagePathProcess")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathService")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathWe")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
 
@@ -328,10 +344,6 @@ namespace ArchtistStudio.Migrations
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");

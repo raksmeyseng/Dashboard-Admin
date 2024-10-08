@@ -7,7 +7,6 @@ namespace ArchtistStudio.Modules.Contact;
 
 public class Contact : AuditableEntity
 {
-       public string ImagePath { get; set; } = null!;
        public string Location { get; set; } = null!;
 }
 

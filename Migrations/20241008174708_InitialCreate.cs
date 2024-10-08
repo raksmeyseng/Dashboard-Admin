@@ -19,9 +19,13 @@ namespace ArchtistStudio.Migrations
                     ImagePath = table.Column<string>(type: "text", nullable: false),
                     Since = table.Column<string>(type: "text", nullable: false),
                     We = table.Column<string>(type: "text", nullable: false),
+                    ImagePathWe = table.Column<string>(type: "text", nullable: false),
                     Version = table.Column<string>(type: "text", nullable: false),
+                    ImagePathVersion = table.Column<string>(type: "text", nullable: false),
                     Service = table.Column<string>(type: "text", nullable: false),
+                    ImagePathService = table.Column<string>(type: "text", nullable: false),
                     Process = table.Column<string>(type: "text", nullable: false),
+                    ImagePathProcess = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -137,7 +141,6 @@ namespace ArchtistStudio.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ImagePath = table.Column<string>(type: "text", nullable: false),
                     Location = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<Guid>(type: "uuid", nullable: true),

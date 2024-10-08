@@ -22,7 +22,6 @@ public class ContactController(
     IPhoneNumberRepository phoneNumberRepository,
     IEmailRepository emailRepository,
     IContactRepository repository,
-    IFileUploadService fileUploadService,
     IRecommendRepository recommendRepository) : MyController
 {
     // === Gets ====//
@@ -78,15 +77,7 @@ public class ContactController(
             return RedirectToAction("error", "error");
         }
 
-        if (request.ImagePath == null || request.ImagePath.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
-
         var item = mapper.Map<Contact>(request);
-        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -120,13 +111,6 @@ public class ContactController(
               TempData["Message"] = "Data is available. Redirecting to insert.";
             return RedirectToAction("error", "error");
         }
-
-        if (request.ImagePath != null && request.ImagePath.Length > 0)
-        {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
-            item.ImagePath = Image;
-        }
-
         item.Location = request.Location ?? item.Location;
         item.UpdatedAt = DateTime.UtcNow;
 

@@ -9,7 +9,6 @@ public class ContactMapper : Profile
         CreateMap<Contact, ListContactResponse>();
         CreateMap<Contact, DetailContactResponse>();
         CreateMap<InsertContactRequest, Contact>();
-       CreateMap<Contact, UpdateContactRequest>()
-            .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
+       CreateMap<Contact, UpdateContactRequest>();
     }
 }

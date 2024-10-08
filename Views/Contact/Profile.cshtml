@@ -45,17 +45,10 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                         <hr class="border-light my-0">
                         <div class="card-body" style="max-height: 550px; overflow-y: auto;">
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <div class="border border-outline-secondary p-2 rounded-1">
-                                            <a class="text-decoration-none text-black" href="@Model.Item1?.ImagePath">Image Location</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <div class="border border-outline-secondary p-2 rounded-1">
-                                              <a class="text-decoration-none text-black" href=" @Model.Item1?.Location">Location</a>
+                                            Location: @Model.Item1?.Location
                                            </div>
                                     </div>
                                 </div>
@@ -63,7 +56,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="border border-outline-secondary p-2 rounded-1">Phonenumber:
+                                        <div class="border border-outline-secondary p-2 rounded-1">Phonenumber
                                             @foreach (var PhoneNumber in Model.Item4)
                                             {
                                                 <div
@@ -123,7 +116,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <div class="border border-outline-secondary p-2 rounded-1">Phonenumber:
+                                        <div class="border border-outline-secondary p-2 rounded-1">Email
                                             @foreach (var Email in Model.Item5)
                                             {
                                                 <div

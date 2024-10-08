@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArchtistStudio.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241008033304_InitialCreate")]
+    [Migration("20241008174708_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,6 +44,22 @@ namespace ArchtistStudio.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathProcess")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathService")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathVersion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePathWe")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -331,10 +347,6 @@ namespace ArchtistStudio.Migrations
 
                     b.Property<Guid?>("DeletedBy")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<bool?>("InActive")
                         .HasColumnType("boolean");
