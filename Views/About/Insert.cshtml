@@ -17,7 +17,7 @@
                             <span asp-validation-for="Since" class="text-danger"></span>
                         </div>
                     </div>
-                     <div class="col-md-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label asp-for="ImagePath" class="control-label"></label>
                             <input type="file" asp-for="ImagePath" class="form-control" placeholder="Upload Image" />
@@ -89,6 +89,24 @@
                             <input type="file" asp-for="ImagePathProcess" class="form-control"
                                 placeholder="Upload Image" />
                             <span asp-validation-for="ImagePathProcess" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-1">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label asp-for="Planning" class="control-label"></label>
+                            <textarea asp-for="Planning" class="form-control" rows="3"
+                                placeholder="Planning"></textarea>
+                            <span asp-validation-for="Planning" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="ImagePathPlanning" class="control-label"></label>
+                            <input type="file" asp-for="ImagePathPlanning" class="form-control"
+                                placeholder="Upload Image" />
+                            <span asp-validation-for="ImagePathPlanning" class="text-danger"></span>
                         </div>
                     </div>
                 </div>

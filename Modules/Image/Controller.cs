@@ -105,12 +105,11 @@ public class ImageController(
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
             return View(request);
         }
-        if (request.ImagePath == null || request.ImagePath.Length == 0)
+        if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+            image.ImagePath = Image;
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
         image.Description = request.Description ?? image.Description;
         image.UpdatedAt = DateTime.UtcNow;
@@ -154,11 +153,15 @@ public class ApiImageController(
     IImageRepository repository) : MyAdminController
 {
     [HttpGet]
-    public IActionResult Gets()
+    public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
-        var results = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking()
-            .Include(p => p.ImageShows)
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+                                   .AsNoTracking()
+                                   .Include(p => p.ImageShows);
+        var pagedResults = iQueryable
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .Select(s => new DatailImageResponse
             {
                 ImagePath = s.ImagePath,
@@ -167,10 +170,11 @@ public class ApiImageController(
                 {
                     ImagePath = img.ImagePath,
                     Description = img.Description
-                }).ToList(),
+                }).ToList()
             })
             .ToList();
 
-        return Ok(results);
+        return Ok(pagedResults);
     }
+
 }

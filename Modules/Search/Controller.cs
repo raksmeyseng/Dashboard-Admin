@@ -11,7 +11,7 @@ public class SearchController(
     IProjectRepository projectrepository) : MyAdminController
 {
     [HttpGet("project")]
-    public IActionResult GetByCategorySearchId([FromQuery] string? ProjectName)
+    public IActionResult GetByCategorySearchId([FromQuery] string? ProjectName, int pageNumber = 1, int pageSize = 10)
     {
         if (string.IsNullOrWhiteSpace(ProjectName))
         {
@@ -23,14 +23,17 @@ public class SearchController(
             .Include(p => p.Images)
             .ToList();
 
-
         if (allProjects == null || allProjects.Count == 0)
         {
             return Ok(new List<GetSearchByProjectResponse>());
         }
 
-        var projects = allProjects
-            .Where(p => p.ProjectName.Contains(ProjectName, StringComparison.OrdinalIgnoreCase))
+        var filteredProjects = allProjects
+            .Where(p => p.ProjectName.Contains(ProjectName, StringComparison.OrdinalIgnoreCase));
+
+        var pagedProjects = filteredProjects
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .Select(s => new GetSearchByProjectResponse
             {
                 Project = new ListProjectResponse
@@ -46,10 +49,12 @@ public class SearchController(
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty
                     }).ToList() ?? []
-                },
+                }
             })
             .ToList();
-        return Ok(projects);
+
+        return Ok(pagedProjects);
     }
+
 
 }

@@ -17,6 +17,8 @@ public class About : AuditableEntity
        public string ImagePathService { get; set; } = null!;
        public string Process { get; set; } = null!;
        public string ImagePathProcess { get; set; } = null!;
+       public string Planning { get; set; } = null!;
+       public string ImagePathPlanning { get; set; } = null!;
 
 }
 

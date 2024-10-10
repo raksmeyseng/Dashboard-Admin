@@ -101,15 +101,20 @@ public class ProjectController(
 }
 
 public class ApiProjectController(
-    IMapper mapper, 
+    IMapper mapper,
     IProjectRepository repository) : MyAdminController
 {
     [HttpGet]
-    public IActionResult Gets()
+    public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<ListProjectResponse>(iQueryable).ToList();
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var pagedData = iQueryable
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+
+        var results = mapper.ProjectTo<ListProjectResponse>(pagedData).ToList();
+
         return Ok(results);
     }
 }

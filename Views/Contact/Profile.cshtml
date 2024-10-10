@@ -1,32 +1,15 @@
 @model Tuple<ArchtistStudio.Modules.Contact.DetailContactResponse,
 List<ArchtistStudio.Modules.Social.ListSocialResponse>,
-List<ArchtistStudio.Modules.TopManagement.ListTopManagementResponse>,
 List<ArchtistStudio.Modules.PhoneNumber.ListPhoneNumberResponse>,
-List<ArchtistStudio.Modules.Email.ListEmailResponse> ,
-List<ArchtistStudio.Modules.History.ListHistoryResponse>,
-List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
+List<ArchtistStudio.Modules.Email.ListEmailResponse>> 
 
 <div class="container light-style flex-grow-1 container-p-y">
     <h4 class="font-weight-bold py-3 mb-4">Account Settings</h4>
 
     <div class="card overflow-hidden">
         <div class="row no-gutters row-bordered row-border-light">
-            <div class="col-md-3 pt-0">
-                <div class="list-group list-group-flush account-settings-links">
-                    <a class="list-group-item list-group-item-action active" data-bs-toggle="list"
-                        href="#account-general">General</a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
-                        href="#account-history">History</a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
-                        href="#account-top-management">Top Management</a>
-                    <a class="list-group-item list-group-item-action" data-bs-toggle="list"
-                        href="#account-top-notification">Notification</a>
-                </div>
-            </div>
-
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="tab-content">
-                    <!-- General Tab -->
                     <div class="tab-pane fade show active" id="account-general">
                         <div class="card-body media align-items-center row p-3">
                             <div class="col pl-3">
@@ -49,7 +32,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                     <div class="form-group">
                                         <div class="border border-outline-secondary p-2 rounded-1">
                                             Location: @Model.Item1?.Location
-                                           </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +40,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="border border-outline-secondary p-2 rounded-1">Phonenumber
-                                            @foreach (var PhoneNumber in Model.Item4)
+                                            @foreach (var PhoneNumber in Model.Item3)
                                             {
                                                 <div
                                                     class="list-group-item d-flex justify-content-between align-items-center">
@@ -117,7 +100,7 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="border border-outline-secondary p-2 rounded-1">Email
-                                            @foreach (var Email in Model.Item5)
+                                            @foreach (var Email in Model.Item4)
                                             {
                                                 <div
                                                     class="list-group-item d-flex justify-content-between align-items-center">
@@ -247,254 +230,6 @@ List<ArchtistStudio.Modules.Recommend.ListRecommendResponse>>
                             <a href="/contact/insert" class="btn btn-outline-dark">Insert Contact</a>
                             <a href="@Url.Action("update", "contact", new { id = Model.Item1?.Id })"
                                 class="btn btn-outline-dark">Edit Contact</a>
-                        </div>
-                    </div>
-
-                    <!-- Management Tab -->
-                    <div class="tab-pane fade" id="account-top-management">
-                        <div class="card-body media align-items-center row p-3">
-                            <div class="col pl-3">
-                                <h4 class="font-weight-bold">
-                                    @if (User.Identity?.IsAuthenticated == true)
-                                    {
-                                        @User.Identity.Name
-                                    }
-                                    else
-                                    {
-                                        <p>Guest</p>
-                                    }
-                                </h4>
-                            </div>
-                        </div>
-
-                        <hr class="border-light my-0">
-
-                        <div class="card-body" style="max-height: 550px; overflow-y: auto;">
-                            <!-- Scrollable List Group -->
-                            <div class="list-group list-group-flush">
-                                @foreach (var topmanagement in Model.Item3)
-                                {
-                                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <!-- Image and Text Section -->
-                                        <div class="d-flex align-items-start">
-                                            <div class="me-3">
-                                                <!-- Profile Image -->
-                                                <img src="https://arhcitecture-image.s3.ap-southeast-1.amazonaws.com/@topmanagement.ImagePath"  alt="@topmanagement.Name"
-                                                    class="rounded-circle"
-                                                    style="width: 100px; height: 100px; object-fit: cover;">
-                                            </div>
-
-                                            <div class="d-flex flex-column">
-                                                <!-- Name and Description -->
-                                                <h6 class="mb-1">@topmanagement.Name</h6>
-                                                <p class="mb-0">@topmanagement.Description</p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Action Buttons -->
-                                        <div class="d-flex align-items-center">
-                                            <a asp-controller="topmanagement"
-                                                asp-action="update" asp-route-id="@topmanagement.Id"><i
-                                                                class="fa fa-edit fa-lg text-info"
-                                                                aria-hidden="true"></i></a>
-                                            <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal-@topmanagement.Id">    
-                                                            <i class="fa fa-trash" aria-hidden="true"></i></button>
-
-                                            <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteModal-@topmanagement.Id" tabindex="-1"
-                                                aria-labelledby="deleteModalLabel-@topmanagement.Id" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModalLabel-@topmanagement.Id">
-                                                                Confirm Deletion</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Are you sure you want to delete this item?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form asp-controller="topmanagement" asp-action="delete"
-                                                                asp-route-id="@topmanagement.Id" method="post">
-                                                                @Html.AntiForgeryToken()
-                                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                                            </form>
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-
-                        <div class="text-end m-2">
-                            <a href="/topmanagement/insert" class="btn btn-outline-dark">Insert TopManagement</a>
-                        </div>
-                    </div>
-
-                    <!-- History Tab -->
-                    <div class="tab-pane fade" id="account-history">
-                        <div class="card-body media align-items-center row p-3">
-                            <div class="col pl-3">
-                                <h4 class="font-weight-bold">
-                                    @if (User.Identity?.IsAuthenticated == true)
-                                    {
-                                        @User.Identity.Name
-                                    }
-                                    else
-                                    {
-                                        <p>Guest</p>
-                                    }
-                                </h4>
-                            </div>
-                        </div>
-
-                        <hr class="border-light my-0">
-
-                        <div class="card-body" style="max-height: 550px; overflow-y: auto;">
-                            <div class="list-group list-group-flush">
-                                @foreach (var history in Model.Item6)
-                                {
-                                    <div class="list-group-item d-flex justify-content-between align-items-start">
-                                        <!-- Content Section -->
-                                        <div class="flex-grow-1">
-                                            <div class="border border-outline-secondary p-2 rounded-1">
-                                                <h6>@history.Name</h6>
-                                                <p>@history.Description</p>
-                                            </div>
-                                        </div>
-
-                                        <!-- Action Buttons -->
-                                        <div class="d-flex align-items-center ms-3">
-                                            <a asp-controller="history"
-                                                asp-action="update" asp-route-id="@history.Id"><i
-                                                                class="fa fa-edit fa-lg text-info"
-                                                                aria-hidden="true"></i></a>
-                                            <button type="button"  class="btn btn-link text-danger" data-bs-toggle="modal"
-                                                data-bs-target="#deleteModal-@history.Id">  
-                                                            <i class="fa fa-trash" aria-hidden="true"></i></button>
-
-                                            <!-- Delete Modal -->
-                                            <div class="modal fade" id="deleteModal-@history.Id" tabindex="-1"
-                                                aria-labelledby="deleteModalLabel-@history.Id" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="deleteModalLabel-@history.Id">
-                                                                Confirm Deletion</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Are you sure you want to delete this item?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <form asp-controller="history" asp-action="delete"
-                                                                asp-route-id="@history.Id" method="post">
-                                                                @Html.AntiForgeryToken()
-                                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                                            </form>
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-
-                        </div>
-                        <div class="text-end m-2">
-                            <a href="/history/insert" class="btn btn-outline-dark">Insert History</a>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="account-top-notification">
-                        <div class="card-body media align-items-center row p-3">
-                            <div class="col pl-3">
-                                <h4 class="font-weight-bold">
-                                    @if (User.Identity?.IsAuthenticated == true)
-                                    {
-                                        @User.Identity.Name
-                                    }
-                                    else
-                                    {
-                                        <p>Guest</p>
-                                    }
-                                </h4>
-                            </div>
-                        </div>
-
-                        <hr class="border-light my-0">
-
-                        <div class="card-body" style="max-height: 550px; overflow-y: auto;">
-                            <div class="list-group list-group-flush">
-                                <div class="border border-outline-secondary p-2 rounded-1">
-                                    <h5>Recommand</h5>
-                                    <ul class="list-group list-group-flush">
-                                        @foreach (var notification in Model.Item7)
-                                        {
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <div>
-                                                    <div class="form-group">
-                                                        <div class="border border-outline-secondary p-2 rounded-1">
-                                                            <h6>
-                                                                <a href="mailto:@notification.Email"
-                                                                    class="text-decoration-none">@notification.Name</a>
-                                                            </h6>
-                                                            @notification.Description
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <button type="button"   class="btn btn-link text-danger"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#deleteModal-@notification.Id"> 
-                                                            <i class="fa fa-trash" aria-hidden="true"></i></button>
-                                                    <!-- Delete Modal -->
-                                                    <div class="modal fade" id="deleteModal-@notification.Id" tabindex="-1"
-                                                        aria-labelledby="deleteModalLabel-@notification.Id"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title"
-                                                                        id="deleteModalLabel-@notification.Id">Confirm
-                                                                        Deletion</h5>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    Are you sure you want to delete this item?
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <form asp-controller="recommend" asp-action="delete"
-                                                                        asp-route-id="@notification.Id" method="post">
-                                                                        @Html.AntiForgeryToken()
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger">Delete</button>
-                                                                    </form>
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>

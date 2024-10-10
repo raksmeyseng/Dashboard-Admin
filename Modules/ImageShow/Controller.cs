@@ -108,13 +108,11 @@ public class ImageShowController(
             ModelState.AddModelError("ProjectId", "Invalid Project ID.");
             return View(request);
         }
-        if (request.ImagePath == null || request.ImagePath.Length == 0)
+        if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            ModelState.AddModelError("Images", "Image file is required.");
-            return View(request);
+            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+            ImageShow.ImagePath = Image;
         }
-        var Image = fileUploadService.UploadFileAsync(request.ImagePath);
-
         ImageShow.Description = request.Description ?? ImageShow.Description;
         ImageShow.UpdatedAt = DateTime.UtcNow;
 
@@ -158,11 +156,16 @@ public class ApiImageShowController(
     IImageShowRepository repository) : MyAdminController
 {
     [HttpGet]
-    public IActionResult Gets()
+    public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
     {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<DatailImageShowResponse>(iQueryable).ToList();
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null).AsNoTracking();
+        var pagedData = iQueryable
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize);
+
+        var results = mapper.ProjectTo<ListImageShowResponse>(pagedData).ToList();
+
         return Ok(results);
     }
 }

@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Social;
-using ArchtistStudio.Modules.About;
-using ArchtistStudio.Modules.TopManagement;
-using ArchtistStudio.Modules.History;
-using ArchtistStudio.Modules.Recommend;
 using ArchtistStudio.Modules.PhoneNumber;
 using ArchtistStudio.Modules.Email;
 
@@ -17,12 +13,9 @@ namespace ArchtistStudio.Modules.Contact;
 public class ContactController(
     IMapper mapper,
     ISocialRepository socialRepository,
-    IHistoryRepository historyRepository,
-    ITopManagementRepository topManagementRepository,
     IPhoneNumberRepository phoneNumberRepository,
     IEmailRepository emailRepository,
-    IContactRepository repository,
-    IRecommendRepository recommendRepository) : MyController
+    IContactRepository repository) : MyController
 {
     // === Gets ====//
     [HttpGet]
@@ -33,30 +26,15 @@ public class ContactController(
 
         var socialQueryable = socialRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var socialLinks = mapper.ProjectTo<ListSocialResponse>(socialQueryable).ToList();
-
-        var topmanagemetnQueryable = topManagementRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var topmanagemetnLinks = mapper.ProjectTo<ListTopManagementResponse>(topmanagemetnQueryable).ToList();
-
         var phoneNumberQueryable = phoneNumberRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var phoneNumberLinks = mapper.ProjectTo<ListPhoneNumberResponse>(phoneNumberQueryable).ToList();
-
         var emailQueryable = emailRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
         var emailLinks = mapper.ProjectTo<ListEmailResponse>(emailQueryable).ToList();
-
-        var historyQueryable = historyRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var historyLinks = mapper.ProjectTo<ListHistoryResponse>(historyQueryable).ToList();
-
-        var recommendiQueryable = recommendRepository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var recommendLinks = mapper.ProjectTo<ListRecommendResponse>(recommendiQueryable).ToList();
-
-        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>, List<ListTopManagementResponse>,List<ListPhoneNumberResponse>,List<ListEmailResponse>, List<ListHistoryResponse>, List<ListRecommendResponse>>(
+        var response = new Tuple<DetailContactResponse, List<ListSocialResponse>,List<ListPhoneNumberResponse>,List<ListEmailResponse>>(
             contactLink ?? new DetailContactResponse(),
             socialLinks ?? [],
-            topmanagemetnLinks ?? [],
             phoneNumberLinks ?? [],
-            emailLinks ?? [],
-            historyLinks ?? [],
-            recommendLinks ?? []
+            emailLinks ?? []
         );
 
         return View(response);

@@ -73,6 +73,12 @@ public class AboutController(
             return View(request);
         }
         string ImagePathProcess = fileUploadService.UploadFileAsync(request.ImagePathProcess);
+        if (request.ImagePathPlanning == null || request.ImagePathPlanning.Length == 0)
+        {
+            ModelState.AddModelError("Image", "Image file is required.");
+            return View(request);
+        }
+        string ImagePathPlanning = fileUploadService.UploadFileAsync(request.ImagePathPlanning);
 
         var item = mapper.Map<About>(request);
         item.ImagePath = Image;
@@ -80,6 +86,7 @@ public class AboutController(
         item.ImagePathVersion = ImagePathVersion;
         item.ImagePathService = ImagePathService;
         item.ImagePathProcess = ImagePathProcess;
+        item.ImagePathPlanning = ImagePathPlanning;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -112,12 +119,40 @@ public class AboutController(
             string Image = fileUploadService.UploadFileAsync(request.ImagePath);
             item.ImagePath = Image;
         }
+        if (request.ImagePathWe != null && request.ImagePathWe.Length > 0)
+        {
+            string Image = fileUploadService.UploadFileAsync(request.ImagePathWe);
+            item.ImagePathWe = Image;
+        }
+        if (request.ImagePathVersion != null && request.ImagePathVersion.Length > 0)
+        {
+            string Image = fileUploadService.UploadFileAsync(request.ImagePathVersion);
+            item.ImagePathVersion = Image;
+        }
+        if (request.ImagePathService != null && request.ImagePathService.Length > 0)
+        {
+            string Image = fileUploadService.UploadFileAsync(request.ImagePathService);
+            item.ImagePathService = Image;
+        }
+        if (request.ImagePathProcess != null && request.ImagePathProcess.Length > 0)
+        {
+            string Image = fileUploadService.UploadFileAsync(request.ImagePathProcess);
+            item.ImagePathProcess = Image;
+        }
+        if (request.ImagePathPlanning != null && request.ImagePathPlanning.Length > 0)
+        {
+            string Image = fileUploadService.UploadFileAsync(request.ImagePathPlanning);
+            item.ImagePathPlanning = Image;
+        }
+
+
 
         item.Since = request.Since ?? item.Since;
         item.We = request.We ?? item.We;
         item.Version = request.Version ?? item.Version;
         item.Service = request.Service ?? item.Service;
         item.Process = request.Process ?? item.Process;
+         item.Planning = request.Planning ?? item.Planning;
         item.UpdatedAt = DateTime.UtcNow;
 
         repository.Update(item);
