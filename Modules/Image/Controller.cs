@@ -15,13 +15,38 @@ public class ImageController(
 {
     // === Gets ====//
     [HttpGet]
-    public IActionResult Gets()
+    public IActionResult Gets([FromQuery] string? projectame, int pageNumber = 1, int pageSize = 13)
     {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
+        var iQueryable = repository
+            .FindBy(e => e.DeletedAt == null)
+            .Include(image => image.Project)
             .AsNoTracking();
-        var results = mapper.ProjectTo<ListImageResponse>(iQueryable).ToList();
+
+        if (!string.IsNullOrEmpty(projectame))
+        {
+            var searchTerm = projectame.ToLower();
+            iQueryable = iQueryable.Where(e => e.Project.ProjectName.ToLower().Contains(searchTerm));
+        }
+
+        var totalItems = iQueryable.Count();
+        var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+        var pagedData = iQueryable
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var results = mapper.ProjectTo<ListImageResponse>(pagedData.AsQueryable()).ToList();
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.CurrentPage = pageNumber;
+        ViewBag.SearchQuery = projectame;
+
         return View(results);
     }
+
+
 
     [HttpGet]
     public IActionResult Insert(Guid id)

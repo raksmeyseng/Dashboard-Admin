@@ -10,6 +10,8 @@ public class ListProjectResponse
 	public string Status { get; set; } = null!;
 	public string Location { get; set; } = null!;
 	public List<Image.DatailImageResponse> Images { get; set; } = [];
+	public int ImageCount { get; set; }
+	public int ImageShowCount { get; set; }
 	public bool? InActive { get; set; }
 }
 

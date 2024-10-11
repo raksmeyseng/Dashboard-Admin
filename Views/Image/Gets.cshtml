@@ -4,24 +4,40 @@
     <h4 class="font-weight-bold py-3 mb-4">
         Information Image
     </h4>
-    <div class="text-end m-2">
-        <a class="text-decoration-none btn btn-outline-dark" href="/imageshow/gets">Slide Show</a>
-        <a class="text-decoration-none btn btn-outline-dark" href="/project/gets"> Back to Project</a>
+    <div class="d-flex justify-content-between m-2">
+        <div class="mb-3">
+            <form method="get" asp-action="gets" class="mb-3">
+                <div class="input-group rounded">
+                    <input type="text" name="projectame" value="@ViewBag.SearchQuery"
+                        placeholder="Search by Project Name" class="form-control"
+                        style="width: 300px; height: 40px; border: 1px solid black;" />
+                    <input type="hidden" name="pageNumber" value="@ViewBag.CurrentPage" />
+                    <span class="input-group-text " id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <div class="button-row text-end m-2">
+            <a class="text-decoration-none btn btn-outline-dark" href="/imageshow/gets">Image Slide</a>
+            <a class="text-decoration-none btn btn-outline-dark" href="/project/gets"> Back to Project</a>
+        </div>
     </div>
     <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
         <table class="table table-Secondary table-striped">
             <thead>
                 <tr>
                     <th scope="col">No</th>
-                    <th scope="col">ProjectName</th>
-                    <th scope="col">ImagePath</th>
+                    <th scope="col">Project Name</th>
+                    <th scope="col">Image Path</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model != null && Model.Any())
                 {
-                    int index = 1;
+                    int index = 1 + ((ViewBag.CurrentPage - 1) * 13);
                     foreach (var item in Model)
                     {
                         <tr>
@@ -30,14 +46,14 @@
                             <td>@Html.DisplayFor(model => item.ImagePath)</td>
                             <td>
                                 <a class="text-decoration-none btn btn-outline-dark" asp-controller="imageshow"
-                                    asp-action="insert" asp-route-id="@item.Id"><i class="fa fa-plus-square p-1" aria-hidden="true"></i>SlideShow</a>
-                                <a asp-controller="image" asp-action="update"
-                                    asp-route-id="@item.Id">
-                                    <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i> 
+                                    asp-action="insert" asp-route-id="@item.Id"><i class="fa fa-plus-square p-1"
+                                        aria-hidden="true"></i>Image Slide</a>
+                                <a asp-controller="image" asp-action="update" asp-route-id="@item.Id">
+                                    <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i>
                                 </a>
                                 <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal-@item.Id">
-                                       <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </button>
                                 <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1"
                                     aria-labelledby="deleteModalLabel-@item.Id" aria-hidden="true">
@@ -79,5 +95,35 @@
             </tbody>
         </table>
     </div>
+    <nav aria-label="Page navigation" class="text-end">
+        <ul class="pagination justify-content-center">
+            @if (ViewBag.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Gets" asp-route-pageNumber="@(ViewBag.CurrentPage - 1)"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" asp-action="Gets" asp-route-pageNumber="@i">@i</a>
+                </li>
+            }
+
+            @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-action="Gets" asp-route-pageNumber="@(ViewBag.CurrentPage + 1)"
+                        aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
 
 </div>

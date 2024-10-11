@@ -15,25 +15,42 @@ public class NewController(
 
     // === Gets ====//
     [HttpGet]
-    public IActionResult Gets()
+    public IActionResult Gets([FromQuery] string? Title, int pageNumber = 1, int pageSize = 11)
     {
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
 
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null).AsNoTracking();
-        var NewLink = mapper.ProjectTo<ListNewResponse>(iQueryable).ToList();
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
 
+        if (!string.IsNullOrEmpty(Title))
+        {
+            var searchTerm = Title.ToLower();
+            iQueryable = iQueryable.Where(e => e.Title.ToLower().Contains(searchTerm));
+        }
+
+        var totalItems = iQueryable.Count();
+        var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+        var pagedData = iQueryable
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var newLink = mapper.ProjectTo<ListNewResponse>(pagedData.AsQueryable()).ToList();
         var newDescriptionQueryable = newDescriptionRepository.GetSingle(e => e.DeletedAt == null);
         var newDescriptionLink = mapper.Map<ListNewDescriptionResponse>(newDescriptionQueryable);
 
-
         var response = new Tuple<List<ListNewResponse>, ListNewDescriptionResponse>(
-            NewLink ?? [],
+            newLink ?? [],
             newDescriptionLink ?? new ListNewDescriptionResponse()
-
         );
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.CurrentPage = pageNumber;
+        ViewBag.SearchQuery = Title;
 
         return View(response);
     }
-
+    
     // === Post ====//
     public IActionResult Insert()
     {

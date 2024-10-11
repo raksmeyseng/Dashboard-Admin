@@ -14,15 +14,38 @@ public class ImageShowController(
     IImageRepository imageRepository) : MyController
 {
     // === Gets ====//
-    [HttpGet]
-    public IActionResult Gets()
-    {
-        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-            .AsNoTracking();
-        var results = mapper.ProjectTo<ListImageShowResponse>(iQueryable).ToList();
-        return View(results);
-    }
+      [HttpGet]
+public IActionResult Gets([FromQuery] string? projectame, int pageNumber = 1, int pageSize = 13)
+{
+    pageNumber = pageNumber < 1 ? 1 : pageNumber;
+    var iQueryable = repository
+        .FindBy(e => e.DeletedAt == null)
+        .Include(slideimage => slideimage.Image.Project) 
+        .AsNoTracking();
 
+      if (!string.IsNullOrEmpty(projectame))
+        {
+            var searchTerm = projectame.ToLower();
+            iQueryable = iQueryable.Where(e => e.Image.Project.ProjectName.ToLower().Contains(searchTerm));
+        }
+
+    var totalItems = iQueryable.Count();
+    var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+    var pagedData = iQueryable
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+
+    var results = mapper.ProjectTo<ListImageShowResponse>(pagedData.AsQueryable()).ToList();
+
+    ViewBag.TotalPages = totalPages;
+    ViewBag.CurrentPage = pageNumber;
+    ViewBag.SearchQuery = projectame;
+
+    return View(results);
+}
+ 
     [HttpGet]
     public IActionResult Insert(Guid id)
     {
@@ -164,7 +187,7 @@ public class ApiImageShowController(
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize);
 
-        var results = mapper.ProjectTo<ListImageShowResponse>(pagedData).ToList();
+        var results = mapper.ProjectTo<DatailImageShowResponse>(pagedData).ToList();
 
         return Ok(results);
     }
