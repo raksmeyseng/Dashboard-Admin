@@ -12,58 +12,58 @@ public class ProjectController(
 {
     // === Get All ====//
     [HttpGet]
-public IActionResult Gets([FromQuery] string? projectame, int pageNumber = 1, int pageSize = 13)
-{
-    pageNumber = pageNumber < 1 ? 1 : pageNumber;
-    var iQueryable = repository.FindBy(e => e.DeletedAt == null)
-        .AsNoTracking();
-
-    if (!string.IsNullOrWhiteSpace(projectame))
+    public IActionResult Gets([FromQuery] string? projectame, int pageNumber = 1, int pageSize = 13)
     {
-        var searchTerm = projectame.ToLower();
-        iQueryable = iQueryable.Where(e => e.ProjectName.ToLower().Contains(searchTerm));
-    }
+        pageNumber = pageNumber < 1 ? 1 : pageNumber;
+        var iQueryable = repository.FindBy(e => e.DeletedAt == null)
+            .AsNoTracking();
 
-    var projectQuery = iQueryable.Select(project => new ListProjectResponse
-    {
-        Id = project.Id,
-        ProjectType = project.ProjectType,
-        ProjectName = project.ProjectName,
-        Client = project.Client,
-        Size = project.Size,
-        Status = project.Status,
-        Location = project.Location,
-        Images = project.Images.Select(image => new Image.DatailImageResponse
+        if (!string.IsNullOrWhiteSpace(projectame))
         {
-            Id = image.Id,
-            ImageShows = image.ImageShows.Select(imageshow => new ImageShow.DatailImageShowResponse
+            var searchTerm = projectame.ToLower();
+            iQueryable = iQueryable.Where(e => e.ProjectName.ToLower().Contains(searchTerm));
+        }
+
+        var projectQuery = iQueryable.Select(project => new ViewListProjectResponse
+        {
+            Id = project.Id,
+            ProjectType = project.ProjectType,
+            ProjectName = project.ProjectName,
+            Client = project.Client,
+            Size = project.Size,
+            Status = project.Status,
+            Location = project.Location,
+            Images = project.Images.Select(image => new Image.DatailImageResponse
             {
-                Id = imageshow.Id,
+                Id = image.Id,
+                ImageShows = image.ImageShows.Select(imageshow => new ImageShow.DatailImageShowResponse
+                {
+                    Id = imageshow.Id,
+                }).ToList(),
             }).ToList(),
-        }).ToList(),
-        InActive = project.InActive,
-        ImageCount = project.Images.Count,
-        ImageShowCount = project.Images.Sum(image => image.ImageShows.Count)
-    });
+            InActive = project.InActive,
+            ImageCount = project.Images.Count,
+            ImageShowCount = project.Images.Sum(image => image.ImageShows.Count)
+        });
 
-    // Calculate total records and total pages
-    var totalRecords = projectQuery.Count();
-    var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+        // Calculate total records and total pages
+        var totalRecords = projectQuery.Count();
+        var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
-    // Paginate the results
-    var results = projectQuery
-        .Skip((pageNumber - 1) * pageSize)
-        .Take(pageSize)
-        .ToList();
+        // Paginate the results
+        var results = projectQuery
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
 
-    // Pass values to ViewBag for pagination and search state
-    ViewBag.CurrentPage = pageNumber;
-    ViewBag.TotalPages = totalPages;
-    ViewBag.SearchQuery = projectame;
+        // Pass values to ViewBag for pagination and search state
+        ViewBag.CurrentPage = pageNumber;
+        ViewBag.TotalPages = totalPages;
+        ViewBag.SearchQuery = projectame;
 
-    // Return the results to the view
-    return View(results);
-}
+        // Return the results to the view
+        return View(results);
+    }
 
 
 
