@@ -15,7 +15,7 @@ public class NewController(
 
     // === Gets ====//
     [HttpGet]
-    public IActionResult Gets([FromQuery] string? Title, int pageNumber = 1, int pageSize = 11)
+    public IActionResult Gets([FromQuery] string? Title, int pageNumber = 1, int pageSize = 10)
     {
         pageNumber = pageNumber < 1 ? 1 : pageNumber;
 
@@ -50,7 +50,7 @@ public class NewController(
 
         return View(response);
     }
-    
+
     // === Post ====//
     public IActionResult Insert()
     {

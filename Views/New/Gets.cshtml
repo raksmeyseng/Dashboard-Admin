@@ -38,7 +38,7 @@ ArchtistStudio.Modules.NewDescription.ListNewDescriptionResponse>
         </div>
     </div>
 
-    <div class="list-group list-group-flush" style="max-height: 80vh; overflow-y: auto;">
+    <div class="list-group list-group-flush responsive-table-container">
         <table class="table table-Secondary table-striped">
             <thead>
                 <tr>
@@ -51,7 +51,7 @@ ArchtistStudio.Modules.NewDescription.ListNewDescriptionResponse>
             <tbody>
                 @if (Model != null && Model.Item1.Any())
                 {
-                    int index = 1 + ((ViewBag.CurrentPage - 1) * 11);
+                    int index = 1 + ((ViewBag.CurrentPage - 1) * 10);
                     foreach (var item in Model.Item1)
                     {
                         <tr>
