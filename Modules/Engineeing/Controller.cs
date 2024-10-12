@@ -24,6 +24,7 @@ public class EngineeingController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -69,6 +70,7 @@ public class EngineeingController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -140,6 +142,7 @@ public class EngineeingController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())

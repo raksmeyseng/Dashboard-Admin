@@ -23,6 +23,7 @@ public class ProductController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .Select(s => new GetCategoryProductByProductResponse
             {
                 ProjectId = s.Id,
@@ -68,6 +69,7 @@ public class ProductController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -139,6 +141,7 @@ public class ProductController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
+            .Include(p => p.ImageSlides)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
