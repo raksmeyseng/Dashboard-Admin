@@ -4,7 +4,7 @@ using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.CategoryArchitecture;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
-using ArchtistStudio.Modules.ImageShow;
+using ArchtistStudio.Modules.ImageSlide;
 
 namespace ArchtistStudio.Modules.Architecture;
 
@@ -23,7 +23,6 @@ public class ArchitectureController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows)
             .Select(s => new GetCategoryArchitectureByArchitectureResponse
             {
                 ProjectId = s.Id,
@@ -39,11 +38,11 @@ public class ArchitectureController(
                     {
                         ImagePath = img.ImagePath,
                         Description = img.Description,
-                        ImageShows = img.ImageShows.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath,
-                            Description = showImg.Description
-                        }).ToList()
+                    }).ToList(),
+                    ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath,
+                        Description = img.Description,
                     }).ToList(),
                 }
             })
@@ -69,7 +68,6 @@ public class ArchitectureController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -96,12 +94,12 @@ public class ArchitectureController(
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty,
-                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath ?? string.Empty,
-                            Description = showImg.Description ?? string.Empty,
-                        }).ToList() ?? []
-                    }).ToList() ?? []
+                    }).ToList() ?? [],
+                    ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
                 },
                 Checked = false
             })
@@ -123,7 +121,7 @@ public class ArchitectureController(
         }
 
         var paginatedProjects = filteredProjects
-            .Skip((pageNumber - 1) * pageSize) 
+            .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToList();
 
@@ -141,7 +139,6 @@ public class ArchitectureController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ThenInclude(img => img.ImageShows)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -167,12 +164,12 @@ public class ArchitectureController(
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty,
-                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath ?? string.Empty,
-                            Description = showImg.Description ?? string.Empty,
-                        }).ToList() ?? []
-                    }).ToList() ?? []
+                    }).ToList() ?? [],
+                    ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
                 },
                 Checked = false
             })
@@ -194,8 +191,8 @@ public class ArchitectureController(
         }
 
         var paginatedProjects = projects
-            .Skip((pageNumber - 1) * pageSize) 
-            .Take(pageSize) 
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToList();
 
         return Ok(paginatedProjects);

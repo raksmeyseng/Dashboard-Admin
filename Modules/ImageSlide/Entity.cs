@@ -3,9 +3,9 @@ using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ArchtistStudio.Modules.Image;
+namespace ArchtistStudio.Modules.ImageSlide;
 
-public class Image : AuditableEntity
+public class ImageSlide : AuditableEntity
 {
 	public string ImagePath { get; set; } = null!;
 	public string Description { get; set; } = null!;
@@ -13,12 +13,12 @@ public class Image : AuditableEntity
 	public Project.Project Project { get; set; } = null!;
 }
 
-public class ImageConfig : IEntityTypeConfiguration<Image>
+public class ImageSlideConfig : IEntityTypeConfiguration<ImageSlide>
 {
-	public void Configure(EntityTypeBuilder<Image> builder)
+	public void Configure(EntityTypeBuilder<ImageSlide> builder)
 	{
 		builder.HasOne(o => o.Project)
-				.WithMany(m => m.Images)
+				.WithMany(m => m.ImageSlides)
 				.HasForeignKey(k => k.ProjectId);
 	}
 }

@@ -10,7 +10,7 @@ public class New : AuditableEntity
 	public string ImagePath { get; set; } = null!;
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public DateTime? Time { get; set; }
+	public DateOnly? Time { get; set; }
 }
 
 public class NewConfig : IEntityTypeConfiguration<New>

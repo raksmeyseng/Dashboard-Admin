@@ -1,8 +1,8 @@
-﻿@model List<ArchtistStudio.Modules.ImageShow.ListImageShowResponse>
+﻿@model List<ArchtistStudio.Modules.ImageSlide.ListImageSlideResponse>
 
 <div>
     <h4 class="font-weight-bold py-3 mb-4">
-        Information Image Show
+        Information Image Slide
     </h4>
     <div class="d-flex justify-content-between m-2">
         <div class="mb-3">
@@ -42,10 +42,10 @@
                     {
                         <tr>
                             <th scope="row">@index</th>
-                            <td>@Html.DisplayFor(model => item.Image.Project.ProjectName)</td>
+                            <td>@Html.DisplayFor(model => item.Project.ProjectName)</td>
                             <td>@Html.DisplayFor(model => item.ImagePath)</td>
                             <td>
-                                <a asp-controller="imageshow" asp-action="update" asp-route-id="@item.Id">
+                                <a asp-controller="imageslide" asp-action="update" asp-route-id="@item.Id">
                                     <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i>
                                 </a>
                                 <button type="button" class="btn btn-link text-danger" data-bs-toggle="modal"
@@ -66,7 +66,7 @@
                                                 Are you sure you want to delete this item?
                                             </div>
                                             <div class="modal-footer">
-                                                <form asp-controller="imageshow" asp-action="delete" asp-route-id="@item.Id"
+                                                <form asp-controller="imageslide" asp-action="delete" asp-route-id="@item.Id"
                                                     method="post" style="display: inline;">
                                                     @Html.AntiForgeryToken()
                                                     <input type="hidden" name="_method" value="delete" />

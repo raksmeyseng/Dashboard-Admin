@@ -35,7 +35,7 @@
                     <th scope="col">Client</th>
                     <th scope="col">Size</th>
                     <th scope="col">IMG</th>
-                    <th scope="col">Slide IMG</th>
+                    <th scope="col">IMG Slide</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -62,8 +62,12 @@
                             <td>
                                 <a class="text-decoration-none btn btn-outline-dark" asp-controller="image" asp-action="insert"
                                     asp-route-id="@item.Id">
-                                    <i class="fa fa-plus-square p-1" aria-hidden="true"></i> Image
+                                    <i class="fa fa-plus-square p-1" aria-hidden="true"></i> IMG
                                 </a>
+                                
+                                <a class="text-decoration-none btn btn-outline-dark" asp-controller="imageslide"
+                                    asp-action="insert" asp-route-id="@item.Id"><i class="fa fa-plus-square p-1"
+                                        aria-hidden="true"></i>IMG Slide</a>
                                 <a asp-controller="project" asp-action="update" asp-route-id="@item.Id">
                                     <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i>
                                 </a>

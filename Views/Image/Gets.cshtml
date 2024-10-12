@@ -20,7 +20,7 @@
         </div>
 
         <div class="button-row text-end m-2">
-            <a class="text-decoration-none btn btn-outline-dark" href="/imageshow/gets">Image Slide</a>
+            <a class="text-decoration-none btn btn-outline-dark" href="/imageslide/gets">Image Slide</a>
             <a class="text-decoration-none btn btn-outline-dark" href="/project/gets"> Back to Project</a>
         </div>
     </div>
@@ -45,9 +45,6 @@
                             <td>@Html.DisplayFor(model => item.Project.ProjectName)</td>
                             <td>@Html.DisplayFor(model => item.ImagePath)</td>
                             <td>
-                                <a class="text-decoration-none btn btn-outline-dark" asp-controller="imageshow"
-                                    asp-action="insert" asp-route-id="@item.Id"><i class="fa fa-plus-square p-1"
-                                        aria-hidden="true"></i>Image Slide</a>
                                 <a asp-controller="image" asp-action="update" asp-route-id="@item.Id">
                                     <i class="fa fa-edit fa-lg text-info p-2" aria-hidden="true"></i>
                                 </a>

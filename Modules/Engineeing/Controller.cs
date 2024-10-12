@@ -4,8 +4,7 @@ using ArchtistStudio.Modules.Project;
 using ArchtistStudio.Modules.CategoryEngineering;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
-using ArchtistStudio.Modules.ImageShow;
-
+using ArchtistStudio.Modules.ImageSlide;
 
 namespace ArchtistStudio.Modules.Engineeing;
 
@@ -25,7 +24,6 @@ public class EngineeingController(
             .FindBy(e => e.DeletedAt == null)
             .AsNoTracking()
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows)
             .Select(s => new GetCategoryEngineeringByEngineeingResponse
             {
                 ProjectId = s.Id,
@@ -41,11 +39,11 @@ public class EngineeingController(
                     {
                         ImagePath = img.ImagePath,
                         Description = img.Description,
-                        ImageShows = img.ImageShows.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath,
-                            Description = showImg.Description
-                        }).ToList()
+                    }).ToList(),
+                      ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath,
+                        Description = img.Description
                     }).ToList(),
                 }
             })
@@ -71,7 +69,6 @@ public class EngineeingController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-                .ThenInclude(img => img.ImageShows)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -98,12 +95,12 @@ public class EngineeingController(
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty,
-                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath ?? string.Empty,
-                            Description = showImg.Description ?? string.Empty,
-                        }).ToList() ?? []
-                    }).ToList() ?? []
+                    }).ToList() ?? [],
+                      ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
                 },
                 Checked = false
             })
@@ -143,7 +140,6 @@ public class EngineeingController(
         var allProjects = projectrepository
             .FindBy(e => e.InActive != true && e.DeletedAt == null)
             .Include(p => p.Images)
-            .ThenInclude(img => img.ImageShows)
             .ToList();
 
         if (allProjects == null || !allProjects.Any())
@@ -169,12 +165,12 @@ public class EngineeingController(
                     {
                         ImagePath = img.ImagePath ?? string.Empty,
                         Description = img.Description ?? string.Empty,
-                        ImageShows = img.ImageShows?.Select(showImg => new DatailImageShowResponse
-                        {
-                            ImagePath = showImg.ImagePath ?? string.Empty,
-                            Description = showImg.Description ?? string.Empty,
-                        }).ToList() ?? []
-                    }).ToList() ?? []
+                    }).ToList() ?? [],
+                      ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
                 },
                 Checked = false
             })

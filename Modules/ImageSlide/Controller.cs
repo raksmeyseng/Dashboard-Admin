@@ -4,12 +4,12 @@ using ArchtistStudio.Core;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Project;
 
-namespace ArchtistStudio.Modules.Image;
+namespace ArchtistStudio.Modules.ImageSlide;
 
-public class ImageController(
+public class ImageSlideController(
     IFileUploadService fileUploadService,
     IMapper mapper,
-    IImageRepository repository,
+    IImageSlideRepository repository,
     IProjectRepository projectRepository) : MyController
 {
     // === Gets ====//
@@ -36,7 +36,7 @@ public class ImageController(
             .Take(pageSize)
             .ToList();
 
-        var results = mapper.ProjectTo<ListImageResponse>(pagedData.AsQueryable()).ToList();
+        var results = mapper.ProjectTo<ListImageSlideResponse>(pagedData.AsQueryable()).ToList();
 
         ViewBag.TotalPages = totalPages;
         ViewBag.CurrentPage = pageNumber;
@@ -55,7 +55,7 @@ public class ImageController(
         {
             return NotFound("Project not found.");
         }
-        var model = new InsertImageRequest
+        var model = new InsertImageSlideRequest
         {
             ProjectId = id
         };
@@ -63,7 +63,7 @@ public class ImageController(
     }
 
     [HttpPost]
-    public IActionResult Insert([FromForm] InsertImageRequest request)
+    public IActionResult Insert([FromForm] InsertImageSlideRequest request)
     {
         var project = projectRepository.FindBy(e => e.Id == request.ProjectId).FirstOrDefault();
 
@@ -79,13 +79,13 @@ public class ImageController(
         }
         string Image = fileUploadService.UploadFileAsync(request.ImagePath);
 
-        var item = mapper.Map<Image>(request);
+        var item = mapper.Map<ImageSlide>(request);
         item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
-        project.Images ??= [];
-        project.Images.Add(item);
+        project.ImageSlides ??= [];
+        project.ImageSlides.Add(item);
 
         repository.Add(item);
         repository.Commit();
@@ -104,7 +104,7 @@ public class ImageController(
             return NotFound("Image not found.");
         }
 
-        var model = new UpdateImageRequest
+        var model = new UpdateImageSlideRequest
         {
             ProjectId = image.ProjectId,
             Description = image.Description,
@@ -115,7 +115,7 @@ public class ImageController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(Guid id, UpdateImageRequest request)
+    public IActionResult Update(Guid id, UpdateImageSlideRequest request)
     {
         var image = repository.FindBy(e => e.Id == id).FirstOrDefault();
         if (image == null)
@@ -173,8 +173,8 @@ public class ImageController(
 
 }
 
-public class ApiImageController(
-    IImageRepository repository) : MyAdminController
+public class ApiImageSlideController(
+    IImageSlideRepository repository) : MyAdminController
 {
     [HttpGet]
     public IActionResult Gets(int pageNumber = 1, int pageSize = 10)
@@ -185,7 +185,7 @@ public class ApiImageController(
         var pagedResults = iQueryable
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .Select(s => new DatailImageResponse
+            .Select(s => new DatailImageSlideResponse
             {
                 ImagePath = s.ImagePath,
                 Description = s.Description,

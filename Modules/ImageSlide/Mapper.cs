@@ -1,22 +1,23 @@
 using AutoMapper;
 
-namespace ArchtistStudio.Modules.ImageShow;
+namespace ArchtistStudio.Modules.ImageSlide;
 
-public class ImageShowMapper : Profile
+public class ImageSlideMapper : Profile
 {
-    public ImageShowMapper()
+    public ImageSlideMapper()
     {
-        CreateMap<ImageShow, ListImageShowResponse>();
-         CreateMap<ImageShow, DatailImageShowResponse>();
-        CreateMap<InsertImageShowRequest, ImageShow>()
+        CreateMap<ImageSlide, ListImageSlideResponse>();
+         CreateMap<ImageSlide, DatailImageSlideResponse>();
+         
+        CreateMap<InsertImageSlideRequest, ImageSlide>()
            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
-        CreateMap<ImageShow, UpdateImageShowRequest>()
+        CreateMap<ImageSlide, UpdateImageSlideRequest>()
             .ForMember(dest => dest.ImagePath, opt => opt.Ignore());
-        CreateMap<ListImageShowResponse, ImageShow>()
+        CreateMap<ListImageSlideResponse, ImageSlide>()
            .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
-        CreateMap<ImageShow, ListImageShowResponse>()
+        CreateMap<ImageSlide, ListImageSlideResponse>()
             .ForMember(dest => dest.ImagePath, opt => opt.MapFrom(src => src.ImagePath))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description));
     }

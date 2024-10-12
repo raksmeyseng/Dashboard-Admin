@@ -36,32 +36,28 @@ public class ProjectController(
             Images = project.Images.Select(image => new Image.DatailImageResponse
             {
                 Id = image.Id,
-                ImageShows = image.ImageShows.Select(imageshow => new ImageShow.DatailImageShowResponse
-                {
-                    Id = imageshow.Id,
-                }).ToList(),
+            }).ToList(),
+            ImageSlides = project.ImageSlides.Select(slide => new ImageSlide.DatailImageSlideResponse
+            {
+                Id = slide.Id,
             }).ToList(),
             InActive = project.InActive,
             ImageCount = project.Images.Count,
-            ImageShowCount = project.Images.Sum(image => image.ImageShows.Count)
+            ImageShowCount = project.ImageSlides.Count,
         });
 
-        // Calculate total records and total pages
         var totalRecords = projectQuery.Count();
         var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
-        // Paginate the results
         var results = projectQuery
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToList();
 
-        // Pass values to ViewBag for pagination and search state
         ViewBag.CurrentPage = pageNumber;
         ViewBag.TotalPages = totalPages;
         ViewBag.SearchQuery = projectame;
 
-        // Return the results to the view
         return View(results);
     }
 

@@ -7,7 +7,7 @@ public class ListNewResponse
   	public string ImagePath { get; set; } = null!;
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public DateTime Time { get; set; } 
+	public DateOnly Time { get; set; } 
 }
 
 public class DetailNewResponse
@@ -16,7 +16,7 @@ public class DetailNewResponse
   	public string ImagePath { get; set; } = null!;
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public DateTime Time { get; set; } 
+	public DateOnly Time { get; set; } 
 }
  
 public class InsertNewRequest
@@ -24,7 +24,7 @@ public class InsertNewRequest
   	public IFormFile ImagePath { get; set; } = null!;
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public DateTime Time { get; set; }
+	public DateOnly Time { get; set; }
 }
 
 public class UpdateNewRequest
@@ -32,5 +32,5 @@ public class UpdateNewRequest
   	public IFormFile ImagePath { get; set; } = null!;
 	public string Title { get; set; } = null!;
 	public string Description { get; set; } = null!;
-	public DateTime Time { get; set; } 
+	public DateOnly Time { get; set; } 
 }
