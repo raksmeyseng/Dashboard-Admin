@@ -14,6 +14,6 @@ public class InsertSendEmailRequest
 
 public static class MyAccount
 {
-    public static string OwnerGmail { get; } = "Catherine722005@gmail.com";  
-    public static string OwnerPassword { get; } = "mmif chtv xhew jdwt";    
+    public static string OwnerGmail { get; } = "defurteam@gmail.com";  
+    public static string OwnerPassword { get; } = "nccq qxue ewqx ipvg";    
 }

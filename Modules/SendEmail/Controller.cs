@@ -37,9 +37,9 @@ public class ApiSendEmailController : MyAdminController
         </html>",
 
             IsBodyHtml = true,
-            From = new MailAddress("Catherine722005@gmail.com", "fromSone")
+            From = new MailAddress("defurteam@gmail.com", "fromSone")
         };
-        mailMessage.To.Add(new MailAddress("Catherine722005@gmail.com", "Nerd someone"));
+        mailMessage.To.Add(new MailAddress("defurteam@gmail.com", "Nerd someone"));
 
         SmtpClient smtpClient = new SmtpClient
         {
