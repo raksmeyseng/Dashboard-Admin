@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ArchtistStudio.Modules.Project;
 using Microsoft.EntityFrameworkCore;
 using ArchtistStudio.Modules.Image;
+using ArchtistStudio.Modules.ImageSlide;
 
 namespace ArchtistStudio.Modules.Search;
 
@@ -21,6 +22,7 @@ public IActionResult GetByCategorySearchId([FromQuery] string? ProjectName, int 
     var allProjects = projectrepository
         .FindBy(e => e.InActive != true && e.DeletedAt == null)
         .Include(p => p.Images)
+       .Include(p => p.ImageSlides)
         .ToList();
 
     if (allProjects == null || allProjects.Count == 0)
@@ -44,11 +46,16 @@ public IActionResult GetByCategorySearchId([FromQuery] string? ProjectName, int 
                 Size = s.Size ?? string.Empty,
                 Status = s.Status ?? string.Empty,
                 Location = s.Location ?? string.Empty,
-                Images = s.Images?.Select(img => new DatailImageResponse
-                {
-                    ImagePath = img.ImagePath ?? string.Empty,
-                    Description = img.Description ?? string.Empty
-                }).ToList() ?? new List<DatailImageResponse>()
+                Images = s.Images.Select(img => new DatailImageResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
+                      ImageSlides = s.ImageSlides.Select(img => new DatailImageSlideResponse
+                    {
+                        ImagePath = img.ImagePath ?? string.Empty,
+                        Description = img.Description ?? string.Empty,
+                    }).ToList() ?? [],
             }
         })
         .ToList();
