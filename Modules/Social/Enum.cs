@@ -5,5 +5,5 @@ public enum ESocial
     Instargram = 2,
     TikTok= 3,
     Telegram = 4,
-    Linkined = 5
+    Behance = 5
 }

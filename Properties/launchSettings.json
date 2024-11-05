@@ -16,13 +16,13 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=47.129.175.170:5432;Database=ArchitectureDB;User Id=ArchitectureUser;Password=ArchitectureP@ssw0rd;",
+        "DB_CONNECTION": "Server=13.250.4.12:5432;Database=ArchtustDB;User Id=ArchtustUser;Password=ArchtustP@ssw0rd;",
         "MAIL_ACCOUNT": "seng.vichet.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-        "ACCESS_KEY" : "AKIAQ4NXPZ657BUL755C",
-        "SECRET_KEY" : "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",
-         "BACKET_NAME": "storage-image-architecture"
+        "ACCESS_KEY" : "AKIASZ7NBXPCROJNDKGE",
+        "SECRET_KEY" : "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",
+         "BACKET_NAME": "storage-architecture"
       }
     },
     "GCloud": {
@@ -32,13 +32,13 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=47.129.175.170:5432;Database=ArchitectureDB;User Id=ArchitectureUser;Password=ArchitectureP@ssw0rd;",
+        "DB_CONNECTION": "Server=13.250.4.12:5432;Database=ArchtustDB;User Id=ArchtustUser;Password=ArchtustP@ssw0rd;",
         "MAIL_ACCOUNT": "last.name.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-         "ACCESS_KEY" : "AKIAQ4NXPZ657BUL755C",
-        "SECRET_KEY" : "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",
-         "BACKET_NAME": "storage-image-architecture"
+         "ACCESS_KEY" : "AKIASZ7NBXPCROJNDKGE",
+        "SECRET_KEY" : "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",
+         "BACKET_NAME": "storage-architecture"
       }
     },
     "https": {

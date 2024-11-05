@@ -2,23 +2,13 @@
   "sqltools.connections": [
     {
       "previewLimit": 50,
-      "server": "localhost",
-      "port": 5055,
-      "driver": "PostgreSQL",
-      "name": "TSCE_API",
-      "database": "TSCE_API",
-      "username": "postgres",
-      "password": "P@ssw0rd"
-    },
-    {
-      "previewLimit": 50,
-      "server": "18.141.56.107",
+      "server": "13.250.4.12",
       "port": 5432,
       "driver": "PostgreSQL",
-      "password": "P@ssw0rd",
-      "name": "TSCE",
-      "username": "TSCE",
-      "database": "Archtist"
+      "name": "Archtust",
+      "database": "ArchtustDB",
+      "username": "ArchtustUser",
+      "password": "ArchtustP@ssw0rd"
     }
   ]
 }
