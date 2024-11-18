@@ -14,7 +14,7 @@ public static class MyEnvironment
 	}
 
 	public static string DbConnection => Environment.GetEnvironmentVariable("DB_CONNECTION") ??
-										 "Server=13.250.4.12:5432;Database=ArchtustDB;User Id=ArchtustUser;Password=ArchtustP@ssw0rd;";
+										 "Server=157.245.146.248:5432;Database=databaseTSENC;User Id=userTSENC;Password=TSENCP@ssw0rd";
 
 	public static string SpaceName => Environment.GetEnvironmentVariable("SPACE_NAME") ?? "ts-enc";
 	public static string Region => Environment.GetEnvironmentVariable("REGION") ?? "sgp1";

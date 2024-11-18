@@ -2,13 +2,13 @@
   "sqltools.connections": [
     {
       "previewLimit": 50,
-      "server": "13.250.4.12",
+      "server": "157.245.146.248",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "Archtust",
-      "database": "ArchtustDB",
-      "username": "ArchtustUser",
-      "password": "ArchtustP@ssw0rd"
+      "name": "nameTSENC",
+      "database": "databaseTSENC",
+      "username": "userTSENC",
+      "password": "TSENCP@ssw0rd"
     }
   ]
 }
