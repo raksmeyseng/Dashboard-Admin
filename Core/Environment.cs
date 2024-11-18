@@ -16,7 +16,9 @@ public static class MyEnvironment
 	public static string DbConnection => Environment.GetEnvironmentVariable("DB_CONNECTION") ??
 										 "Server=13.250.4.12:5432;Database=ArchtustDB;User Id=ArchtustUser;Password=ArchtustP@ssw0rd;";
 
-	public static string BucketName => Environment.GetEnvironmentVariable("BACKET_NAME") ?? "storage-architecture";
-	public static string AWSKey => Environment.GetEnvironmentVariable("ACCESS_KEY") ?? "AKIASZ7NBXPCROJNDKGE";
-	public static string AWSSecretkey => Environment.GetEnvironmentVariable("SECRET_KEY") ?? "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";
+	public static string SpaceName => Environment.GetEnvironmentVariable("SPACE_NAME") ?? "ts-enc";
+	public static string Region => Environment.GetEnvironmentVariable("REGION") ?? "sgp1";
+	public static string Endpoint => Environment.GetEnvironmentVariable("END_POINT") ?? "https://ts-enc.sgp1.digitaloceanspaces.com";
+	public static string AccessKey => Environment.GetEnvironmentVariable("ACCESS_KEY") ?? "DO00JMU67D2ZGENZH6Y6";
+	public static string Secretkey => Environment.GetEnvironmentVariable("SECRET_KEY") ?? "3+XNkUayT15U2uYiRlNwuqvZ1WmE8d08Z++EneCGOAU";
 }

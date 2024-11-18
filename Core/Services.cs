@@ -1,4 +1,3 @@
-using Amazon;
 using Amazon.S3;
 using Amazon.S3.Transfer;
 using ArchtistStudio.Core;
@@ -10,44 +9,41 @@ public interface IFileUploadService
 
 public class FileUploadService : IFileUploadService
 {
-    private readonly RegionEndpoint region = RegionEndpoint.APSoutheast1;
-
     public string UploadFileAsync(IFormFile imagePath)
     {
         if (imagePath == null || imagePath.Length == 0)
         {
             throw new ArgumentException("Image file is required");
         }
-
-        using (var amazonS3Client = new AmazonS3Client(MyEnvironment.AWSKey, MyEnvironment.AWSSecretkey, region))
+        using (var amazonS3Client = new AmazonS3Client(MyEnvironment.AccessKey, MyEnvironment.Secretkey, new AmazonS3Config
         {
-            using (var memoryStream = new MemoryStream())
+            ServiceURL = MyEnvironment.Endpoint,
+            ForcePathStyle = true
+        }))
+        {
+            using var memoryStream = new MemoryStream();
+            imagePath.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+            var uploadRequest = new TransferUtilityUploadRequest
             {
-                imagePath.CopyTo(memoryStream);
-                memoryStream.Position = 0;
+                InputStream = memoryStream,
+                Key = imagePath.FileName,
+                BucketName = MyEnvironment.SpaceName,
+                ContentType = imagePath.ContentType,
+                CannedACL = S3CannedACL.PublicRead
+            };
+            var transferUtility = new TransferUtility(amazonS3Client);
 
-                var uploadRequest = new TransferUtilityUploadRequest
-                {
-                    InputStream = memoryStream,
-                    Key = imagePath.FileName,
-                    BucketName = MyEnvironment.BucketName,
-                    ContentType = imagePath.ContentType
-                };
-
-                var transferUtility = new TransferUtility(amazonS3Client);
-
-                try
-                {
-                    transferUtility.Upload(uploadRequest);
-                }
-                catch (AmazonS3Exception ex)
-                {
-                    throw new Exception("Upload failed: " + ex.Message, ex);
-                }
+            try
+            {
+                transferUtility.UploadAsync(uploadRequest);
+            }
+            catch (AmazonS3Exception ex)
+            {
+                throw new Exception("Upload failed: " + ex.Message, ex);
             }
         }
-
-        string fileUrl = $"https://{MyEnvironment.BucketName}.s3.ap-southeast-1.amazonaws.com/{imagePath.FileName}";
+        string fileUrl = $"https://{MyEnvironment.SpaceName}.{MyEnvironment.Region}.digitaloceanspaces.com/{imagePath.FileName}";
         return fileUrl;
     }
 }
