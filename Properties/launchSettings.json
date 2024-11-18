@@ -20,9 +20,11 @@
         "MAIL_ACCOUNT": "seng.vichet.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-        "ACCESS_KEY" : "AKIASZ7NBXPCROJNDKGE",
-        "SECRET_KEY" : "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",
-         "BACKET_NAME": "storage-architecture"
+        "SPACE_NAME": "ts-enc",
+        "REGION": "sgp1",
+        "END_POINT": "https://ts-enc.sgp1.digitaloceanspaces.com",
+        "ACCESS_KEY" : "DO00JMU67D2ZGENZH6Y6",
+        "SECRET_KEY" : "3+XNkUayT15U2uYiRlNwuqvZ1WmE8d08Z++EneCGOAU",
       }
     },
     "GCloud": {
@@ -36,9 +38,11 @@
         "MAIL_ACCOUNT": "last.name.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-         "ACCESS_KEY" : "AKIASZ7NBXPCROJNDKGE",
-        "SECRET_KEY" : "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",
-         "BACKET_NAME": "storage-architecture"
+        "SPACE_NAME": "ts-enc",
+        "REGION": "sgp1",
+        "END_POINT": "https://ts-enc.sgp1.digitaloceanspaces.com",
+        "ACCESS_KEY" : "DO00JMU67D2ZGENZH6Y6",
+        "SECRET_KEY" : "3+XNkUayT15U2uYiRlNwuqvZ1WmE8d08Z++EneCGOAU",
       }
     },
     "https": {
