@@ -1,49 +1,46 @@
 using Amazon.S3;
 using Amazon.S3.Transfer;
-using ArchtistStudio.Core;
 
-public interface IFileUploadService
+public class DigitalOceanSpaceService
 {
-    string UploadFileAsync(IFormFile imagePath);
-}
+    private readonly IConfiguration _configuration;
 
-public class FileUploadService : IFileUploadService
-{
-    public string UploadFileAsync(IFormFile imagePath)
+    public DigitalOceanSpaceService(IConfiguration configuration)
     {
-        if (imagePath == null || imagePath.Length == 0)
+        _configuration = configuration;
+    }
+
+    public async Task<string> UploadImageAsync(IFormFile file)
+    {
+        var accessKey = _configuration["DigitalOceanSpaces:AccessKey"];
+        var secretKey = _configuration["DigitalOceanSpaces:SecretKey"];
+        var region = _configuration["DigitalOceanSpaces:Region"];
+        var endpoint = _configuration["DigitalOceanSpaces:EndPoint"];
+        var spaceName = _configuration["DigitalOceanSpaces:SpaceName"];
+
+        var client = new AmazonS3Client(accessKey, secretKey,
+            new AmazonS3Config
+            {
+                ServiceURL = endpoint,
+                ForcePathStyle = true 
+            });
+
+        var transferUtility = new TransferUtility(client);
+
+        using (var stream = file.OpenReadStream())
         {
-            throw new ArgumentException("Image file is required");
-        }
-        using (var amazonS3Client = new AmazonS3Client(MyEnvironment.AccessKey, MyEnvironment.Secretkey, new AmazonS3Config
-        {
-            ServiceURL = MyEnvironment.Endpoint,
-            ForcePathStyle = true
-        }))
-        {
-            using var memoryStream = new MemoryStream();
-            imagePath.CopyToAsync(memoryStream);
-            memoryStream.Position = 0;
             var uploadRequest = new TransferUtilityUploadRequest
             {
-                InputStream = memoryStream,
-                Key = imagePath.FileName,
-                BucketName = MyEnvironment.SpaceName,
-                ContentType = imagePath.ContentType,
+                InputStream = stream,
+                BucketName = spaceName,
+                Key = $"images/{file.FileName}",
                 CannedACL = S3CannedACL.PublicRead
             };
-            var transferUtility = new TransferUtility(amazonS3Client);
 
-            try
-            {
-                transferUtility.UploadAsync(uploadRequest);
-            }
-            catch (AmazonS3Exception ex)
-            {
-                throw new Exception("Upload failed: " + ex.Message, ex);
-            }
+            await transferUtility.UploadAsync(uploadRequest);
         }
-        string fileUrl = $"https://{MyEnvironment.SpaceName}.{MyEnvironment.Region}.digitaloceanspaces.com/{imagePath.FileName}";
-        return fileUrl;
+
+        string url = $"https://{spaceName}.{region}.digitaloceanspaces.com/images/{file.FileName}";
+        return url;
     }
 }

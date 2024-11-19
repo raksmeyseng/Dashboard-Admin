@@ -7,7 +7,7 @@ namespace ArchtistStudio.Modules.About;
 
 
 public class AboutController(
-    IFileUploadService fileUploadService,
+    DigitalOceanSpaceService digitalOceanSpaceService,
     IMapper mapper,
     IAboutRepository repository) : MyController
 {
@@ -30,7 +30,7 @@ public class AboutController(
         return View();
     }
     [HttpPost]
-    public IActionResult Insert([FromForm] InsertAboutRequest request)
+    public async Task<IActionResult> Insert([FromForm] InsertAboutRequest request)
     {
         var Queryable = repository.GetSingle(e => e.DeletedAt == null);
         if (Queryable != null)
@@ -43,7 +43,7 @@ public class AboutController(
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
 
 
         if (request.ImagePathWe == null || request.ImagePathWe.Length == 0)
@@ -51,42 +51,44 @@ public class AboutController(
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string ImageWe = fileUploadService.UploadFileAsync(request.ImagePathWe);
+        string ImageWe = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathWe);
 
         if (request.ImagePathVersion == null || request.ImagePathVersion.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string ImagePathVersion = fileUploadService.UploadFileAsync(request.ImagePathVersion);
+        string ImageVision = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathVersion);
 
         if (request.ImagePathService == null || request.ImagePathService.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string ImagePathService = fileUploadService.UploadFileAsync(request.ImagePathService);
+        string ImageService = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathService);
 
         if (request.ImagePathProcess == null || request.ImagePathProcess.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string ImagePathProcess = fileUploadService.UploadFileAsync(request.ImagePathProcess);
+        string ImageProcess = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathProcess);
         if (request.ImagePathPlanning == null || request.ImagePathPlanning.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string ImagePathPlanning = fileUploadService.UploadFileAsync(request.ImagePathPlanning);
+        string ImagePlanning = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathPlanning);
 
         var item = mapper.Map<About>(request);
         item.ImagePath = Image;
         item.ImagePathWe = ImageWe;
-        item.ImagePathVersion = ImagePathVersion;
-        item.ImagePathService = ImagePathService;
-        item.ImagePathProcess = ImagePathProcess;
-        item.ImagePathPlanning = ImagePathPlanning;
+        item.ImagePathVersion = ImageVision;
+        item.ImagePathService = ImageService;
+        item.ImagePathProcess = ImageProcess;
+        item.ImagePathPlanning = ImagePlanning;
+
+
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
 
@@ -98,7 +100,7 @@ public class AboutController(
 
     // === Update ====//
     [HttpGet]
-    public ActionResult Update(Guid id)
+    public IActionResult Update(Guid id)
     {
         var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (iQueryable == null) return View();
@@ -108,7 +110,7 @@ public class AboutController(
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(Guid id, UpdateAboutRequest request)
+    public async Task<IActionResult> Update(Guid id, UpdateAboutRequest request)
     {
 
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
@@ -116,32 +118,32 @@ public class AboutController(
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
             item.ImagePath = Image;
         }
         if (request.ImagePathWe != null && request.ImagePathWe.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePathWe);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathWe);
             item.ImagePathWe = Image;
         }
         if (request.ImagePathVersion != null && request.ImagePathVersion.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePathVersion);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathVersion);
             item.ImagePathVersion = Image;
         }
         if (request.ImagePathService != null && request.ImagePathService.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePathService);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathService);
             item.ImagePathService = Image;
         }
         if (request.ImagePathProcess != null && request.ImagePathProcess.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePathProcess);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathProcess);
             item.ImagePathProcess = Image;
         }
         if (request.ImagePathPlanning != null && request.ImagePathPlanning.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePathPlanning);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathPlanning);
             item.ImagePathPlanning = Image;
         }
 
@@ -152,7 +154,7 @@ public class AboutController(
         item.Version = request.Version ?? item.Version;
         item.Service = request.Service ?? item.Service;
         item.Process = request.Process ?? item.Process;
-         item.Planning = request.Planning ?? item.Planning;
+        item.Planning = request.Planning ?? item.Planning;
         item.UpdatedAt = DateTime.UtcNow;
 
         repository.Update(item);

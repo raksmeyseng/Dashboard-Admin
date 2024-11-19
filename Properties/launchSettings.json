@@ -16,15 +16,15 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=157.245.146.248:5432;Database=databaseTSENC;User Id=userTSENC;Password=TSENCP@ssw0rd",
+        "DB_CONNECTION": "Server=157.245.148.27:5432;Database=databaseTSENC;User Id=userTSENC;Password=TSENCP@ssw0rd",
         "MAIL_ACCOUNT": "seng.vichet.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-        "SPACE_NAME": "ts-enc",
+        "SPACE_NAME": "tsenc",
         "REGION": "sgp1",
-        "END_POINT": "https://ts-enc.sgp1.digitaloceanspaces.com",
-        "ACCESS_KEY" : "DO00JMU67D2ZGENZH6Y6",
-        "SECRET_KEY" : "3+XNkUayT15U2uYiRlNwuqvZ1WmE8d08Z++EneCGOAU",
+        "END_POINT": "https://sgp1.digitaloceanspaces.com",
+        "ACCESS_KEY" : "DO00HHHYE99V9UUADCAD",
+        "SECRET_KEY" : "rKx3YGNlzxENmblZlp9YzC/AKfyaThZsaOceQUlbZZg",
       }
     },
     "GCloud": {
@@ -34,15 +34,15 @@
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "DB_CONNECTION": "Server=157.245.146.248:5432;Database=databaseTSENC;User Id=userTSENC;Password=TSENCP@ssw0rd",
+        "DB_CONNECTION": "Server=157.245.148.27:5432;Database=databaseTSENC;User Id=userTSENC;Password=TSENCP@ssw0rd",
         "MAIL_ACCOUNT": "last.name.eventhub@gmail.com",
         "MAIL_PASSWORD": "nmfa xnal tkpi ntuf",
         "JWT_EXPIRED": "1212121212",
-        "SPACE_NAME": "ts-enc",
+        "SPACE_NAME": "tsenc",
         "REGION": "sgp1",
-        "END_POINT": "https://ts-enc.sgp1.digitaloceanspaces.com",
-        "ACCESS_KEY" : "DO00JMU67D2ZGENZH6Y6",
-        "SECRET_KEY" : "3+XNkUayT15U2uYiRlNwuqvZ1WmE8d08Z++EneCGOAU",
+        "END_POINT": "https://sgp1.digitaloceanspaces.com",
+        "ACCESS_KEY" : "DO00HHHYE99V9UUADCAD",
+        "SECRET_KEY" : "rKx3YGNlzxENmblZlp9YzC/AKfyaThZsaOceQUlbZZg",
       }
     },
     "https": {

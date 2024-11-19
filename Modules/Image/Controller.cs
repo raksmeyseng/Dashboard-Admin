@@ -7,7 +7,7 @@ using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.Image;
 
 public class ImageController(
-    IFileUploadService fileUploadService,
+    DigitalOceanSpaceService digitalOceanSpaceService,
     IMapper mapper,
     IImageRepository repository,
     IProjectRepository projectRepository) : MyController
@@ -63,7 +63,7 @@ public class ImageController(
     }
 
     [HttpPost]
-    public IActionResult Insert([FromForm] InsertImageRequest request)
+    public async Task<IActionResult> Insert([FromForm] InsertImageRequest request)
     {
         var project = projectRepository.FindBy(e => e.Id == request.ProjectId).FirstOrDefault();
 
@@ -77,12 +77,14 @@ public class ImageController(
             ModelState.AddModelError("ImagePath", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+
+
+        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
 
         var item = mapper.Map<Image>(request);
-        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
+        item.ImagePath = Image;
 
         project.Images ??= [];
         project.Images.Add(item);
@@ -115,10 +117,10 @@ public class ImageController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(Guid id, UpdateImageRequest request)
+    public async Task<IActionResult> Update(Guid id, UpdateImageRequest request)
     {
-        var image = repository.FindBy(e => e.Id == id).FirstOrDefault();
-        if (image == null)
+        var item = repository.FindBy(e => e.Id == id).FirstOrDefault();
+        if (item == null)
         {
             ModelState.AddModelError("", "Image not found.");
             return View(request);
@@ -131,14 +133,14 @@ public class ImageController(
         }
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
-            image.ImagePath = Image;
+             string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+             item.ImagePath = Image;
         }
 
-        image.Description = request.Description ?? image.Description;
-        image.UpdatedAt = DateTime.UtcNow;
+        item.Description = request.Description ?? item.Description;
+        item.UpdatedAt = DateTime.UtcNow;
 
-        repository.Update(image);
+        repository.Update(item);
         repository.Commit();
 
         return RedirectToAction("gets", "image", new { id = request.ProjectId });

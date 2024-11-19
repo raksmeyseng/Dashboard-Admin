@@ -7,7 +7,7 @@ using ArchtistStudio.Modules.NewDescription;
 namespace ArchtistStudio.Modules.New;
 
 public class NewController(
-    IFileUploadService fileUploadService,
+    DigitalOceanSpaceService digitalOceanSpaceService,
     IMapper mapper,
     INewDescriptionRepository newDescriptionRepository,
     INewRepository repository) : MyController
@@ -57,19 +57,21 @@ public class NewController(
         return View();
     }
     [HttpPost]
-    public IActionResult Insert([FromForm] InsertNewRequest request)
+    public async Task<IActionResult> Insert([FromForm] InsertNewRequest request)
     {
         if (request.ImagePath == null || request.ImagePath.Length == 0)
         {
             ModelState.AddModelError("Image", "Image file is required.");
             return View(request);
         }
-        string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+
+        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
 
         var item = mapper.Map<New>(request);
-        item.ImagePath = Image;
         item.CreatedAt = DateTime.UtcNow;
         item.CreatedBy = Guid.NewGuid();
+        item.ImagePath = Image;
+        
         repository.Add(item);
         repository.Commit();
 
@@ -88,14 +90,14 @@ public class NewController(
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Update(Guid id, UpdateNewRequest request)
+    public async Task<IActionResult> Update(Guid id, UpdateNewRequest request)
     {
         var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
         if (item == null) return NotFound();
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = fileUploadService.UploadFileAsync(request.ImagePath);
+            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
             item.ImagePath = Image;
         }
 
