@@ -1,6 +1,7 @@
 using System.Reflection;
 using Amazon.S3;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 namespace ArchtistStudio.Core;
 
@@ -28,9 +29,12 @@ public static class DependencyInjection
         service.AddControllers();
         service.AddRazorPages();
         service.AddAWSService<IAmazonS3>();
-        service.AddSingleton<DigitalOceanSpaceService>();
+        service.Configure<FormOptions>(options =>
+    {
+        options.MultipartBodyLengthLimit = 100_000_000; 
+    });
         service.AddControllersWithViews();
-        // service.AddTransient<IFileUploadService, FileUploadService>();
+        service.AddTransient<IFileUploadService, FileUploadService>();
 
         service.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
           {

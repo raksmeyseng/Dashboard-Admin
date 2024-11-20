@@ -7,7 +7,7 @@ namespace ArchtistStudio.Modules.About;
 
 
 public class AboutController(
-    DigitalOceanSpaceService digitalOceanSpaceService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     IAboutRepository repository) : MyController
 {
@@ -15,153 +15,98 @@ public class AboutController(
     [HttpGet]
     public IActionResult Gets()
     {
-        var Queryable = repository.GetSingle(e => e.DeletedAt == null);
-        if (Queryable == null)
-        {
-            return RedirectToAction("insert");
-        }
-        var results = Queryable == null ? null : mapper.Map<DetailAboutResponse>(Queryable);
-        return View(results);
+        var about = repository.GetSingle(e => e.DeletedAt == null);
+        if (about == null) return RedirectToAction(nameof(Insert));
+
+        var result = mapper.Map<DetailAboutResponse>(about);
+        return View(result);
     }
 
-    // === Post ====//
-    public IActionResult Insert()
-    {
-        return View();
-    }
+    [HttpGet]
+    public IActionResult Insert() => View();
+
     [HttpPost]
     public async Task<IActionResult> Insert([FromForm] InsertAboutRequest request)
     {
-        var Queryable = repository.GetSingle(e => e.DeletedAt == null);
-        if (Queryable != null)
+        if (!ModelState.IsValid) return View(request);
+
+        if (repository.GetSingle(e => e.DeletedAt == null) != null)
         {
-            TempData["Message"] = "Data is available. Redirecting to update.";
-            return RedirectToAction("error", "error");
+            TempData["Message"] = "About section already exists. Update it instead.";
+            return RedirectToAction(nameof(Gets));
         }
-        if (request.ImagePath == null || request.ImagePath.Length == 0)
+
+        try
         {
-            ModelState.AddModelError("Image", "Image file is required.");
+            var about = mapper.Map<About>(request);
+
+            about.ImagePath = await fileUploadService.UploadFileAsync(request.ImagePath);
+            about.ImagePathWe = await fileUploadService.UploadFileAsync(request.ImagePathWe);
+            about.ImagePathVision = await fileUploadService.UploadFileAsync(request.ImagePathVision);
+            about.ImagePathService = await fileUploadService.UploadFileAsync(request.ImagePathService);
+            about.ImagePathProcess = await fileUploadService.UploadFileAsync(request.ImagePathProcess);
+            about.ImagePathPlanning = await fileUploadService.UploadFileAsync(request.ImagePathPlanning);
+
+            about.CreatedAt = DateTime.UtcNow;
+            about.CreatedBy = Guid.NewGuid();
+
+            repository.Add(about);
+            repository.Commit();
+
+            return RedirectToAction(nameof(Gets));
+        }
+        catch (Exception)
+        {
+            ModelState.AddModelError("", "Failed to save data. Try again later.");
             return View(request);
         }
-        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
-
-
-        if (request.ImagePathWe == null || request.ImagePathWe.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string ImageWe = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathWe);
-
-        if (request.ImagePathVersion == null || request.ImagePathVersion.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string ImageVision = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathVersion);
-
-        if (request.ImagePathService == null || request.ImagePathService.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string ImageService = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathService);
-
-        if (request.ImagePathProcess == null || request.ImagePathProcess.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string ImageProcess = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathProcess);
-        if (request.ImagePathPlanning == null || request.ImagePathPlanning.Length == 0)
-        {
-            ModelState.AddModelError("Image", "Image file is required.");
-            return View(request);
-        }
-        string ImagePlanning = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathPlanning);
-
-        var item = mapper.Map<About>(request);
-        item.ImagePath = Image;
-        item.ImagePathWe = ImageWe;
-        item.ImagePathVersion = ImageVision;
-        item.ImagePathService = ImageService;
-        item.ImagePathProcess = ImageProcess;
-        item.ImagePathPlanning = ImagePlanning;
-
-
-        item.CreatedAt = DateTime.UtcNow;
-        item.CreatedBy = Guid.NewGuid();
-
-        repository.Add(item);
-        repository.Commit();
-
-        return RedirectToAction("gets");
     }
 
-    // === Update ====//
     [HttpGet]
     public IActionResult Update(Guid id)
     {
-        var iQueryable = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (iQueryable == null) return View();
+        var about = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
+        if (about == null) return NotFound();
 
-        var results = mapper.Map<UpdateAboutRequest>(iQueryable);
-        return View(results);
+        var model = mapper.Map<UpdateAboutRequest>(about);
+        return View(model);
     }
+
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Update(Guid id, UpdateAboutRequest request)
     {
+        var about = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
+        if (about == null) return NotFound();
 
-        var item = repository.GetSingle(e => e.Id == id && e.DeletedAt == null);
-        if (item == null) return NotFound();
-
-        if (request.ImagePath != null && request.ImagePath.Length > 0)
+        try
         {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
-            item.ImagePath = Image;
-        }
-        if (request.ImagePathWe != null && request.ImagePathWe.Length > 0)
-        {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathWe);
-            item.ImagePathWe = Image;
-        }
-        if (request.ImagePathVersion != null && request.ImagePathVersion.Length > 0)
-        {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathVersion);
-            item.ImagePathVersion = Image;
-        }
-        if (request.ImagePathService != null && request.ImagePathService.Length > 0)
-        {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathService);
-            item.ImagePathService = Image;
-        }
-        if (request.ImagePathProcess != null && request.ImagePathProcess.Length > 0)
-        {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathProcess);
-            item.ImagePathProcess = Image;
-        }
-        if (request.ImagePathPlanning != null && request.ImagePathPlanning.Length > 0)
-        {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePathPlanning);
-            item.ImagePathPlanning = Image;
-        }
+            about.ImagePath = request.ImagePath != null ? await fileUploadService.UploadFileAsync(request.ImagePath) : about.ImagePath;
+            about.ImagePathWe = request.ImagePathWe != null ? await fileUploadService.UploadFileAsync(request.ImagePathWe) : about.ImagePathWe;
+            about.ImagePathVision = request.ImagePathVision != null ? await fileUploadService.UploadFileAsync(request.ImagePathVision) : about.ImagePathVision;
+            about.ImagePathService = request.ImagePathService != null ? await fileUploadService.UploadFileAsync(request.ImagePathService) : about.ImagePathService;
+            about.ImagePathProcess = request.ImagePathProcess != null ? await fileUploadService.UploadFileAsync(request.ImagePathProcess) : about.ImagePathProcess;
+            about.ImagePathPlanning = request.ImagePathPlanning != null ? await fileUploadService.UploadFileAsync(request.ImagePathPlanning) : about.ImagePathPlanning;
 
+            about.Since = request.Since ?? about.Since;
+            about.We = request.We ?? about.We;
+            about.Vision = request.Vision ?? about.Vision;
+            about.Service = request.Service ?? about.Service;
+            about.Process = request.Process ?? about.Process;
+            about.Planning = request.Planning ?? about.Planning;
+            about.UpdatedAt = DateTime.UtcNow;
 
+            repository.Update(about);
+            repository.Commit();
 
-        item.Since = request.Since ?? item.Since;
-        item.We = request.We ?? item.We;
-        item.Version = request.Version ?? item.Version;
-        item.Service = request.Service ?? item.Service;
-        item.Process = request.Process ?? item.Process;
-        item.Planning = request.Planning ?? item.Planning;
-        item.UpdatedAt = DateTime.UtcNow;
-
-        repository.Update(item);
-        repository.Commit();
-
-        return RedirectToAction("gets");
+            return RedirectToAction(nameof(Gets));
+        }
+        catch (Exception)
+        {
+            ModelState.AddModelError("", "Failed to update data. Try again later.");
+            return View(request);
+        }
     }
+
     public IActionResult Error()
     {
         return View();

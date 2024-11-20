@@ -2,7 +2,7 @@
   "sqltools.connections": [
     {
       "previewLimit": 50,
-      "server": "157.245.146.248",
+      "server": "157.245.148.27",
       "port": 5432,
       "driver": "PostgreSQL",
       "name": "nameTSENC",

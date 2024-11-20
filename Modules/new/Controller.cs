@@ -7,7 +7,7 @@ using ArchtistStudio.Modules.NewDescription;
 namespace ArchtistStudio.Modules.New;
 
 public class NewController(
-    DigitalOceanSpaceService digitalOceanSpaceService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     INewDescriptionRepository newDescriptionRepository,
     INewRepository repository) : MyController
@@ -65,7 +65,7 @@ public class NewController(
             return View(request);
         }
 
-        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+        string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<New>(request);
         item.CreatedAt = DateTime.UtcNow;
@@ -97,7 +97,7 @@ public class NewController(
 
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+            string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
             item.ImagePath = Image;
         }
 

@@ -7,7 +7,7 @@ using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.Image;
 
 public class ImageController(
-    DigitalOceanSpaceService digitalOceanSpaceService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     IImageRepository repository,
     IProjectRepository projectRepository) : MyController
@@ -79,7 +79,7 @@ public class ImageController(
         }
 
 
-        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+        string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<Image>(request);
         item.CreatedAt = DateTime.UtcNow;
@@ -133,7 +133,7 @@ public class ImageController(
         }
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-             string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+             string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
              item.ImagePath = Image;
         }
 

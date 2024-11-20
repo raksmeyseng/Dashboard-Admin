@@ -1,16 +1,16 @@
 using Amazon.S3;
 using Amazon.S3.Transfer;
 
-public class DigitalOceanSpaceService
+public interface IFileUploadService
 {
-    private readonly IConfiguration _configuration;
+    Task<string> UploadFileAsync(IFormFile imagePath);
+}
 
-    public DigitalOceanSpaceService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+public class FileUploadService(IConfiguration configuration) : IFileUploadService
+{
+    private readonly IConfiguration _configuration = configuration;
 
-    public async Task<string> UploadImageAsync(IFormFile file)
+    public async Task<string> UploadFileAsync(IFormFile imagePath)
     {
         var accessKey = _configuration["DigitalOceanSpaces:AccessKey"];
         var secretKey = _configuration["DigitalOceanSpaces:SecretKey"];
@@ -18,29 +18,26 @@ public class DigitalOceanSpaceService
         var endpoint = _configuration["DigitalOceanSpaces:EndPoint"];
         var spaceName = _configuration["DigitalOceanSpaces:SpaceName"];
 
-        var client = new AmazonS3Client(accessKey, secretKey,
-            new AmazonS3Config
-            {
-                ServiceURL = endpoint,
-                ForcePathStyle = true 
-            });
+        var client = new AmazonS3Client(accessKey, secretKey, new AmazonS3Config
+        {
+            ServiceURL = endpoint,
+            ForcePathStyle = true
+        });
 
         var transferUtility = new TransferUtility(client);
-
-        using (var stream = file.OpenReadStream())
+        using (var stream = imagePath.OpenReadStream())
         {
             var uploadRequest = new TransferUtilityUploadRequest
             {
                 InputStream = stream,
                 BucketName = spaceName,
-                Key = $"images/{file.FileName}",
+                Key = $"images/{imagePath.FileName}",
                 CannedACL = S3CannedACL.PublicRead
             };
 
             await transferUtility.UploadAsync(uploadRequest);
         }
-
-        string url = $"https://{spaceName}.{region}.digitaloceanspaces.com/images/{file.FileName}";
+        string url = $"https://{spaceName}.{region}.digitaloceanspaces.com/images/{imagePath.FileName}";
         return url;
     }
 }

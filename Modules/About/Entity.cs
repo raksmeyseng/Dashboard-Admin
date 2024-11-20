@@ -11,8 +11,8 @@ public class About : AuditableEntity
        public string Since { get; set; } = null!;
        public string We { get; set; } = null!;
        public string ImagePathWe { get; set; } = null!;
-       public string Version { get; set; } = null!;
-       public string ImagePathVersion { get; set; } = null!;
+       public string Vision { get; set; } = null!;
+       public string ImagePathVision { get; set; } = null!;
        public string Service { get; set; } = null!;
        public string ImagePathService { get; set; } = null!;
        public string Process { get; set; } = null!;

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ArchtistStudio.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20241119160206_InitialCreate")]
+    [Migration("20241119193508_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace ArchtistStudio.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePathVersion")
+                    b.Property<string>("ImagePathVision")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -92,7 +92,7 @@ namespace ArchtistStudio.Migrations
                     b.Property<Guid?>("UpdatedBy")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Version")
+                    b.Property<string>("Vision")
                         .IsRequired()
                         .HasColumnType("text");
 

@@ -7,7 +7,7 @@ using ArchtistStudio.Modules.Project;
 namespace ArchtistStudio.Modules.ImageSlide;
 
 public class ImageSlideController(
-     DigitalOceanSpaceService digitalOceanSpaceService,
+    IFileUploadService fileUploadService,
     IMapper mapper,
     IImageSlideRepository repository,
     IProjectRepository projectRepository) : MyController
@@ -77,7 +77,7 @@ public class ImageSlideController(
             ModelState.AddModelError("ImagePath", "Image file is required.");
             return View(request);
         }
-        string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+        string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
 
         var item = mapper.Map<ImageSlide>(request);
         item.CreatedAt = DateTime.UtcNow;
@@ -131,7 +131,7 @@ public class ImageSlideController(
         }
         if (request.ImagePath != null && request.ImagePath.Length > 0)
         {
-            string Image = await digitalOceanSpaceService.UploadImageAsync(request.ImagePath);
+            string Image = await fileUploadService.UploadFileAsync(request.ImagePath);
             item.ImagePath = Image;
         }
 
