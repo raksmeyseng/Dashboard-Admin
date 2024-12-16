@@ -8,6 +8,8 @@
             <form asp-controller="imageslide" asp-action="update" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+                <input type="hidden" asp-for="ProjectId" />
+
                 <div class="row m-1">
                     <div class="col-md-12">
                         <div class="form-group">

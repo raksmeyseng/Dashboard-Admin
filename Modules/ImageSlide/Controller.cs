@@ -90,7 +90,7 @@ public class ImageSlideController(
         repository.Add(item);
         repository.Commit();
 
-        return RedirectToAction("gets", "image", new { id = request.ProjectId });
+        return RedirectToAction("gets", "imageslide", new { id = request.ProjectId });
     }
 
 
@@ -141,7 +141,7 @@ public class ImageSlideController(
         repository.Update(item);
         repository.Commit();
 
-        return RedirectToAction("gets", "image", new { id = request.ProjectId });
+        return RedirectToAction("gets", "imageslide", new { id = request.ProjectId });
     }
 
 
@@ -168,7 +168,7 @@ public class ImageSlideController(
         repository.Remove(item);
         repository.Commit();
 
-        return RedirectToAction("gets", "image");
+        return RedirectToAction("gets", "imageslide");
     }
 
 }
